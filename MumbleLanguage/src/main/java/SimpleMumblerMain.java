@@ -1,12 +1,9 @@
 import mumbler.Reader;
 import mumbler.environment.Environment;
-import mumbler.node.MumblerListNode;
+import mumbler.node.ListNode;
 import mumbler.node.Node;
 
-import java.io.ByteArrayInputStream;
-import java.io.Console;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class SimpleMumblerMain {
     public static void main(String[] args) throws IOException {
@@ -21,16 +18,17 @@ public class SimpleMumblerMain {
     private static void startREPL() throws IOException {
         Environment topEnv = Environment.getBaseEnvironment();
 
-        Console console = System.console();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             // READ
-            String data = console.readLine("~> ");
+            System.out.print("~> ");
+            String data = br.readLine();
             if (data == null) {
                 // EOF sent
                 break;
             }
 
-            MumblerListNode nodes = Reader.read(new ByteArrayInputStream(data.getBytes()));
+            ListNode nodes = Reader.read(new ByteArrayInputStream(data.getBytes()));
 
             // EVAL
             Object result = ListNode.EMPTY;
@@ -39,7 +37,7 @@ public class SimpleMumblerMain {
             }
 
             // PRINT
-            if (result != MumblerListNode.EMPTY) {
+            if (result != ListNode.EMPTY) {
                 System.out.println(result);
             }
         }
@@ -48,7 +46,7 @@ public class SimpleMumblerMain {
     private static void runMumbler(String filename) throws IOException {
         Environment topEnv = Environment.getBaseEnvironment();
 
-        MumblerListNode<Node> nodes = Reader.read(new FileInputStream(filename));
+        ListNode nodes = Reader.read(new FileInputStream(filename));
         for (Node node : nodes) {
             node.eval(topEnv);
         }

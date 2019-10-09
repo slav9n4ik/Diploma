@@ -1,9 +1,9 @@
 package mumbler.environment;
 
 import mumbler.node.FunctionNode;
-import mumbler.node.MumblerListNode;
+import mumbler.node.ListNode;
 
-public abstract class BuiltinFn implements FunctionNode {
+public abstract class BuiltinFn extends FunctionNode {
 
     private final String name;
 
@@ -117,7 +117,7 @@ public abstract class BuiltinFn implements FunctionNode {
     static final FunctionNode LIST = new BuiltinFn("list") {
         @Override
         public Object apply(Object... args) {
-            return MumblerListNode.list(args);
+            return ListNode.list(args);
         }
     };
 
@@ -125,7 +125,7 @@ public abstract class BuiltinFn implements FunctionNode {
         @Override
         public Object apply(Object... args) {
             assert args.length == 1;
-            return ((MumblerListNode<?>) args[0]).car;
+            return ((ListNode) args[0]).car();
         }
     };
 
@@ -133,7 +133,7 @@ public abstract class BuiltinFn implements FunctionNode {
         @Override
         public Object apply(Object... args) {
             assert args.length == 1;
-            return ((MumblerListNode<?>) args[0]).cdr;
+            return ((ListNode) args[0]).cdr();
         }
     };
 
@@ -143,7 +143,7 @@ public abstract class BuiltinFn implements FunctionNode {
             for (Object arg : args) {
                 System.out.println(arg);
             }
-            return MumblerListNode.EMPTY;
+            return ListNode.EMPTY;
         }
     };
 

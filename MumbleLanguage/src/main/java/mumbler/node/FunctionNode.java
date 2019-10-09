@@ -2,11 +2,11 @@ package mumbler.node;
 
 import mumbler.environment.Environment;
 
-public interface FunctionNode extends Node {
-    Object apply(Object... args);
+public abstract class FunctionNode extends Node {
+    public abstract Object apply(Object... args);
 
     @Override
-    default Object eval(Environment env) {
+    public Object eval(Environment env) {
         return this;
     }
 }

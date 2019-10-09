@@ -2,7 +2,6 @@ package mumbler.node;
 
 import mumbler.environment.Environment;
 
-public interface Node {
-    Object eval(Environment env);
-
+public abstract class Node {
+    public abstract Object eval(Environment env);
 }

@@ -1,5 +1,7 @@
 package mumbler.node;
 
+import mumbler.environment.Environment;
+
 public class NumberNode extends Node {
     private final Long num;
 
