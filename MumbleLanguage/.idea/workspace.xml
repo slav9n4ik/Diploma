@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="abb54265-baad-4a4a-bd2b-25c4f0c11abe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/forms/DefineSpecialForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/forms/IfSpecialForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/forms/LambdaSpecialForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/forms/QuoteSpecialForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/forms/SpecialForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/BooleanNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SimpleMumblerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SimpleMumblerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/SpecialForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/environment/BuiltinFn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/environment/BuiltinFn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/FunctionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/FunctionNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/ListNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/ListNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/MumblerListNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/NumberNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/NumberNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mumbler/node/SymbolNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mumbler/node/SymbolNode.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -37,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/SimpleMumblerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="23" column="36" lean-forward="true" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+            <state relative-caret-position="342">
+              <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/mumbler/Reader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="101" column="12" selection-start-line="101" selection-start-column="12" selection-end-line="101" selection-end-column="12" />
+            <state relative-caret-position="538">
+              <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -175,8 +158,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -184,7 +167,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SpringCloud/AlexeyCourse" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../simplelanguage" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -225,7 +208,8 @@
       <option name="presentableId" value="Default" />
       <updated>1570470229866</updated>
       <workItem from="1570470233252" duration="2510000" />
-      <workItem from="1570561444168" duration="4203000" />
+      <workItem from="1570561444168" duration="5219000" />
+      <workItem from="1570722092767" duration="58000" />
     </task>
     <task id="LOCAL-00001" summary="init MumbleSimple">
       <created>1570470309072</created>
@@ -241,28 +225,33 @@
       <option name="project" value="LOCAL" />
       <updated>1570470492643</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Простая реализация лиспа без трюфеля">
+      <created>1570636526683</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1570636526683</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6713000" />
+    <option name="totallyTimeSpent" value="7787000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18356457" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18569905" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.2544843" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3295964" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3172646" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3172646" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -273,6 +262,7 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.2544843" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -291,7 +281,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init MumbleSimple" />
     <MESSAGE value="delete dir" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete dir" />
+    <MESSAGE value="Простая реализация лиспа без трюфеля" />
+    <option name="LAST_COMMIT_MESSAGE" value="Простая реализация лиспа без трюфеля" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/mumbler/node/MumblerListNode.java" />
@@ -436,8 +427,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SimpleMumblerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="23" column="36" lean-forward="true" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        <state relative-caret-position="342">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -446,8 +437,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mumbler/Reader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="101" column="12" selection-start-line="101" selection-start-column="12" selection-end-line="101" selection-end-column="12" />
+        <state relative-caret-position="538">
+          <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
