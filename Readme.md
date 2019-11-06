@@ -40,3 +40,11 @@ https://www.youtube.com/watch?v=FJY96_6Y3a4&feature=youtu.be
 **Tutorial: Write Lisp Compiler**  
 http://cesquivias.github.io/blog/2014/12/02/writing-a-language-in-truffle-part-2-using-truffle-and-graal/
 
+**Antlr4 Tutorial**
+https://tomassetti.me/antlr-mega-tutorial/#lexers-and-parser
+https://habr.com/ru/post/341138/
+
+**Настройка idea annotation processor**
+https://stackoverflow.com/questions/43999714/intellij-maven-default-annotation-processors-configuration-getting-lost
+https://medium.com/@komamitsu/how-to-run-simplelanguage-built-using-truffle-for-the-graalvm-on-intellij-26b08dad9238
+

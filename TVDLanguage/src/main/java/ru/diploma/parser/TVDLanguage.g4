@@ -1,0 +1,15 @@
+grammar TVDLanguage;
+
+//parser
+
+sum : WHITESPACE* NUMERIC_LITERAL WHITESPACE* OPERATION WHITESPACE* NUMERIC_LITERAL;
+
+//lexer
+
+fragment DIGIT : [0-9];
+fragment NON_ZERO_DIGIT : [1-9];
+
+WHITESPACE : (' ' | '\t');
+OPERATION : ('+');
+
+NUMERIC_LITERAL : '0' | NON_ZERO_DIGIT DIGIT*;
