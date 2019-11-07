@@ -7,4 +7,9 @@
 /MumbleLanguage/target
 /MumblerOnTruffle/target
 
+# production
+/MumbleLanguage/target
+/TVDLanguage/target
+/TVDLanguage/.idea
+
 /.metadata/
