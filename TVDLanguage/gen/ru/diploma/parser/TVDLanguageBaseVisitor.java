@@ -1,5 +1,12 @@
 // Generated from /home/viacheslav/Documents/Diploma/TVDLanguage/src/main/java/ru/diploma/parser/TVDLanguage.g4 by ANTLR 4.7.2
 package ru.diploma.parser;
+
+//Generated from TVDLanguage.g4
+import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.source.Source;
+import ru.diploma.TVDLanguage;
+import java.util.Map;
+
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
