@@ -10,20 +10,26 @@ import ru.diploma.TVDLanguage;
 
 public class ParserMain {
     public static void main(String[] args) throws Exception {
+        testParsingCallsInAntlr();
+        //testAntlrTree();
+    }
+
+    private static void testAntlrTree() {
         CharStream inputStream = CharStreams.fromString("43 + 57");
         TVDLanguageLexer lexer = new TVDLanguageLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         TVDLanguageParser parser = new TVDLanguageParser(commonTokenStream);
 
+        ParseTree tree = parser.sum();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(new TVDWalker(), tree);
+    }
+
+    private static void testParsingCallsInAntlr() throws Exception {
         Source source = Source.newBuilder("tvd",
                 "43 + 57",
                 "sum.tvd").build();
 
         new TVDLanguage().parse(source);
-
-        //Test Antlr Lexer + Parser
-//        ParseTree tree = parser.sum();
-//        ParseTreeWalker walker = new ParseTreeWalker();
-//        walker.walk(new TVDWalker(), tree);
     }
 }

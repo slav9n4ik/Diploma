@@ -98,11 +98,6 @@ public class TVDLanguageParser extends Parser {
 	public static Map<String, RootCallTarget> parseTVD(TVDLanguage language, Source source) {
 	    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
 	    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
-	    //lexer.removeErrorListeners();
-	    //parser.removeErrorListeners();
-	    //BailoutErrorListener listener = new BailoutErrorListener(source);
-	    //lexer.addErrorListener(listener);
-	    //parser.addErrorListener(listener);
 	    parser.factory = new TVDNodeFactory(language, source);
 	    parser.source = source;
 	    parser.sum();
