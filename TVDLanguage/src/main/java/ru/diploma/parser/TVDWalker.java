@@ -5,7 +5,7 @@ public class TVDWalker extends TVDLanguageBaseListener {
         System.out.println( "Entering R : " + ctx.NUMERIC_LITERAL());
     }
 
-    public void exitSum(TVDLanguageParser.SumContext ctx ) {
+    public void exitSum(ru.diploma.parser.TVDLanguageParser.SumContext ctx ) {
         System.out.println( "Exiting R");
     }
 }

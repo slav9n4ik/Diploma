@@ -1,4 +1,4 @@
-// Generated from /home/viacheslav/Documents/Diploma/TVDLanguage/src/main/java/ru/diploma/parser/TVDLanguage.g4 by ANTLR 4.7.2
+// Generated from /Users/u17079332/Documents/IdeaProject/Diploma/TVDLanguage/src/main/java/ru/diploma/parser/TVDLanguage.g4 by ANTLR 4.7.2
 package ru.diploma.parser;
 
 //Generated from TVDLanguage.g4
@@ -132,11 +132,6 @@ public class TVDLanguageParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TVDLanguageListener ) ((TVDLanguageListener)listener).exitSum(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TVDLanguageVisitor ) return ((TVDLanguageVisitor<? extends T>)visitor).visitSum(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
