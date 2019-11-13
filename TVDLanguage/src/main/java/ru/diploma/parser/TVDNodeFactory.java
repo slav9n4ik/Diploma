@@ -6,8 +6,11 @@ import org.antlr.v4.runtime.Token;
 import ru.diploma.TVDLanguage;
 import ru.diploma.nodes.TVDAddNodeGen;
 import ru.diploma.nodes.TVDExpressionNode;
+import ru.diploma.nodes.TVDLongLiteralNode;
+import ru.diploma.nodes.TVDStatementNode;
 import ru.diploma.util.TVDUnboxNodeGen;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,17 +29,18 @@ public class TVDNodeFactory {
         this.allFunctions = new HashMap<>();
     }
 
-    public void showOperation(Token bodyStartToken) {
-        System.out.println("Node Factory showOperation");
-        System.out.println(bodyStartToken.getText());
+    public void startFunction() {
+        System.out.println("******* Start Function *******");
     }
 
-    public void showNumber(Token bodyStartToken) {
-        System.out.println("Node Factory showNumber");
-        System.out.println(bodyStartToken.getText());
+    public void finishFunction(Token sumToken, TVDExpressionNode result) {
+        System.out.println("******* Finish Function *******");
+        //System.out.println("Token text: " + sumToken.getType());
+        //System.out.println("Token start index: " + sumToken.getStartIndex());
     }
 
     public TVDExpressionNode createBinary(Token opToken, TVDExpressionNode leftNode, TVDExpressionNode rightNode) {
+        System.out.println("******* CreateBinary Function *******");
         if (leftNode == null || rightNode == null) {
             return null;
         }
@@ -60,8 +64,39 @@ public class TVDNodeFactory {
         return result;
     }
 
+    public TVDExpressionNode createNumericLiteral(Token literalToken) {
+        TVDExpressionNode result;
+        try {
+            /* Try if the literal is small enough to fit into a long value. */
+            result = new TVDLongLiteralNode(Long.parseLong(literalToken.getText()));
+        } catch (NumberFormatException ex) {
+            /* Overflow of long value, so fall back to BigInteger. */
+            result = null;//new TVDBigIntegerLiteralNode(new BigInteger(literalToken.getText()));
+        }
+        srcFromToken(result, literalToken);
+        result.addExpressionTag();
+        return result;
+    }
+
+    /**
+     * Creates source description of a single token.
+     */
+    private static void srcFromToken(TVDStatementNode node, Token token) {
+        node.setSourceSection(token.getStartIndex(), token.getText().length());
+    }
+
     public Map<String, RootCallTarget> getAllFunctions() {
         return allFunctions;
+    }
+
+    //To check parser
+    public void showOperation(Token bodyStartToken) {
+        System.out.println("Node Factory showOperation: " + bodyStartToken.getText());
+    }
+
+    //To check parser
+    public void showNumber(Token bodyStartToken) {
+        System.out.println("Node Factory showNumber: " + bodyStartToken.getText());
     }
 
 }

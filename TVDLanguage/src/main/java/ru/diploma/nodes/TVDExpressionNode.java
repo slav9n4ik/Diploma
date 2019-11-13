@@ -9,7 +9,7 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 
 @TypeSystemReference(TVDTypes.class)
 @NodeInfo(description = "The abstract base node for all expressions")
-@GenerateWrapper
+//@GenerateWrapper
 public abstract class TVDExpressionNode extends TVDStatementNode {
 
     private boolean hasExpressionTag;
@@ -25,6 +25,11 @@ public abstract class TVDExpressionNode extends TVDStatementNode {
      * generic execution method and then expect a result of their return type. Type-specialized
      * subclasses overwrite the appropriate methods.
      */
+
+    @Override
+    public void executeVoid(VirtualFrame frame) {
+        executeGeneric(frame);
+    }
 
     public long executeLong(VirtualFrame frame) throws UnexpectedResultException {
         return TVDTypesGen.expectLong(executeGeneric(frame));

@@ -5,6 +5,7 @@ package ru.diploma.parser;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TVDLanguage;
+import ru.diploma.nodes.TVDExpressionNode;
 import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -15,6 +16,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface TVDLanguageListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link TVDLanguageParser#tvdlanguage}.
+	 * @param ctx the parse tree
+	 */
+	void enterTvdlanguage(TVDLanguageParser.TvdlanguageContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TVDLanguageParser#tvdlanguage}.
+	 * @param ctx the parse tree
+	 */
+	void exitTvdlanguage(TVDLanguageParser.TvdlanguageContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TVDLanguageParser#sum}.
 	 * @param ctx the parse tree
 	 */
@@ -24,4 +35,24 @@ public interface TVDLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSum(TVDLanguageParser.SumContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TVDLanguageParser#leftnode}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftnode(TVDLanguageParser.LeftnodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TVDLanguageParser#leftnode}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftnode(TVDLanguageParser.LeftnodeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TVDLanguageParser#rightnode}.
+	 * @param ctx the parse tree
+	 */
+	void enterRightnode(TVDLanguageParser.RightnodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TVDLanguageParser#rightnode}.
+	 * @param ctx the parse tree
+	 */
+	void exitRightnode(TVDLanguageParser.RightnodeContext ctx);
 }

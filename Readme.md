@@ -39,6 +39,7 @@ https://www.youtube.com/watch?v=FJY96_6Y3a4&feature=youtu.be
 
 **Tutorial: Write Lisp Compiler**  
 http://cesquivias.github.io/blog/2014/12/02/writing-a-language-in-truffle-part-2-using-truffle-and-graal/
+https://stefan-marr.de/2015/11/add-graal-jit-compilation-to-your-jvm-language-in-5-easy-steps-step-3/
 
 **Antlr4 Tutorial**
 https://tomassetti.me/antlr-mega-tutorial/#lexers-and-parser

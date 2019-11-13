@@ -5,6 +5,7 @@ package ru.diploma.parser;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TVDLanguage;
+import ru.diploma.nodes.TVDExpressionNode;
 import java.util.Map;
 
 
@@ -23,6 +24,18 @@ public class TVDLanguageBaseListener implements TVDLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTvdlanguage(TVDLanguageParser.TvdlanguageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTvdlanguage(TVDLanguageParser.TvdlanguageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSum(TVDLanguageParser.SumContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -30,6 +43,30 @@ public class TVDLanguageBaseListener implements TVDLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSum(TVDLanguageParser.SumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftnode(TVDLanguageParser.LeftnodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftnode(TVDLanguageParser.LeftnodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRightnode(TVDLanguageParser.RightnodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRightnode(TVDLanguageParser.RightnodeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
