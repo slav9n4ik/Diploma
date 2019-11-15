@@ -1,6 +1,7 @@
 package ru.diploma.parser;
 
 import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.source.Source;
 import org.antlr.v4.runtime.Token;
 import ru.diploma.TVDLanguage;
@@ -35,8 +36,9 @@ public class TVDNodeFactory {
 
     public void finishFunction(Token sumToken, TVDExpressionNode result) {
         System.out.println("******* Finish Function *******");
-        //System.out.println("Token text: " + sumToken.getType());
-        //System.out.println("Token start index: " + sumToken.getStartIndex());
+
+        //TODO Исправить заглушку имени
+        allFunctions.put("main", Truffle.getRuntime().createCallTarget(rootNode));
     }
 
     public TVDExpressionNode createBinary(Token opToken, TVDExpressionNode leftNode, TVDExpressionNode rightNode) {
@@ -50,6 +52,7 @@ public class TVDNodeFactory {
         final TVDExpressionNode result;
         switch (opToken.getText()) {
             case "+":
+                System.out.println("CreateBinary Function Plus Operation");
                 result = TVDAddNodeGen.create(leftUnboxed, rightUnboxed);
                 break;
             default:
