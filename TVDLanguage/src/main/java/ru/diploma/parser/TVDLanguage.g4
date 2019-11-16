@@ -16,38 +16,41 @@ import java.util.Map;
 private TVDNodeFactory factory;
 private Source source;
 
-public static Map<String, RootCallTarget> parseTVD(TVDLanguage language, Source source) {
-    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
-    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
-    parser.factory = new TVDNodeFactory(language, source);
-    parser.source = source;
-    parser.tvdlanguage();
-    return parser.factory.getAllFunctions();
+public static TVDExpressionNode[] parseTVD(TVDLanguage language, Source source) {
+	    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
+	    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
+	    parser.factory = new TVDNodeFactory(language, source);
+	    parser.source = source;
+	    parser.tvdlanguage();
+	    return parser.factory.getNodes();
 }
 }
 
 //parser
 tvdlanguage
 :
-block =
+start =
 WHITESPACE*
 (
                                         { factory.startFunction(); }
     sum
-                                        { factory.finishFunction($block, $sum.result); }
+    print
+                                        { factory.finishFunction($start, $sum.result); }
     WHITESPACE*
 )
 ;
 
 
-sum returns [TVDExpressionNode result]
+sum returns [List<TVDExpressionNode> result]
 :
+                                        { List<TVDExpressionNode> sumNodes = new ArrayList<>(); }
     leftnode
     WHITESPACE*
-        OPERATION
-                                        { factory.showOperation($OPERATION); }
+        OPERATION                       { factory.showOperation($OPERATION); }
     rightnode
-                                        { $result = factory.createBinary($OPERATION, $leftnode.result, $rightnode.result); }
+                                        //{ opNode = factory.createBinary($OPERATION, $leftnode.result, $rightnode.result);}
+                                        { sumNodes.add(factory.createBinary($OPERATION, $leftnode.result, $rightnode.result)); }
+                                        { $result = sumNodes; }
 ;
 
 leftnode returns [TVDExpressionNode result]
@@ -64,6 +67,17 @@ rightnode returns [TVDExpressionNode result]
         NUMERIC_LITERAL
                                         { factory.showNumber($NUMERIC_LITERAL); }
                                         { $result = factory.createNumericLiteral($NUMERIC_LITERAL); }
+;
+
+print returns [List<TVDExpressionNode> result]
+:
+s =
+    WHITESPACE*
+        'print('
+            sum                         { $result = $sum.result }
+        ')'
+    WHITESPACE*
+
 ;
 
 //lexer

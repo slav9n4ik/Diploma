@@ -30,6 +30,6 @@ public class ParserMain {
                 "43 + 57",
                 "sum.tvd").build();
 
-        new TVDLanguage().parse(source);
+        new TVDLanguage().parseCustom(source);
     }
 }

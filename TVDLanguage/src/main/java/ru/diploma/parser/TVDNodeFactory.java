@@ -1,25 +1,22 @@
 package ru.diploma.parser;
 
 import com.oracle.truffle.api.RootCallTarget;
-import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.source.Source;
 import org.antlr.v4.runtime.Token;
 import ru.diploma.TVDLanguage;
 import ru.diploma.nodes.TVDAddNodeGen;
 import ru.diploma.nodes.TVDExpressionNode;
 import ru.diploma.nodes.TVDLongLiteralNode;
-import ru.diploma.nodes.TVDStatementNode;
 import ru.diploma.util.TVDUnboxNodeGen;
-
-import java.math.BigInteger;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TVDNodeFactory {
 
     /* State while parsing a source unit. */
     private final Source source;
-    private final Map<String, RootCallTarget> allFunctions;
+    //private final Map<String, RootCallTarget> allFunctions;
+    private TVDExpressionNode[] nodes;
 
     /* State while parsing a block. */
     private final TVDLanguage language;
@@ -27,18 +24,19 @@ public class TVDNodeFactory {
     public TVDNodeFactory(TVDLanguage language, Source source) {
         this.language = language;
         this.source = source;
-        this.allFunctions = new HashMap<>();
+        //this.allFunctions = new HashMap<>();
     }
 
     public void startFunction() {
         System.out.println("******* Start Function *******");
     }
 
-    public void finishFunction(Token sumToken, TVDExpressionNode result) {
+    public void finishFunction(Token sumToken, List<TVDExpressionNode> result) {
         System.out.println("******* Finish Function *******");
-
-        //TODO Исправить заглушку имени
-        allFunctions.put("main", Truffle.getRuntime().createCallTarget(rootNode));
+        nodes = new TVDExpressionNode[result.size()];
+        //Возвращает ноды без контекста
+        nodes = result.toArray(nodes);
+        //allFunctions.put("main", Truffle.getRuntime().createCallTarget(rootNode));
     }
 
     public TVDExpressionNode createBinary(Token opToken, TVDExpressionNode leftNode, TVDExpressionNode rightNode) {
@@ -59,11 +57,6 @@ public class TVDNodeFactory {
                 throw new RuntimeException("unexpected operation: " + opToken.getText());
         }
 
-        int start = leftNode.getSourceCharIndex();
-        int length = rightNode.getSourceEndIndex() - start;
-        result.setSourceSection(start, length);
-        result.addExpressionTag();
-
         return result;
     }
 
@@ -76,20 +69,12 @@ public class TVDNodeFactory {
             /* Overflow of long value, so fall back to BigInteger. */
             result = null;//new TVDBigIntegerLiteralNode(new BigInteger(literalToken.getText()));
         }
-        srcFromToken(result, literalToken);
-        result.addExpressionTag();
+
         return result;
     }
 
-    /**
-     * Creates source description of a single token.
-     */
-    private static void srcFromToken(TVDStatementNode node, Token token) {
-        node.setSourceSection(token.getStartIndex(), token.getText().length());
-    }
-
-    public Map<String, RootCallTarget> getAllFunctions() {
-        return allFunctions;
+    public TVDExpressionNode[] getNodes() {
+        return nodes;
     }
 
     //To check parser

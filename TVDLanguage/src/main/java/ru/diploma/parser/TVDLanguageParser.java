@@ -96,13 +96,13 @@ public class TVDLanguageParser extends Parser {
 	private TVDNodeFactory factory;
 	private Source source;
 
-	public static Map<String, RootCallTarget> parseTVD(TVDLanguage language, Source source) {
-	    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
-	    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
-	    parser.factory = new TVDNodeFactory(language, source);
-	    parser.source = source;
-	    parser.tvdlanguage();
-	    return parser.factory.getAllFunctions();
+	public static TVDExpressionNode[] parseTVD(TVDLanguage language, Source source) {
+		    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
+		    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
+		    parser.factory = new TVDNodeFactory(language, source);
+		    parser.source = source;
+		    parser.tvdlanguage();
+		    return parser.factory.getNodes();
 	}
 
 	public TVDLanguageParser(TokenStream input) {
@@ -192,7 +192,7 @@ public class TVDLanguageParser extends Parser {
 	}
 
 	public static class SumContext extends ParserRuleContext {
-		public TVDExpressionNode result;
+		public List<TVDExpressionNode> result;
 		public LeftnodeContext leftnode;
 		public Token OPERATION;
 		public RightnodeContext rightnode;
@@ -228,28 +228,30 @@ public class TVDLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(23);
+			 List<TVDExpressionNode> sumNodes = new ArrayList<>(); 
+			setState(24);
 			((SumContext)_localctx).leftnode = leftnode();
-			setState(27);
+			setState(28);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(24);
+				setState(25);
 				match(WHITESPACE);
 				}
 				}
-				setState(29);
+				setState(30);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(30);
+			setState(31);
 			((SumContext)_localctx).OPERATION = match(OPERATION);
 			 factory.showOperation(((SumContext)_localctx).OPERATION); 
-			setState(32);
+			setState(33);
 			((SumContext)_localctx).rightnode = rightnode();
-			 ((SumContext)_localctx).result =  factory.createBinary(((SumContext)_localctx).OPERATION, ((SumContext)_localctx).leftnode.result, ((SumContext)_localctx).rightnode.result); 
+			 sumNodes.add(factory.createBinary(((SumContext)_localctx).OPERATION, ((SumContext)_localctx).leftnode.result, ((SumContext)_localctx).rightnode.result)); 
+			 ((SumContext)_localctx).result =  sumNodes; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -292,21 +294,21 @@ public class TVDLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(38);
+			setState(40);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(35);
+				setState(37);
 				match(WHITESPACE);
 				}
 				}
-				setState(40);
+				setState(42);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(41);
+			setState(43);
 			((LeftnodeContext)_localctx).NUMERIC_LITERAL = match(NUMERIC_LITERAL);
 			 factory.showNumber(((LeftnodeContext)_localctx).NUMERIC_LITERAL); 
 			 ((LeftnodeContext)_localctx).result =  factory.createNumericLiteral(((LeftnodeContext)_localctx).NUMERIC_LITERAL); 
@@ -352,21 +354,21 @@ public class TVDLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(50);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(45);
+				setState(47);
 				match(WHITESPACE);
 				}
 				}
-				setState(50);
+				setState(52);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(51);
+			setState(53);
 			((RightnodeContext)_localctx).NUMERIC_LITERAL = match(NUMERIC_LITERAL);
 			 factory.showNumber(((RightnodeContext)_localctx).NUMERIC_LITERAL); 
 			 ((RightnodeContext)_localctx).result =  factory.createNumericLiteral(((RightnodeContext)_localctx).NUMERIC_LITERAL); 
@@ -384,22 +386,22 @@ public class TVDLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\5:\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\5<\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\3\2\7\2\f\n\2\f\2\16\2\17\13\2\3\2\3\2\3\2\3\2\7\2"+
-		"\25\n\2\f\2\16\2\30\13\2\3\3\3\3\7\3\34\n\3\f\3\16\3\37\13\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\4\7\4\'\n\4\f\4\16\4*\13\4\3\4\3\4\3\4\3\4\3\5\7\5\61\n\5"+
-		"\f\5\16\5\64\13\5\3\5\3\5\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2\2:\2\r\3\2\2\2"+
-		"\4\31\3\2\2\2\6(\3\2\2\2\b\62\3\2\2\2\n\f\7\3\2\2\13\n\3\2\2\2\f\17\3"+
-		"\2\2\2\r\13\3\2\2\2\r\16\3\2\2\2\16\20\3\2\2\2\17\r\3\2\2\2\20\21\b\2"+
-		"\1\2\21\22\5\4\3\2\22\26\b\2\1\2\23\25\7\3\2\2\24\23\3\2\2\2\25\30\3\2"+
-		"\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\3\3\2\2\2\30\26\3\2\2\2\31\35\5\6"+
-		"\4\2\32\34\7\3\2\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2"+
-		"\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\4\2\2!\"\b\3\1\2\"#\5\b\5\2#$\b\3\1"+
-		"\2$\5\3\2\2\2%\'\7\3\2\2&%\3\2\2\2\'*\3\2\2\2(&\3\2\2\2()\3\2\2\2)+\3"+
-		"\2\2\2*(\3\2\2\2+,\7\5\2\2,-\b\4\1\2-.\b\4\1\2.\7\3\2\2\2/\61\7\3\2\2"+
-		"\60/\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63\65\3\2\2\2\64"+
-		"\62\3\2\2\2\65\66\7\5\2\2\66\67\b\5\1\2\678\b\5\1\28\t\3\2\2\2\7\r\26"+
-		"\35(\62";
+		"\25\n\2\f\2\16\2\30\13\2\3\3\3\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\4\7\4)\n\4\f\4\16\4,\13\4\3\4\3\4\3\4\3\4\3\5\7\5\63"+
+		"\n\5\f\5\16\5\66\13\5\3\5\3\5\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2\2<\2\r\3\2"+
+		"\2\2\4\31\3\2\2\2\6*\3\2\2\2\b\64\3\2\2\2\n\f\7\3\2\2\13\n\3\2\2\2\f\17"+
+		"\3\2\2\2\r\13\3\2\2\2\r\16\3\2\2\2\16\20\3\2\2\2\17\r\3\2\2\2\20\21\b"+
+		"\2\1\2\21\22\5\4\3\2\22\26\b\2\1\2\23\25\7\3\2\2\24\23\3\2\2\2\25\30\3"+
+		"\2\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\3\3\2\2\2\30\26\3\2\2\2\31\32\b"+
+		"\3\1\2\32\36\5\6\4\2\33\35\7\3\2\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2"+
+		"\2\2\36\37\3\2\2\2\37!\3\2\2\2 \36\3\2\2\2!\"\7\4\2\2\"#\b\3\1\2#$\5\b"+
+		"\5\2$%\b\3\1\2%&\b\3\1\2&\5\3\2\2\2\')\7\3\2\2(\'\3\2\2\2),\3\2\2\2*("+
+		"\3\2\2\2*+\3\2\2\2+-\3\2\2\2,*\3\2\2\2-.\7\5\2\2./\b\4\1\2/\60\b\4\1\2"+
+		"\60\7\3\2\2\2\61\63\7\3\2\2\62\61\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2"+
+		"\64\65\3\2\2\2\65\67\3\2\2\2\66\64\3\2\2\2\678\7\5\2\289\b\5\1\29:\b\5"+
+		"\1\2:\t\3\2\2\2\7\r\26\36*\64";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

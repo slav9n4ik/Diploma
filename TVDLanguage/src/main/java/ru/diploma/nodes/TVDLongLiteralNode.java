@@ -16,7 +16,7 @@ public class TVDLongLiteralNode extends TVDExpressionNode {
     }
 
     @Override
-    public Object executeGeneric(VirtualFrame frame) {
+    public Object execute(VirtualFrame frame) {
         return value;
     }
 }
