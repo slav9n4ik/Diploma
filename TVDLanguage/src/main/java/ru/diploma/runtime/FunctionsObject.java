@@ -55,7 +55,7 @@ import java.util.Map;
 @SuppressWarnings("static-method")
 final class FunctionsObject implements TruffleObject {
 
-    final Map<String, TVDFunction> functions = new HashMap<>();
+    final Map<String, TLLFunction> functions = new HashMap<>();
 
     FunctionsObject() {
     }

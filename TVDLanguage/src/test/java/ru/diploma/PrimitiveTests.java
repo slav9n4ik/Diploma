@@ -25,12 +25,12 @@ public class PrimitiveTests {
 
     @Test
     public void printNumberTest() throws Exception {
-        context.eval("tvd", "\n" +
+        context.eval("tll", "\n" +
                 "START \n" +
                 " println(100) \n" +
                 "END\n"
         );
-        print = context.getBindings("tvd").getMember("START");
+        print = context.getBindings("tll").getMember("START");
 
         Number ret = print.execute().as(Number.class);
         assertEquals(100, ret.intValue());
@@ -38,12 +38,12 @@ public class PrimitiveTests {
 
     @Test
     public void printSumTest() throws Exception {
-        context.eval("tvd", "\n" +
+        context.eval("tll", "\n" +
                 "START \n" +
                 " println(100 + 23) \n" +
                 "END\n"
         );
-        print = context.getBindings("tvd").getMember("START");
+        print = context.getBindings("tll").getMember("START");
 
         Number ret = print.execute().as(Number.class);
         assertEquals(123, ret.intValue());
