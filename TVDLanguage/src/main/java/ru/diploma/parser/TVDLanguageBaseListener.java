@@ -6,7 +6,11 @@ import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TVDLanguage;
 import ru.diploma.nodes.TVDExpressionNode;
-import java.util.Map;
+import ru.diploma.nodes.TVDStatementNode;
+
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -36,6 +40,18 @@ public class TVDLanguageBaseListener implements TVDLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatement(TVDLanguageParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatement(TVDLanguageParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSum(TVDLanguageParser.SumContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -48,25 +64,25 @@ public class TVDLanguageBaseListener implements TVDLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLeftnode(TVDLanguageParser.LeftnodeContext ctx) { }
+	@Override public void enterNumeric(TVDLanguageParser.NumericContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLeftnode(TVDLanguageParser.LeftnodeContext ctx) { }
+	@Override public void exitNumeric(TVDLanguageParser.NumericContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRightnode(TVDLanguageParser.RightnodeContext ctx) { }
+	@Override public void enterMember_expression(TVDLanguageParser.Member_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRightnode(TVDLanguageParser.RightnodeContext ctx) { }
+	@Override public void exitMember_expression(TVDLanguageParser.Member_expressionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -10,8 +10,9 @@ import ru.diploma.TVDLanguage;
 
 public class ParserMain {
     public static void main(String[] args) throws Exception {
-        testParsingCallsInAntlr();
+        //testParsingSumInAntlr();
         //testAntlrTree();
+        testParsingPrintInAntlr();
     }
 
     private static void testAntlrTree() {
@@ -25,11 +26,19 @@ public class ParserMain {
         walker.walk(new TVDWalker(), tree);
     }
 
-    private static void testParsingCallsInAntlr() throws Exception {
+    private static void testParsingSumInAntlr() throws Exception {
         Source source = Source.newBuilder("tvd",
                 "43 + 57",
                 "sum.tvd").build();
 
-        new TVDLanguage().parseCustom(source);
+        //new TVDLanguage().parseCustom(source);
+    }
+
+    private static void testParsingPrintInAntlr() throws Exception {
+        Source source = Source.newBuilder("tvd",
+                "print()",
+                "print.tvd").build();
+
+        //new TVDLanguage().parseCustom(source);
     }
 }

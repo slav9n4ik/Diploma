@@ -8,18 +8,22 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class SumTest {
+public class PrimitiveTests {
 
     private Context context;
-    private Value sum;
+    private Value print;
 
     @Before
     public void initEngine() throws Exception {
         context = Context.create();
         // @formatter:off
-        context.eval("tvd", "77 + 23");
+        context.eval("tvd", "\n" +
+                "START \n" +
+                " println(100) \n" +
+                "END\n"
+        );
         // @formatter:on
-        sum = context.getBindings("tvd").getMember("main");
+        print = context.getBindings("tvd").getMember("START");
     }
 
     @After
@@ -28,8 +32,8 @@ public class SumTest {
     }
 
     @Test
-    public void factorialOf5() throws Exception {
-        Number ret = sum.execute().as(Number.class);
+    public void printNumberTest() throws Exception {
+        Number ret = print.execute().as(Number.class);
         assertEquals(100, ret.intValue());
     }
 }

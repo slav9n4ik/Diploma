@@ -7,7 +7,11 @@ import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TVDLanguage;
 import ru.diploma.nodes.TVDExpressionNode;
-import java.util.Map;
+import ru.diploma.nodes.TVDStatementNode;
+
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 }
 
 @parser::members
@@ -16,76 +20,122 @@ import java.util.Map;
 private TVDNodeFactory factory;
 private Source source;
 
-public static TVDExpressionNode[] parseTVD(TVDLanguage language, Source source) {
-	    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
-	    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
-	    parser.factory = new TVDNodeFactory(language, source);
-	    parser.source = source;
-	    parser.tvdlanguage();
-	    return parser.factory.getNodes();
+private static final class BailoutErrorListener extends BaseErrorListener {
+    private final Source source;
+    BailoutErrorListener(Source source) {
+        this.source = source;
+    }
+    @Override
+    public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+        throwParseError(source, line, charPositionInLine, (Token) offendingSymbol, msg);
+    }
+}
+
+public void SemErr(Token token, String message) {
+    assert token != null;
+    throwParseError(source, token.getLine(), token.getCharPositionInLine(), token, message);
+}
+
+private static void throwParseError(Source source, int line, int charPositionInLine, Token token, String message) {
+    int col = charPositionInLine + 1;
+    String location = "-- line " + line + " col " + col + ": ";
+    int length = token == null ? 1 : Math.max(token.getStopIndex() - token.getStartIndex(), 0);
+    throw new TVDParseError(source, line, col, length, String.format("Error(s) parsing script:%n" + location + message));
+}
+
+public static Map<String, RootCallTarget> parseTVD(TVDLanguage language, Source source) {
+    TVDLanguageLexer lexer = new TVDLanguageLexer(CharStreams.fromString(source.getCharacters().toString()));
+    TVDLanguageParser parser = new TVDLanguageParser(new CommonTokenStream(lexer));
+    lexer.removeErrorListeners();
+    parser.removeErrorListeners();
+    BailoutErrorListener listener = new BailoutErrorListener(source);
+    lexer.addErrorListener(listener);
+    parser.addErrorListener(listener);
+    parser.factory = new TVDNodeFactory(language, source);
+    parser.source = source;
+    parser.tvdlanguage();
+    return parser.factory.getAllBlocks();
 }
 }
 
 //parser
 tvdlanguage
 :
-start =
+block =
 WHITESPACE*
 (
-                                        { factory.startFunction(); }
-    sum
-    print
-                                        { factory.finishFunction($start, $sum.result); }
+s='START'
+                                         {
+                                           factory.startBlock($s, $block);
+                                           List<TVDStatementNode> body = new ArrayList<>(); }
+(
+    statement+
+                                         { body.add($statement.result); }
     WHITESPACE*
+)*
+e='END'
+                                         { factory.finishBlock(body, $s.getStartIndex(), $e.getStopIndex() - $s.getStartIndex() + 1); }
 )
 ;
 
-
-sum returns [List<TVDExpressionNode> result]
+statement returns [TVDStatementNode result]
 :
-                                        { List<TVDExpressionNode> sumNodes = new ArrayList<>(); }
-    leftnode
+r = WHITESPACE* (
+sum
+                                        { $result = factory.createReturn($r, $sum.result); }
+|
+(
+    IDENTIFIER
+                                        { TVDExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+        member_expression[assignmentName]
+                                        { $result = factory.createReturn($r, $member_expression.result); }
+)
+)
+;
+
+sum returns [TVDExpressionNode result]
+:
+                                        { TVDExpressionNode leftnode, rightnode;  }
+    numeric
+                                        { leftnode = $numeric.result; }
     WHITESPACE*
         OPERATION                       { factory.showOperation($OPERATION); }
-    rightnode
-                                        //{ opNode = factory.createBinary($OPERATION, $leftnode.result, $rightnode.result);}
-                                        { sumNodes.add(factory.createBinary($OPERATION, $leftnode.result, $rightnode.result)); }
-                                        { $result = sumNodes; }
+    numeric
+                                        { rightnode = $numeric.result; }
+                                        { $result = factory.createBinary($OPERATION, leftnode, rightnode); }
 ;
 
-leftnode returns [TVDExpressionNode result]
+numeric returns [TVDExpressionNode result]
 :
     WHITESPACE*
         NUMERIC_LITERAL
+    WHITESPACE*
                                         { factory.showNumber($NUMERIC_LITERAL); }
                                         { $result = factory.createNumericLiteral($NUMERIC_LITERAL); }
 ;
 
-rightnode returns [TVDExpressionNode result]
-:
-    WHITESPACE*
-        NUMERIC_LITERAL
-                                        { factory.showNumber($NUMERIC_LITERAL); }
-                                        { $result = factory.createNumericLiteral($NUMERIC_LITERAL); }
-;
-
-print returns [List<TVDExpressionNode> result]
-:
-s =
-    WHITESPACE*
-        'print('
-            sum                         { $result = $sum.result }
-        ')'
-    WHITESPACE*
-
+member_expression[TVDExpressionNode assignmentName] returns [TVDExpressionNode result]
+:                                            { TVDExpressionNode nestedAssignmentName = null; }
+(
+        '('                                  { List<TVDExpressionNode> parameters = new ArrayList<>();
+                                               TVDExpressionNode receiver = factory.createRead(assignmentName); }
+        (
+            sum                              { parameters.add($sum.result); }
+            |
+            numeric                          { parameters.add($numeric.result); }
+        )?
+        e=')'
+                                             { $result = factory.createCall(receiver, parameters, $e); }
+)
 ;
 
 //lexer
-
 fragment DIGIT : [0-9];
+fragment LETTER : [A-Z] | [a-z] | '_' | '$';
 fragment NON_ZERO_DIGIT : [1-9];
 
-WHITESPACE : (' ' | '\t');
+WHITESPACE : (' ' | '\t' | '\n');
+IDENTIFIER : LETTER (LETTER | DIGIT)*;
 OPERATION : ('+');
 
 NUMERIC_LITERAL : '0' | NON_ZERO_DIGIT DIGIT*;

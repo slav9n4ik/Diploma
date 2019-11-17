@@ -6,7 +6,11 @@ import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TVDLanguage;
 import ru.diploma.nodes.TVDExpressionNode;
-import java.util.Map;
+import ru.diploma.nodes.TVDStatementNode;
+
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -26,6 +30,16 @@ public interface TVDLanguageListener extends ParseTreeListener {
 	 */
 	void exitTvdlanguage(TVDLanguageParser.TvdlanguageContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TVDLanguageParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(TVDLanguageParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TVDLanguageParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(TVDLanguageParser.StatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TVDLanguageParser#sum}.
 	 * @param ctx the parse tree
 	 */
@@ -36,23 +50,23 @@ public interface TVDLanguageListener extends ParseTreeListener {
 	 */
 	void exitSum(TVDLanguageParser.SumContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TVDLanguageParser#leftnode}.
+	 * Enter a parse tree produced by {@link TVDLanguageParser#numeric}.
 	 * @param ctx the parse tree
 	 */
-	void enterLeftnode(TVDLanguageParser.LeftnodeContext ctx);
+	void enterNumeric(TVDLanguageParser.NumericContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TVDLanguageParser#leftnode}.
+	 * Exit a parse tree produced by {@link TVDLanguageParser#numeric}.
 	 * @param ctx the parse tree
 	 */
-	void exitLeftnode(TVDLanguageParser.LeftnodeContext ctx);
+	void exitNumeric(TVDLanguageParser.NumericContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TVDLanguageParser#rightnode}.
+	 * Enter a parse tree produced by {@link TVDLanguageParser#member_expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterRightnode(TVDLanguageParser.RightnodeContext ctx);
+	void enterMember_expression(TVDLanguageParser.Member_expressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TVDLanguageParser#rightnode}.
+	 * Exit a parse tree produced by {@link TVDLanguageParser#member_expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitRightnode(TVDLanguageParser.RightnodeContext ctx);
+	void exitMember_expression(TVDLanguageParser.Member_expressionContext ctx);
 }
