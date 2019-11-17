@@ -56,7 +56,6 @@ public class TVDContext {
         //TODO если появятся объекты #object
         //this.allocationReporter = env.lookup(AllocationReporter.class);
         //this.emptyShape = LAYOUT.createShape(TVDObjectType.SINGLETON);
-        //TODO когда появятся функции
         this.functionRegistry = new TVDFunctionRegistry(language);
         this.topScopes = Collections.singleton(Scope.newBuilder("global", functionRegistry.getFunctionsObject()).build());
         installBuiltins();
@@ -91,7 +90,6 @@ public class TVDContext {
     /**
      * Returns the registry of all functions that are currently defined.
      */
-    //TODO когда появятся функции
     public TVDFunctionRegistry getFunctionRegistry() {
         return functionRegistry;
     }

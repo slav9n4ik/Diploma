@@ -167,10 +167,10 @@ public class TVDLanguage extends TruffleLanguage<TVDContext> {
         }
     }
 
-//    @Override
-//    protected Iterable<Scope> findTopScopes(TVDContext context) {
-//        return context.getTopScopes();
-//    }
+    @Override
+    protected Iterable<Scope> findTopScopes(TVDContext context) {
+        return context.getTopScopes();
+    }
 
     public static TVDContext getCurrentContext() {
         return getCurrentContext(TVDLanguage.class);
@@ -181,17 +181,4 @@ public class TVDLanguage extends TruffleLanguage<TVDContext> {
     public static void installBuiltin(NodeFactory<? extends TVDBuiltinNode> builtin) {
         EXTERNAL_BUILTINS.add(builtin);
     }
-
-//    //TODO кастомный парсер на первое время
-//    public void parseCustom(Source source) {
-//        //Создаем глобальный контекст
-//        TVDContext context = new TVDContext();
-//        //Получаем ноды, после разбора файла
-//        TVDExpressionNode[] nodes = TVDLanguageParser.parseTVD(this, source);
-//        //Собираем в рутовую ноду c контекстом. БЕЗ АРГУМЕНТОВ
-//        TVDRootNode rootNode = new TVDRootNode(nodes, context.getGlobalFrame().getFrameDescriptor());
-//        //Отдаем готовое дерево с рутовой нодой
-//        CallTarget callTarget = Truffle.getRuntime().createCallTarget(rootNode);
-//        callTarget.call(new Object[]{context.getGlobalFrame()});
-//    }
 }

@@ -16,14 +16,6 @@ public class PrimitiveTests {
     @Before
     public void initEngine() throws Exception {
         context = Context.create();
-        // @formatter:off
-        context.eval("tvd", "\n" +
-                "START \n" +
-                " println(100) \n" +
-                "END\n"
-        );
-        // @formatter:on
-        print = context.getBindings("tvd").getMember("START");
     }
 
     @After
@@ -33,7 +25,27 @@ public class PrimitiveTests {
 
     @Test
     public void printNumberTest() throws Exception {
+        context.eval("tvd", "\n" +
+                "START \n" +
+                " println(100) \n" +
+                "END\n"
+        );
+        print = context.getBindings("tvd").getMember("START");
+
         Number ret = print.execute().as(Number.class);
         assertEquals(100, ret.intValue());
+    }
+
+    @Test
+    public void printSumTest() throws Exception {
+        context.eval("tvd", "\n" +
+                "START \n" +
+                " println(100 + 23) \n" +
+                "END\n"
+        );
+        print = context.getBindings("tvd").getMember("START");
+
+        Number ret = print.execute().as(Number.class);
+        assertEquals(123, ret.intValue());
     }
 }

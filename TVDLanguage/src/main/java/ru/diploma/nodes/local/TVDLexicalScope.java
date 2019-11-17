@@ -10,6 +10,7 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeUtil;
 import com.oracle.truffle.api.nodes.NodeVisitor;
 import com.oracle.truffle.api.nodes.RootNode;
+import ru.diploma.nodes.TVDEvalRootNode;
 import ru.diploma.nodes.TVDStatementNode;
 import ru.diploma.nodes.controlflow.TVDBlockNode;
 import ru.diploma.runtime.TVDNull;
@@ -67,8 +68,7 @@ public final class TVDLexicalScope {
             block = findChildrenBlock(node);
             if (block == null) {
                 // Corrupted TVD AST, no block was found
-                //TODO
-                //assert node.getRootNode() instanceof TVDEvalRootNode : "Corrupted TVD AST under " + node;
+                assert node.getRootNode() instanceof TVDEvalRootNode : "Corrupted TVD AST under " + node;
                 return new TVDLexicalScope(null, null, (TVDBlockNode) null);
             }
             node = null; // node is above the block
