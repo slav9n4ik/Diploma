@@ -7,9 +7,12 @@ import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage.Env;
 import com.oracle.truffle.api.dsl.NodeFactory;
 import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.instrumentation.AllocationReporter;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.object.DynamicObject;
 import com.oracle.truffle.api.object.Layout;
+import com.oracle.truffle.api.object.Shape;
 import com.oracle.truffle.api.source.Source;
 import ru.diploma.TLLLanguage;
 import ru.diploma.builtin.*;
@@ -39,23 +42,19 @@ public class TLLContext {
     static final Layout LAYOUT = Layout.createLayout();
 
     private final Env env;
-    private final BufferedReader input;
     private final PrintWriter output;
     private final TLLLanguage language;
-    //TODO если появятся объекты #object
-    //private final AllocationReporter allocationReporter;
-    //private final Shape emptyShape;
+    private final AllocationReporter allocationReporter;
+    private final Shape emptyShape;
     private final Iterable<Scope> topScopes; // Cache the top scopes
     private final TLLFunctionRegistry functionRegistry;
 
     public TLLContext(TLLLanguage language, Env env, List<NodeFactory<? extends TLLBuiltinNode>> externalBuiltins) {
         this.env = env;
-        this.input = new BufferedReader(new InputStreamReader(env.in()));
         this.output = new PrintWriter(env.out(), true);
         this.language = language;
-        //TODO если появятся объекты #object
-        //this.allocationReporter = env.lookup(AllocationReporter.class);
-        //this.emptyShape = LAYOUT.createShape(TLLObjectType.SINGLETON);
+        this.allocationReporter = env.lookup(AllocationReporter.class);
+        this.emptyShape = LAYOUT.createShape(TLLObjectType.SINGLETON);
         this.functionRegistry = new TLLFunctionRegistry(language);
         this.topScopes = Collections.singleton(Scope.newBuilder("global", functionRegistry.getFunctionsObject()).build());
         installBuiltins();
@@ -69,14 +68,6 @@ public class TLLContext {
      */
     public Env getEnv() {
         return env;
-    }
-
-    /**
-     * Returns the default input, i.e., the source for the {@link TLLReadLnBuiltin}. To allow unit
-     * testing, we do not use {@link System#in} directly.
-     */
-    public BufferedReader getInput() {
-        return input;
     }
 
     /**
@@ -102,11 +93,12 @@ public class TLLContext {
      * {@link TLLBuiltinNode builtin implementation classes}.
      */
     private void installBuiltins() {
-        installBuiltin(TLLReadLnBuiltinFactory.getInstance());
         installBuiltin(TLLPrintLnBuiltinFactory.getInstance());
+        installBuiltin(TLLPartnerObjBuildinFactory.getInstance());
 
+        //installBuiltin(TLLReadLnBuiltinFactory.getInstance());
         //installBuiltin(TLLImportBuiltinFactory.getInstance());
-        //installBuiltin(TLLEvalBuiltinFactory.getInstance());
+        installBuiltin(TLLEvalBuiltinFactory.getInstance());
         //installBuiltin(TLLWrapPrimitiveBuiltinFactory.getInstance());
 
         //installBuiltin(TLLIsNullBuiltinFactory.getInstance());
@@ -162,25 +154,24 @@ public class TLLContext {
         }
     }
 
-    //TODO если появятся объекты #object
-    /*
+    /**
      * Methods for object creation / object property access.
      */
-//    public AllocationReporter getAllocationReporter() {
-//        return allocationReporter;
-//    }
-//    /**
-//     * Allocate an empty object. All new objects initially have no properties. Properties are added
-//     * when they are first stored, i.e., the store triggers a shape change of the object.
-//     */
-//    public DynamicObject createObject(AllocationReporter reporter) {
-//        DynamicObject object = null;
-//        reporter.onEnter(null, 0, AllocationReporter.SIZE_UNKNOWN);
-//        object = emptyShape.newInstance();
-//        reporter.onReturnValue(object, 0, AllocationReporter.SIZE_UNKNOWN);
-//        return object;
-//    }
-//
+    public AllocationReporter getAllocationReporter() {
+        return allocationReporter;
+    }
+    /**
+     * Allocate an empty object. All new objects initially have no properties. Properties are added
+     * when they are first stored, i.e., the store triggers a shape change of the object.
+     */
+    public DynamicObject createObject(AllocationReporter reporter) {
+        DynamicObject object = null;
+        reporter.onEnter(null, 0, AllocationReporter.SIZE_UNKNOWN);
+        object = emptyShape.newInstance();
+        reporter.onReturnValue(object, 0, AllocationReporter.SIZE_UNKNOWN);
+        return object;
+    }
+
     public static boolean isTLLObject(Object value) {
         /*
          * LAYOUT.getType() returns a concrete implementation class, i.e., a class that is more

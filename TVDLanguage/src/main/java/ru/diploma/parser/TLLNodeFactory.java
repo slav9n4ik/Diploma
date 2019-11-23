@@ -4,6 +4,7 @@ import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.source.SourceSection;
 import org.antlr.v4.runtime.Token;
@@ -19,6 +20,10 @@ import ru.diploma.nodes.expression.TLLInvokeNode;
 import ru.diploma.nodes.literal.TLLFunctionLiteralNode;
 import ru.diploma.nodes.literal.TLLLongLiteralNode;
 import ru.diploma.nodes.literal.TLLStringLiteralNode;
+import ru.diploma.nodes.local.TLLReadLocalVariableNode;
+import ru.diploma.nodes.local.TLLReadLocalVariableNodeGen;
+import ru.diploma.nodes.local.TLLWriteLocalVariableNode;
+import ru.diploma.nodes.local.TLLWriteLocalVariableNodeGen;
 import ru.diploma.util.TLLUnboxNodeGen;
 
 import java.util.ArrayList;
@@ -34,10 +39,9 @@ public class TLLNodeFactory {
      * decide during parsing if a name references a local variable or is a function name.
      */
     static class LexicalScope {
-
-
         protected final LexicalScope outer;
         protected final Map<String, FrameSlot> locals;
+
         LexicalScope(LexicalScope outer) {
             this.outer = outer;
             this.locals = new HashMap<>();
@@ -60,8 +64,7 @@ public class TLLNodeFactory {
     private int blockStartPos;
     private String blockName;
     private FrameDescriptor frameDescriptor;
-    private int blockBodyStartPos;
-    private ArrayList<Object> blockNodes;
+    private List<TLLStatementNode> allNodes;
 
     private LexicalScope lexicalScope;
 
@@ -73,18 +76,38 @@ public class TLLNodeFactory {
 
     public void startBlock(Token nameToken, Token blockStartToken) {
         System.out.println("******* Start Block *******");
-        blockStartPos = nameToken.getStartIndex();
+        blockStartPos = blockStartToken.getStartIndex();
         blockName = nameToken.getText();
-        blockBodyStartPos = blockStartToken.getStartIndex();
         frameDescriptor = new FrameDescriptor();
-        blockNodes = new ArrayList<>();
         lexicalScope = new LexicalScope(lexicalScope);
+        allNodes = new ArrayList<>();
     }
 
     public void finishBlock(List<TLLStatementNode> blockNodes, int startPos, int length) {
         System.out.println("******* Finish Block *******");
-        lexicalScope = lexicalScope.outer;
+        TLLBlockNode blockNode = executeBlock(blockNodes, startPos, length);
 
+        allNodes.add(blockNode);
+        final int bodyEndPos = blockNode.getSourceEndIndex();
+        final SourceSection blockSrc = source.createSection(blockStartPos, bodyEndPos - blockStartPos);
+        final TLLStatementNode methodBlock = executeBlock(allNodes, blockStartPos, bodyEndPos - blockStartPos);
+        lexicalScope = lexicalScope.outer;
+        assert lexicalScope == null : "Wrong scoping of blocks in parser";
+
+        //TODO убрать TLLFunctionBodyNode и переделать TLLBlock
+        final TLLFunctionBodyNode functionBodyNode = new TLLFunctionBodyNode(methodBlock);
+        functionBodyNode.setSourceSection(blockSrc.getCharIndex(), blockSrc.getCharLength());
+
+        final TLLRootNode rootNode = new TLLRootNode(language, frameDescriptor, functionBodyNode, blockSrc, blockName);
+        allBlocks.put(blockName, Truffle.getRuntime().createCallTarget(rootNode));
+
+        blockStartPos = 0;
+        blockName = null;
+        frameDescriptor = null;
+        lexicalScope = null;
+    }
+
+    private TLLBlockNode executeBlock(List<TLLStatementNode> blockNodes, int startPos, int length) {
         List<TLLStatementNode> flattenedNodes = new ArrayList<>(blockNodes.size());
         flattenBlocks(blockNodes, flattenedNodes);
         for (TLLStatementNode statement : flattenedNodes) {
@@ -94,30 +117,7 @@ public class TLLNodeFactory {
         }
         TLLBlockNode blockNode = new TLLBlockNode(flattenedNodes.toArray(new TLLStatementNode[flattenedNodes.size()]));
         blockNode.setSourceSection(startPos, length);
-
-        if (blockNode == null) {
-            // a state update that would otherwise be performed by finishBlock
-            lexicalScope = lexicalScope.outer;
-        } else {
-            blockNodes.add(blockNode);
-            final int bodyEndPos = blockNode.getSourceEndIndex();
-            final SourceSection blockSrc = source.createSection(blockStartPos, bodyEndPos - blockStartPos);
-            assert lexicalScope == null : "Wrong scoping of blocks in parser";
-
-            //TODO убрать TLLFunctionBodyNode и переделать TLLBlock
-            final TLLFunctionBodyNode functionBodyNode = new TLLFunctionBodyNode(blockNode);
-            functionBodyNode.setSourceSection(blockSrc.getCharIndex(), blockSrc.getCharLength());
-            
-            final TLLRootNode rootNode = new TLLRootNode(language, frameDescriptor, functionBodyNode, blockSrc, blockName);
-            allBlocks.put(blockName, Truffle.getRuntime().createCallTarget(rootNode));
-        }
-
-        blockStartPos = 0;
-        blockName = null;
-        blockBodyStartPos = 0;
-        //parameterCount = 0;
-        frameDescriptor = null;
-        lexicalScope = null;
+        return blockNode;
     }
 
     public TLLExpressionNode createBinary(Token opToken, TLLExpressionNode leftNode, TLLExpressionNode rightNode) {
@@ -147,14 +147,6 @@ public class TLLNodeFactory {
 
     public TLLExpressionNode createNumericLiteral(Token literalToken) {
         TLLExpressionNode result = new TLLLongLiteralNode(Long.parseLong(literalToken.getText()));
-        //TODO
-//        try {
-//            /* Try if the literal is small enough to fit into a long value. */
-//            result = new TLLLongLiteralNode(Long.parseLong(literalToken.getText()));
-//        } catch (NumberFormatException ex) {
-//            /* Overflow of long value, so fall back to BigInteger. */
-//            //result = new TLLBigIntegerLiteralNode(new BigInteger(literalToken.getText()));
-//        }
         srcFromToken(result, literalToken);
         result.addExpressionTag();
 
@@ -164,7 +156,7 @@ public class TLLNodeFactory {
     /**
      * Returns an {@link TLLReturnNode} for the given parameters.
      *
-     * @param t The token containing the return node's info
+     * @param t         The token containing the return node's info
      * @param valueNode The value of the return (null if not returning a value)
      * @return An TLLReturnNode for the given parameters.
      */
@@ -183,11 +175,11 @@ public class TLLNodeFactory {
      *
      * @param nameNode The name of the variable/function being read
      * @return either:
-     *         <ul>
-     *         <li>A TLLReadLocalVariableNode representing the local variable being read.</li>
-     *         <li>A TLLFunctionLiteralNode representing the function definition.</li>
-     *         <li>null if nameNode is null.</li>
-     *         </ul>
+     * <ul>
+     * <li>A TLLReadLocalVariableNode representing the local variable being read.</li>
+     * <li>A TLLFunctionLiteralNode representing the function definition.</li>
+     * <li>null if nameNode is null.</li>
+     * </ul>
      */
     public TLLExpressionNode createRead(TLLExpressionNode nameNode) {
         if (nameNode == null) {
@@ -195,16 +187,15 @@ public class TLLNodeFactory {
         }
 
         String name = ((TLLStringLiteralNode) nameNode).executeGeneric(null);
-        final TLLExpressionNode result = new TLLFunctionLiteralNode(language, name);
+        final TLLExpressionNode result;
         final FrameSlot frameSlot = lexicalScope.locals.get(name);
-//        if (frameSlot != null) {
-//            /* Read of a local variable. */
-//            //TODO
-//            //result = TLLReadLocalVariableNodeGen.create(frameSlot);
-//        } else {
-//            /* Read of a global name. In our language, the only global names are functions. */
-//            result = new TLLFunctionLiteralNode(language, name);
-//        }
+        if (frameSlot != null) {
+            /* Read of a local variable. */
+            result = TLLReadLocalVariableNodeGen.create(frameSlot);
+        } else {
+            /* Read of a global name. In our language, the only global names are functions. */
+            result = new TLLFunctionLiteralNode(language, name);
+        }
         result.setSourceSection(nameNode.getSourceCharIndex(), nameNode.getSourceLength());
         result.addExpressionTag();
         return result;
@@ -214,9 +205,9 @@ public class TLLNodeFactory {
      * Returns an {@link TLLInvokeNode} for the given parameters.
      *
      * @param parameterNodes The parameters of the function call
-     * @param finalToken A token used to determine the end of the sourceSelection for this call
+     * @param finalToken     A token used to determine the end of the sourceSelection for this call
      * @return An TLLInvokeNode for the given parameters. null if functionNode or any of the
-     *         parameterNodes are null.
+     * parameterNodes are null.
      */
     public TLLExpressionNode createCall(TLLExpressionNode functionNode, List<TLLExpressionNode> parameterNodes, Token finalToken) {
         if (functionNode == null || containsNull(parameterNodes)) {
@@ -244,6 +235,48 @@ public class TLLNodeFactory {
         final TLLStringLiteralNode result = new TLLStringLiteralNode(literal.intern());
         srcFromToken(result, literalToken);
         result.addExpressionTag();
+        return result;
+    }
+
+    /**
+     * Returns an {@link TLLWriteLocalVariableNode} for the given parameters.
+     *
+     * @param nameNode  The name of the variable being assigned
+     * @param valueNode The value to be assigned
+     * @return An TLLExpressionNode for the given parameters. null if nameNode or valueNode is null.
+     */
+    public TLLExpressionNode createAssignment(TLLExpressionNode nameNode, TLLExpressionNode valueNode) {
+        return createAssignment(nameNode, valueNode, null);
+    }
+
+    /**
+     * Returns an {@link TLLWriteLocalVariableNode} for the given parameters.
+     *
+     * @param nameNode      The name of the variable being assigned
+     * @param valueNode     The value to be assigned
+     * @param argumentIndex null or index of the argument the assignment is assigning
+     * @return An TLLExpressionNode for the given parameters. null if nameNode or valueNode is null.
+     */
+    public TLLExpressionNode createAssignment(TLLExpressionNode nameNode, TLLExpressionNode valueNode, Integer argumentIndex) {
+        if (nameNode == null || valueNode == null) {
+            return null;
+        }
+
+        String name = ((TLLStringLiteralNode) nameNode).executeGeneric(null);
+        FrameSlot frameSlot = frameDescriptor.findOrAddFrameSlot(
+                name,
+                argumentIndex,
+                FrameSlotKind.Illegal);
+        lexicalScope.locals.put(name, frameSlot);
+        final TLLExpressionNode result = TLLWriteLocalVariableNodeGen.create(valueNode, frameSlot);
+
+        if (valueNode.hasSource()) {
+            final int start = nameNode.getSourceCharIndex();
+            final int length = valueNode.getSourceEndIndex() - start;
+            result.setSourceSection(start, length);
+        }
+        result.addExpressionTag();
+
         return result;
     }
 

@@ -64,7 +64,6 @@ public final class TLLEvalRootNode extends RootNode {
             reference.get().getFunctionRegistry().register(functions);
             registered = true;
         }
-
         if (mainCallNode == null) {
             /* The source code did not have a "main" function, so nothing to execute. */
             return TLLNull.SINGLETON;

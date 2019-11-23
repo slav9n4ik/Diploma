@@ -8,6 +8,7 @@ import com.oracle.truffle.api.nodes.RootNode;
 import com.oracle.truffle.api.source.SourceSection;
 import ru.diploma.TLLLanguage;
 import ru.diploma.builtin.TLLBuiltinNode;
+import ru.diploma.nodes.controlflow.TLLFunctionBodyNode;
 
 /**
  * The root of all TLL execution trees. It is a Truffle requirement that the tree root extends the
@@ -42,7 +43,8 @@ public class TLLRootNode extends RootNode {
     @Override
     public Object execute(VirtualFrame frame) {
         assert lookupContextReference(TLLLanguage.class).get() != null;
-        return bodyNode.executeGeneric(frame);
+        Object o = bodyNode.executeGeneric(frame);
+        return o;
     }
 
     public TLLExpressionNode getBodyNode() {

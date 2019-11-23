@@ -76,6 +76,18 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpression(TLLLanguageParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpression(TLLLanguageParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMember_expression(TLLLanguageParser.Member_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}

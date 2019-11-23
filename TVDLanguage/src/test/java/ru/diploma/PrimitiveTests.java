@@ -1,12 +1,14 @@
 package ru.diploma;
 
 import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PrimitiveTests {
 
@@ -24,7 +26,7 @@ public class PrimitiveTests {
     }
 
     @Test
-    public void printNumberTest() throws Exception {
+    public void printNumberTest() {
         context.eval("tll", "\n" +
                 "START \n" +
                 " println(100) \n" +
@@ -37,7 +39,7 @@ public class PrimitiveTests {
     }
 
     @Test
-    public void printSumTest() throws Exception {
+    public void printSumTest() {
         context.eval("tll", "\n" +
                 "START \n" +
                 " println(100 + 23) \n" +
@@ -47,5 +49,22 @@ public class PrimitiveTests {
 
         Number ret = print.execute().as(Number.class);
         assertEquals(123, ret.intValue());
+    }
+
+    @Test
+    public void createObjectTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " Partner: Romashka" + "\n" +
+                        //" println(Romashka)" + "\n" +
+                        "END\n",
+                "testObject.sl").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        Value result = getValue.execute();
+//        assertNotNull(result);
+//        assertEquals(result.toString(), "NULL");
     }
 }

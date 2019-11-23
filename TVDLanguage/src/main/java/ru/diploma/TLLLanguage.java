@@ -12,6 +12,7 @@ import com.oracle.truffle.api.interop.UnsupportedMessageException;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.RootNode;
 import com.oracle.truffle.api.source.Source;
+import com.oracle.truffle.api.source.SourceSection;
 import ru.diploma.builtin.TLLBuiltinNode;
 import ru.diploma.nodes.TLLEvalRootNode;
 import ru.diploma.nodes.local.TLLLexicalScope;
@@ -53,7 +54,7 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
         Source source = request.getSource();
         Map<String, RootCallTarget> blocks = TLLLanguageParser.parseTLL(this, source);
         RootCallTarget main = blocks.get("START");
-        RootNode evalMain = new TLLEvalRootNode(this, main, blocks);
+        RootNode evalMain = new TLLEvalRootNode(this, null, blocks);
         return Truffle.getRuntime().createCallTarget(evalMain);
     }
 
@@ -150,6 +151,14 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
                 };
             }
         };
+    }
+
+    @Override
+    protected SourceSection findSourceLocation(TLLContext context, Object value) {
+        if (value instanceof TLLFunction) {
+            return ((TLLFunction) value).getDeclaredLocation();
+        }
+        return null;
     }
 
     @Override
