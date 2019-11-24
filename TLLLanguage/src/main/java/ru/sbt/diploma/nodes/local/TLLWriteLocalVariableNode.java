@@ -7,6 +7,7 @@ import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 
 /**
@@ -15,6 +16,7 @@ import ru.sbt.diploma.nodes.TLLExpressionNode;
  */
 @NodeChild("valueNode")
 @NodeField(name = "slot", type = FrameSlot.class)
+@Log4j
 public abstract class TLLWriteLocalVariableNode extends TLLExpressionNode {
     /**
      * Returns the descriptor of the accessed local variable. The implementation of this method is
@@ -29,6 +31,7 @@ public abstract class TLLWriteLocalVariableNode extends TLLExpressionNode {
      */
     @Specialization(guards = "isLongOrIllegal(frame)")
     protected long writeLong(VirtualFrame frame, long value) {
+        log.info("writeLong in Write Local Vars Node");
         /* Initialize type on first write of the local variable. No-op if kind is already Long. */
         frame.getFrameDescriptor().setFrameSlotKind(getSlot(), FrameSlotKind.Long);
 
@@ -38,6 +41,7 @@ public abstract class TLLWriteLocalVariableNode extends TLLExpressionNode {
 
     @Specialization(guards = "isBooleanOrIllegal(frame)")
     protected boolean writeBoolean(VirtualFrame frame, boolean value) {
+        log.info("writeBoolean in Write Local Vars Node");
         /* Initialize type on first write of the local variable. No-op if kind is already Long. */
         frame.getFrameDescriptor().setFrameSlotKind(getSlot(), FrameSlotKind.Boolean);
 
@@ -57,6 +61,7 @@ public abstract class TLLWriteLocalVariableNode extends TLLExpressionNode {
      */
     @Specialization(replaces = {"writeLong", "writeBoolean"})
     protected Object write(VirtualFrame frame, Object value) {
+        log.info("writeObject in Write Local Vars Node");
         /*
          * Regardless of the type before, the new and final type of the local variable is Object.
          * Changing the slot kind also discards compiled code, because the variable type is

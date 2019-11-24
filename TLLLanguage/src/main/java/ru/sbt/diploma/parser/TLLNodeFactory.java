@@ -7,6 +7,7 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.source.SourceSection;
+import lombok.extern.log4j.Log4j;
 import org.antlr.v4.runtime.Token;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
@@ -20,10 +21,7 @@ import ru.sbt.diploma.nodes.expression.TLLInvokeNode;
 import ru.sbt.diploma.nodes.literal.TLLFunctionLiteralNode;
 import ru.sbt.diploma.nodes.literal.TLLLongLiteralNode;
 import ru.sbt.diploma.nodes.literal.TLLStringLiteralNode;
-import ru.sbt.diploma.nodes.local.TLLReadLocalVariableNode;
-import ru.sbt.diploma.nodes.local.TLLReadLocalVariableNodeGen;
-import ru.sbt.diploma.nodes.local.TLLWriteLocalVariableNode;
-import ru.sbt.diploma.nodes.local.TLLWriteLocalVariableNodeGen;
+import ru.sbt.diploma.nodes.local.*;
 import ru.sbt.diploma.util.TLLUnboxNodeGen;
 
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Log4j
 public class TLLNodeFactory {
 
     /**
@@ -61,6 +60,7 @@ public class TLLNodeFactory {
 
     /* State while parsing a block. */
     private final TLLLanguage language;
+    private int parameterCount;
     private int blockStartPos;
     private String blockName;
     private FrameDescriptor frameDescriptor;
@@ -75,7 +75,7 @@ public class TLLNodeFactory {
     }
 
     public void startBlock(Token nameToken, Token blockStartToken) {
-        System.out.println("******* Start Block *******");
+        log.info("Start Block name: " + nameToken.getText());
         blockStartPos = blockStartToken.getStartIndex();
         blockName = nameToken.getText();
         frameDescriptor = new FrameDescriptor();
@@ -84,7 +84,7 @@ public class TLLNodeFactory {
     }
 
     public void finishBlock(List<TLLStatementNode> blockNodes, int startPos, int length) {
-        System.out.println("******* Finish Block *******");
+        log.info("Finish Block");
         TLLBlockNode blockNode = executeBlock(blockNodes, startPos, length);
 
         allNodes.add(blockNode);
@@ -105,6 +105,7 @@ public class TLLNodeFactory {
         blockName = null;
         frameDescriptor = null;
         lexicalScope = null;
+        parameterCount = 0;
     }
 
     private TLLBlockNode executeBlock(List<TLLStatementNode> blockNodes, int startPos, int length) {
@@ -121,7 +122,8 @@ public class TLLNodeFactory {
     }
 
     public TLLExpressionNode createBinary(Token opToken, TLLExpressionNode leftNode, TLLExpressionNode rightNode) {
-        System.out.println("******* CreateBinary Function *******");
+        log.info("Create Binary Left: " + leftNode.toString() + " Right: "
+                + rightNode.toString() + " Expression: " + opToken.getText());
         if (leftNode == null || rightNode == null) {
             return null;
         }
@@ -131,7 +133,6 @@ public class TLLNodeFactory {
         final TLLExpressionNode result;
         switch (opToken.getText()) {
             case "+":
-                System.out.println("CreateBinary Function Plus Operation");
                 result = TLLAddNodeGen.create(leftUnboxed, rightUnboxed);
                 break;
             default:
@@ -146,10 +147,10 @@ public class TLLNodeFactory {
     }
 
     public TLLExpressionNode createNumericLiteral(Token literalToken) {
+        log.info("CreateNumericLiteral: " + literalToken.getText());
         TLLExpressionNode result = new TLLLongLiteralNode(Long.parseLong(literalToken.getText()));
         srcFromToken(result, literalToken);
         result.addExpressionTag();
-
         return result;
     }
 
@@ -187,6 +188,7 @@ public class TLLNodeFactory {
         }
 
         String name = ((TLLStringLiteralNode) nameNode).executeGeneric(null);
+        log.info("CreateRead: " + name);
         final TLLExpressionNode result;
         final FrameSlot frameSlot = lexicalScope.locals.get(name);
         if (frameSlot != null) {
@@ -280,18 +282,20 @@ public class TLLNodeFactory {
         return result;
     }
 
+    public void addFormalParameter(Token nameToken) {
+        /*
+         * Method parameters are assigned to local variables at the beginning of the method. This
+         * ensures that accesses to parameters are specialized the same way as local variables are
+         * specialized.
+         */
+        final TLLReadArgumentNode readArg = new TLLReadArgumentNode(parameterCount);
+        TLLExpressionNode assignment = createAssignment(createStringLiteral(nameToken, false), readArg, parameterCount);
+        allNodes.add(assignment);
+        parameterCount++;
+    }
+
     public Map<String, RootCallTarget> getAllBlocks() {
         return allBlocks;
-    }
-
-    //To check parser
-    public void showOperation(Token bodyStartToken) {
-        System.out.println("Node Factory showOperation: " + bodyStartToken.getText());
-    }
-
-    //To check parser
-    public void showNumber(Token bodyStartToken) {
-        System.out.println("Node Factory showNumber: " + bodyStartToken.getText());
     }
 
     /**

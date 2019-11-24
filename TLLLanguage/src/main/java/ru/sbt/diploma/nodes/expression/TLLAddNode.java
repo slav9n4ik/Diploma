@@ -2,6 +2,7 @@ package ru.sbt.diploma.nodes.expression;
 
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLBinaryNode;
 
 /**
@@ -15,6 +16,7 @@ import ru.sbt.diploma.nodes.TLLBinaryNode;
  * is generated that provides, e.g., {@link TLLAddNodeGen#create node creation}.
  */
 @NodeInfo(shortName = "+")
+@Log4j
 public abstract class TLLAddNode extends TLLBinaryNode {
     /**
      * Specialization for primitive {@code long} values. This is the fast path of the
@@ -32,6 +34,7 @@ public abstract class TLLAddNode extends TLLBinaryNode {
      */
     @Specialization(rewriteOn = ArithmeticException.class)
     protected long add(long left, long right) {
+        log.info("Add in AddNode");
         return Math.addExact(left, right);
     }
 }

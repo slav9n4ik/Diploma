@@ -6,6 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.ProbeNode;
 import com.oracle.truffle.api.instrumentation.InstrumentableNode.WrapperNode;
 import com.oracle.truffle.api.nodes.NodeCost;
+import ru.sbt.diploma.nodes.TLLStatementNode;
 
 @GeneratedBy(TLLStatementNode.class)
 final class TLLStatementNodeWrapper extends TLLStatementNode implements WrapperNode {

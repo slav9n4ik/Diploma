@@ -3,6 +3,7 @@ package ru.sbt.diploma.runtime;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.source.Source;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.parser.TLLLanguageParser;
 
@@ -11,6 +12,7 @@ import java.util.*;
 /**
  * Manages the mapping from function names to {@link TLLFunction function objects}.
  */
+@Log4j
 public class TLLFunctionRegistry {
     private final TLLLanguage language;
     private final FunctionsObject functionsObject = new FunctionsObject();
@@ -24,6 +26,7 @@ public class TLLFunctionRegistry {
      * it is created.
      */
     public TLLFunction lookup(String name, boolean createIfNotPresent) {
+        log.info("Look up invoke");
         TLLFunction result = functionsObject.functions.get(name);
         if (result == null && createIfNotPresent) {
             result = new TLLFunction(language, name);
@@ -38,18 +41,21 @@ public class TLLFunctionRegistry {
      * before, it redefines the function and the old implementation is discarded.
      */
     public TLLFunction register(String name, RootCallTarget callTarget) {
+        log.info("Register invoke");
         TLLFunction function = lookup(name, true);
         function.setCallTarget(callTarget);
         return function;
     }
 
     public void register(Map<String, RootCallTarget> newFunctions) {
+        log.info("Register invoke");
         for (Map.Entry<String, RootCallTarget> entry : newFunctions.entrySet()) {
             register(entry.getKey(), entry.getValue());
         }
     }
 
     public void register(Source newFunctions) {
+        log.info("Register invoke");
         register(TLLLanguageParser.parseTLL(language, newFunctions));
     }
 
@@ -61,6 +67,7 @@ public class TLLFunctionRegistry {
      * Returns the sorted list of all functions, for printing purposes only.
      */
     public List<TLLFunction> getFunctions() {
+        log.info("Get Functions invoke");
         List<TLLFunction> result = new ArrayList<>(functionsObject.functions.values());
         Collections.sort(result, new Comparator<TLLFunction>() {
             public int compare(TLLFunction f1, TLLFunction f2) {

@@ -10,6 +10,7 @@ import com.oracle.truffle.api.nodes.NodeCost;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import java.util.concurrent.locks.Lock;
 import ru.sbt.diploma.nodes.TLLTypesGen;
+import ru.sbt.diploma.nodes.local.TLLReadLocalVariableNode;
 
 @GeneratedBy(TLLReadLocalVariableNode.class)
 public final class TLLReadLocalVariableNodeGen extends TLLReadLocalVariableNode {

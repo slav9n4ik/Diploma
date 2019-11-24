@@ -4,6 +4,7 @@ import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLStatementNode;
 
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.List;
  * A statement node that just executes a list of other statements.
  */
 @NodeInfo(shortName = "block", description = "The node implementing a source code block")
+@Log4j
 public final class TLLBlockNode extends TLLStatementNode {
     /**
      * The array of child nodes. The annotation {@link com.oracle.truffle.api.nodes.Node.Children
@@ -34,6 +36,7 @@ public final class TLLBlockNode extends TLLStatementNode {
     @Override
     @ExplodeLoop
     public void executeVoid(VirtualFrame frame) {
+        log.info("Execute Void BlockNode");
         /*
          * This assertion illustrates that the array length is really a constant during compilation.
          */
@@ -45,6 +48,7 @@ public final class TLLBlockNode extends TLLStatementNode {
     }
 
     public List<TLLStatementNode> getStatements() {
+        log.info("Get Statements");
         return Collections.unmodifiableList(Arrays.asList(bodyNodes));
     }
 }

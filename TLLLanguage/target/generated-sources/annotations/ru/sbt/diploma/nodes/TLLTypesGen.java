@@ -3,6 +3,7 @@ package ru.sbt.diploma.nodes;
 
 import com.oracle.truffle.api.dsl.GeneratedBy;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import ru.sbt.diploma.nodes.TLLTypes;
 
 @GeneratedBy(TLLTypes.class)
 public final class TLLTypesGen extends TLLTypes {

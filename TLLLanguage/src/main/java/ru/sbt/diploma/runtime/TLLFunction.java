@@ -11,6 +11,7 @@ import com.oracle.truffle.api.nodes.DirectCallNode;
 import com.oracle.truffle.api.nodes.IndirectCallNode;
 import com.oracle.truffle.api.source.SourceSection;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.nodes.TLLUndefinedFunctionRootNode;
 
@@ -26,6 +27,7 @@ import java.util.logging.Level;
  * encapsulates a {@link TLLUndefinedFunctionRootNode}.
  */
 @ExportLibrary(InteropLibrary.class)
+@Log4j
 public class TLLFunction implements TruffleObject {
     public static final int INLINE_CACHE_SIZE = 2;
 
@@ -55,6 +57,7 @@ public class TLLFunction implements TruffleObject {
     }
 
     protected void setCallTarget(RootCallTarget callTarget) {
+        log.info("Set call target");
         this.callTarget = callTarget;
         /*
          * We have a new call target. Invalidate all code that speculated that the old call target
@@ -65,6 +68,7 @@ public class TLLFunction implements TruffleObject {
     }
 
     public RootCallTarget getCallTarget() {
+        log.info("Get call target");
         return callTarget;
     }
 
@@ -86,6 +90,7 @@ public class TLLFunction implements TruffleObject {
      */
     @SuppressWarnings("static-method")
     public SourceSection getDeclaredLocation() {
+        log.info("Get Declared Location");
         return getCallTarget().getRootNode().getSourceSection();
     }
 
@@ -153,6 +158,7 @@ public class TLLFunction implements TruffleObject {
                                          @Cached("create(cachedTarget)") DirectCallNode callNode) {
 
             /* Inline cache hit, we are safe to execute the cached call target. */
+            log.info("doDirect invoke");
             Object returnValue = callNode.call(arguments);
             return returnValue;
         }
@@ -169,6 +175,7 @@ public class TLLFunction implements TruffleObject {
              * TLL has a quite simple call lookup: just ask the function for the current call target,
              * and call it.
              */
+            log.info("doInDirect invoke");
             return callNode.call(function.getCallTarget(), arguments);
         }
     }

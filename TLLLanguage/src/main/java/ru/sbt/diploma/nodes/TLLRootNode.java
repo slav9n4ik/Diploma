@@ -6,6 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
 import com.oracle.truffle.api.source.SourceSection;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.builtin.TLLBuiltinNode;
 import ru.sbt.diploma.nodes.controlflow.TLLFunctionBodyNode;
@@ -17,6 +18,7 @@ import ru.sbt.diploma.nodes.controlflow.TLLFunctionBodyNode;
  * functions, the {@link #bodyNode} is a {@link TLLFunctionBodyNode}.
  */
 @NodeInfo(language = "TLL", description = "The root of all TLL execution trees")
+@Log4j
 public class TLLRootNode extends RootNode {
     /** The function body that is executed, and specialized during execution. */
     @Child private TLLExpressionNode bodyNode;
@@ -42,9 +44,9 @@ public class TLLRootNode extends RootNode {
 
     @Override
     public Object execute(VirtualFrame frame) {
+        log.info("Execute in RootNode name: " + name);
         assert lookupContextReference(TLLLanguage.class).get() != null;
-        Object o = bodyNode.executeGeneric(frame);
-        return o;
+        return bodyNode.executeGeneric(frame);
     }
 
     public TLLExpressionNode getBodyNode() {

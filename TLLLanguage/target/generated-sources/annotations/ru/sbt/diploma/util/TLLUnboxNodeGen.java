@@ -10,6 +10,7 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeCost;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
+import ru.sbt.diploma.util.TLLUnboxNode;
 
 @GeneratedBy(TLLUnboxNode.class)
 public final class TLLUnboxNodeGen extends TLLUnboxNode {
@@ -31,7 +32,7 @@ public final class TLLUnboxNodeGen extends TLLUnboxNode {
             return executeAndSpecialize(ex.getResult());
         }
         if (state != 0 /* is-active fromLong(long) */) {
-            return fromLong(child0Value_);
+            return TLLUnboxNode.fromLong(child0Value_);
         }
         CompilerDirectives.transferToInterpreterAndInvalidate();
         return executeAndSpecialize(child0Value_);
@@ -47,7 +48,7 @@ public final class TLLUnboxNodeGen extends TLLUnboxNode {
             return executeAndSpecialize(ex.getResult());
         }
         if (state != 0 /* is-active fromLong(long) */) {
-            return fromLong(child0Value_);
+            return TLLUnboxNode.fromLong(child0Value_);
         }
         CompilerDirectives.transferToInterpreterAndInvalidate();
         return executeAndSpecialize(child0Value_);
@@ -64,7 +65,7 @@ public final class TLLUnboxNodeGen extends TLLUnboxNode {
         if (child0Value instanceof Long) {
             long child0Value_ = (long) child0Value;
             this.state_ = state = state | 0b1 /* add-active fromLong(long) */;
-            return fromLong(child0Value_);
+            return TLLUnboxNode.fromLong(child0Value_);
         }
         throw new UnsupportedSpecializationException(this, new Node[] {this.child0_}, child0Value);
     }

@@ -7,6 +7,7 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 
 /**
@@ -20,6 +21,7 @@ import ru.sbt.diploma.nodes.TLLExpressionNode;
  * stored boxed.
  */
 @NodeField(name = "slot", type = FrameSlot.class)
+@Log4j
 public abstract class TLLReadLocalVariableNode extends TLLExpressionNode {
     /**
      * Returns the descriptor of the accessed local variable. The implementation of this method is
@@ -29,6 +31,7 @@ public abstract class TLLReadLocalVariableNode extends TLLExpressionNode {
 
     @Specialization(guards = "isLong(frame)")
     protected long readLong(VirtualFrame frame) {
+        log.info("readLond in Read Local Vars Node");
         /*
          * When the FrameSlotKind is Long, we know that only primitive long values have ever been
          * written to the local variable. So we do not need to check that the frame really contains
@@ -39,11 +42,13 @@ public abstract class TLLReadLocalVariableNode extends TLLExpressionNode {
 
     @Specialization(guards = "isBoolean(frame)")
     protected boolean readBoolean(VirtualFrame frame) {
+        log.info("readBoolean in Read Local Vars Node");
         return FrameUtil.getBooleanSafe(frame, getSlot());
     }
 
     @Specialization(replaces = {"readLong", "readBoolean"})
     protected Object readObject(VirtualFrame frame) {
+        log.info("readObject in Read Local Vars Node");
         if (!frame.isObject(getSlot())) {
             /*
              * The FrameSlotKind has been set to Object, so from now on all writes to the local

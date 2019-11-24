@@ -4,6 +4,7 @@ import com.oracle.truffle.api.CompilerDirectives.*;
 import com.oracle.truffle.api.dsl.CachedContext;
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.runtime.TLLContext;
 
@@ -19,9 +20,11 @@ import java.io.PrintWriter;
  * {@link TruffleBoundary} annotations.
  */
 @NodeInfo(shortName = "println")
+@Log4j
 public abstract class TLLPrintLnBuiltin extends TLLBuiltinNode {
     @Specialization
     public long println(long value, @CachedContext(TLLLanguage.class) TLLContext context) {
+        log.info("Println long invoke");
         doPrint(context.getOutput(), value);
         return value;
     }
@@ -33,6 +36,7 @@ public abstract class TLLPrintLnBuiltin extends TLLBuiltinNode {
 
     @Specialization
     public boolean println(boolean value, @CachedContext(TLLLanguage.class) TLLContext context) {
+        log.info("Println boolean invoke");
         doPrint(context.getOutput(), value);
         return value;
     }
@@ -44,6 +48,7 @@ public abstract class TLLPrintLnBuiltin extends TLLBuiltinNode {
 
     @Specialization
     public String println(String value, @CachedContext(TLLLanguage.class) TLLContext context) {
+        log.info("Println string invoke");
         doPrint(context.getOutput(), value);
         return value;
     }
@@ -55,6 +60,7 @@ public abstract class TLLPrintLnBuiltin extends TLLBuiltinNode {
 
     @Specialization
     public Object println(Object value, @CachedContext(TLLLanguage.class) TLLContext context) {
+        log.info("Println object invoke");
         doPrint(context.getOutput(), value);
         return value;
     }

@@ -10,7 +10,9 @@ import com.oracle.truffle.api.interop.UnsupportedMessageException;
 import com.oracle.truffle.api.interop.UnsupportedTypeException;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
+import ru.sbt.diploma.runtime.TLLFunction;
 import ru.sbt.diploma.runtime.TLLUndefinedNameException;
 
 /**
@@ -21,6 +23,7 @@ import ru.sbt.diploma.runtime.TLLUndefinedNameException;
  * inline cache.
  */
 @NodeInfo(shortName = "invoke")
+@Log4j
 public final class TLLInvokeNode extends TLLExpressionNode {
 
     @Child
@@ -39,6 +42,7 @@ public final class TLLInvokeNode extends TLLExpressionNode {
     @ExplodeLoop
     @Override
     public Object executeGeneric(VirtualFrame frame) {
+        log.info("Execute Generic in Invoke Node");
         Object function = functionNode.executeGeneric(frame);
 
         /*

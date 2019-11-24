@@ -10,6 +10,7 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeUtil;
 import com.oracle.truffle.api.nodes.NodeVisitor;
 import com.oracle.truffle.api.nodes.RootNode;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLEvalRootNode;
 import ru.sbt.diploma.nodes.TLLStatementNode;
 import ru.sbt.diploma.nodes.controlflow.TLLBlockNode;
@@ -23,6 +24,7 @@ import java.util.Objects;
 /**
  * Simple language lexical scope. There can be a block scope and fuctional scope.
  */
+@Log4j
 public final class TLLLexicalScope {
     private final Node current;
     private final TLLBlockNode block;
@@ -62,6 +64,7 @@ public final class TLLLexicalScope {
 
     @SuppressWarnings("all") // The parameter node should not be assigned
     public static TLLLexicalScope createScope(Node node) {
+        log.info("Create LexicalScope");
         TLLBlockNode block = getParentBlock(node);
         if (block == null) {
             // We're in the root.
@@ -83,6 +86,7 @@ public final class TLLLexicalScope {
     }
 
     private static TLLBlockNode getParentBlock(Node node) {
+        log.info("Get Parent Block");
         TLLBlockNode block;
         Node parent = node.getParent();
         // Find a nearest block node.
@@ -98,6 +102,7 @@ public final class TLLLexicalScope {
     }
 
     private static TLLBlockNode findChildrenBlock(Node node) {
+        log.info("Find Child Block");
         TLLBlockNode[] blockPtr = new TLLBlockNode[1];
         node.accept(new NodeVisitor() {
             @Override
@@ -114,6 +119,7 @@ public final class TLLLexicalScope {
     }
 
     public TLLLexicalScope findParent() {
+        log.info("Find Parent Block");
         if (parentBlock == null) {
             // This was a root scope.
             return null;
@@ -136,6 +142,7 @@ public final class TLLLexicalScope {
      * @return the function name for function scope, "block" otherwise.
      */
     public String getName() {
+        log.info("Get function name");
         if (root != null) {
             return root.getName();
         } else {
@@ -148,6 +155,7 @@ public final class TLLLexicalScope {
      *         {@link RootNode} for functional scope.
      */
     public Node getNode() {
+        log.info("Get node");
         if (root != null) {
             return root;
         } else {
@@ -156,6 +164,7 @@ public final class TLLLexicalScope {
     }
 
     public Object getVariables(Frame frame) {
+        log.info("Get variables");
         Map<String, FrameSlot> vars = getVars();
         Object[] args = null;
         // Use arguments when the current node is above the block
@@ -166,6 +175,7 @@ public final class TLLLexicalScope {
     }
 
     public Object getArguments(Frame frame) {
+        log.info("Get arguments");
         if (root == null) {
             // No arguments for block scope
             return null;

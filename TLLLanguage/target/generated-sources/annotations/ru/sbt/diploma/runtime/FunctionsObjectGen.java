@@ -10,6 +10,7 @@ import com.oracle.truffle.api.library.DynamicDispatchLibrary;
 import com.oracle.truffle.api.library.LibraryExport;
 import com.oracle.truffle.api.library.LibraryFactory;
 import com.oracle.truffle.api.nodes.NodeCost;
+import ru.sbt.diploma.runtime.FunctionsObject;
 
 @GeneratedBy(FunctionsObject.class)
 final class FunctionsObjectGen {
@@ -53,7 +54,7 @@ final class FunctionsObjectGen {
 
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof FunctionsObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.FunctionsObject'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof FunctionsObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.FunctionsObject'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof FunctionsObject;
             }
 
@@ -96,7 +97,7 @@ final class FunctionsObjectGen {
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof FunctionsObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.FunctionsObject'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof FunctionsObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.FunctionsObject'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof FunctionsObject;
             }
 

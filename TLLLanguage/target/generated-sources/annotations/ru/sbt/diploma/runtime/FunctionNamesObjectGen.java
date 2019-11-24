@@ -54,7 +54,7 @@ final class FunctionNamesObjectGen {
 
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof FunctionNamesObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.FunctionsObject.FunctionNamesObject'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof FunctionNamesObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.FunctionsObject.FunctionNamesObject'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof FunctionNamesObject;
             }
 
@@ -97,7 +97,7 @@ final class FunctionNamesObjectGen {
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof FunctionNamesObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.FunctionsObject.FunctionNamesObject'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof FunctionNamesObject) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.FunctionsObject.FunctionNamesObject'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof FunctionNamesObject;
             }
 

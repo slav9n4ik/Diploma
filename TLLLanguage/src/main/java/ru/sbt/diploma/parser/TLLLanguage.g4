@@ -5,9 +5,9 @@ grammar TLLLanguage;
 //Generated from TLLLanguage.g4
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.source.Source;
-import TLLLanguage;
-import TLLExpressionNode;
-import TLLStatementNode;
+import ru.sbt.diploma.TLLLanguage;
+import ru.sbt.diploma.nodes.TLLExpressionNode;
+import ru.sbt.diploma.nodes.TLLStatementNode;
 
 import java.util.*;
 import java.util.List;
@@ -108,7 +108,7 @@ sum returns [TLLExpressionNode result]
     numeric
                                         { leftnode = $numeric.result; }
     WHITESPACE*
-        OPERATION                       { factory.showOperation($OPERATION); }
+        OPERATION
     numeric
                                         { rightnode = $numeric.result; }
                                         { $result = factory.createBinary($OPERATION, leftnode, rightnode); }
@@ -119,7 +119,6 @@ numeric returns [TLLExpressionNode result]
     WHITESPACE*
         NUMERIC_LITERAL
     WHITESPACE*
-                                        { factory.showNumber($NUMERIC_LITERAL); }
                                         { $result = factory.createNumericLiteral($NUMERIC_LITERAL); }
 ;
 

@@ -7,6 +7,7 @@ import com.oracle.truffle.api.instrumentation.ProbeNode;
 import com.oracle.truffle.api.instrumentation.InstrumentableNode.WrapperNode;
 import com.oracle.truffle.api.nodes.NodeCost;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import ru.sbt.diploma.nodes.TLLExpressionNode;
 
 @GeneratedBy(TLLExpressionNode.class)
 final class TLLExpressionNodeWrapper extends TLLExpressionNode implements WrapperNode {

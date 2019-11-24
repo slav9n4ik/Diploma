@@ -54,7 +54,7 @@ final class KeysArrayGen {
 
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof KeysArray) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.nodes.local.TLLLexicalScope.KeysArray'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof KeysArray) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.nodes.local.TLLLexicalScope.KeysArray'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof KeysArray;
             }
 
@@ -97,7 +97,7 @@ final class KeysArrayGen {
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert !(receiver instanceof KeysArray) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.nodes.local.TLLLexicalScope.KeysArray'. Exported receiver with dynamic dispatch found but not expected.";
+                assert !(receiver instanceof KeysArray) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.nodes.local.TLLLexicalScope.KeysArray'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver instanceof KeysArray;
             }
 

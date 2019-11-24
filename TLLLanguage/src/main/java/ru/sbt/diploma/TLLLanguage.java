@@ -13,9 +13,12 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.RootNode;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.source.SourceSection;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.builtin.TLLBuiltinNode;
 import ru.sbt.diploma.nodes.TLLEvalRootNode;
 import ru.sbt.diploma.nodes.local.TLLLexicalScope;
+import ru.sbt.diploma.parser.TLLLanguageParser;
+import ru.sbt.diploma.runtime.TLLContext;
 import ru.sbt.diploma.runtime.TLLFunction;
 import ru.sbt.diploma.runtime.TLLNull;
 
@@ -30,6 +33,7 @@ import java.util.*;
         StandardTags.RootBodyTag.class,
         StandardTags.ExpressionTag.class,
         DebuggerTags.AlwaysHalt.class})
+@Log4j
 public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     public static volatile int counter;
@@ -44,20 +48,24 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
     @Override
     protected TLLContext createContext(Env env) {
         TLLContext TLLContext = new TLLContext(this, env, new ArrayList<>(EXTERNAL_BUILTINS));
+        log.info("Create TLL context. Env: " + env.getFileNameSeparator());
         return TLLContext;
     }
 
     @Override
     public CallTarget parse(ParsingRequest request) throws Exception {
+        log.info("Start parsing");
         Source source = request.getSource();
         Map<String, RootCallTarget> blocks = TLLLanguageParser.parseTLL(this, source);
         RootCallTarget main = blocks.get("START");
         RootNode evalMain = new TLLEvalRootNode(this, null, blocks);
+        log.info("TLLLanguage - End parsing. Create call target!");
         return Truffle.getRuntime().createCallTarget(evalMain);
     }
 
     @Override
     protected boolean isVisible(TLLContext context, Object value) {
+        log.info("IsVisible invoke");
         return !InteropLibrary.getFactory().getUncached(value).isNull(value);
     }
 
@@ -67,6 +75,7 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
     }
 
     public static String toString(Object value) {
+        log.info("toString Invoke");
         try {
             if (value == null) {
                 return "ANY";
@@ -93,10 +102,12 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     protected Object findMetaObject(TLLContext context, Object value) {
+        log.info("FindMetaObject invoke");
         return getMetaObject(value);
     }
 
     public static String getMetaObject(Object value) {
+        log.info("GetMetaObject invoke");
         if (value == null) {
             return "ANY";
         }
@@ -120,6 +131,7 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     public Iterable<Scope> findLocalScopes(TLLContext context, Node node, Frame frame) {
+        log.info("FindLocalScopes invoke");
         final TLLLexicalScope scope = TLLLexicalScope.createScope(node);
         return new Iterable<Scope>() {
             @Override
@@ -153,6 +165,7 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     protected SourceSection findSourceLocation(TLLContext context, Object value) {
+        log.info("FindSourceLocation invoke");
         if (value instanceof TLLFunction) {
             return ((TLLFunction) value).getDeclaredLocation();
         }
@@ -161,6 +174,7 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     protected boolean isObjectOfLanguage(Object object) {
+        log.info("IsObjectOfLanguage invoke");
         if (!(object instanceof TruffleObject)) {
             return false;
         } else if (object instanceof TLLFunction || object instanceof TLLNull) {
@@ -174,10 +188,12 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     protected Iterable<Scope> findTopScopes(TLLContext context) {
+        log.info("FindTopScopes invoke");
         return context.getTopScopes();
     }
 
     public static TLLContext getCurrentContext() {
+        log.info("DetCurrentContext invoke");
         return getCurrentContext(TLLLanguage.class);
     }
 

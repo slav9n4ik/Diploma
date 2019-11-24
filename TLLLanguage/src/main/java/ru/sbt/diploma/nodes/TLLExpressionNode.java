@@ -8,6 +8,7 @@ import com.oracle.truffle.api.instrumentation.StandardTags;
 import com.oracle.truffle.api.instrumentation.Tag;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Base class for all TLL nodes that produce a value and therefore benefit from type specialization.
@@ -17,6 +18,7 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 @TypeSystemReference(TLLTypes.class)
 @NodeInfo(description = "The abstract base node for all expressions")
 @GenerateWrapper
+@Log4j
 public abstract class TLLExpressionNode extends TLLStatementNode {
 
     private boolean hasExpressionTag;
@@ -33,6 +35,7 @@ public abstract class TLLExpressionNode extends TLLStatementNode {
      */
     @Override
     public void executeVoid(VirtualFrame frame) {
+        log.info("Execute void in ExpressionNode");
         executeGeneric(frame);
     }
 
@@ -63,10 +66,12 @@ public abstract class TLLExpressionNode extends TLLStatementNode {
      */
 
     public long executeLong(VirtualFrame frame) throws UnexpectedResultException {
+        log.info("Execute long in ExpressionNode");
         return TLLTypesGen.expectLong(executeGeneric(frame));
     }
 
     public boolean executeBoolean(VirtualFrame frame) throws UnexpectedResultException {
+        log.info("Execute boolean in ExpressionNode");
         return TLLTypesGen.expectBoolean(executeGeneric(frame));
     }
 

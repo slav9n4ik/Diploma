@@ -21,7 +21,7 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeCost;
 import com.oracle.truffle.api.nodes.ExplodeLoop.LoopExplosionKind;
 import java.util.concurrent.locks.Lock;
-
+import ru.sbt.diploma.runtime.TLLFunction;
 import ru.sbt.diploma.runtime.TLLFunction.Execute;
 
 @GeneratedBy(TLLFunction.class)
@@ -70,7 +70,7 @@ final class TLLFunctionGen {
 
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
+                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver.getClass() == this.receiverClass_;
             }
 
@@ -249,7 +249,7 @@ final class TLLFunctionGen {
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
+                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver.getClass() == this.receiverClass_;
             }
 

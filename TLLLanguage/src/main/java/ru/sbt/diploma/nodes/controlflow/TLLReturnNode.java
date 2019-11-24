@@ -4,6 +4,7 @@ package ru.sbt.diploma.nodes.controlflow;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLStatementNode;
 import ru.sbt.diploma.runtime.TLLNull;
@@ -16,6 +17,7 @@ import ru.sbt.diploma.runtime.TLLNull;
  * the return value.
  */
 @NodeInfo(shortName = "return", description = "The node implementing a return statement")
+@Log4j
 public final class TLLReturnNode extends TLLStatementNode {
 
     @Node.Child
@@ -27,6 +29,7 @@ public final class TLLReturnNode extends TLLStatementNode {
 
     @Override
     public void executeVoid(VirtualFrame frame) {
+        log.info("Execute Void Return Node");
         Object result;
         if (valueNode != null) {
             result = valueNode.executeGeneric(frame);

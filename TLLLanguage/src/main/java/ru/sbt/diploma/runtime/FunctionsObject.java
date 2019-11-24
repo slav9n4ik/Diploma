@@ -47,12 +47,14 @@ import com.oracle.truffle.api.interop.InvalidArrayIndexException;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.library.ExportLibrary;
 import com.oracle.truffle.api.library.ExportMessage;
+import lombok.extern.log4j.Log4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @ExportLibrary(InteropLibrary.class)
 @SuppressWarnings("static-method")
+@Log4j
 final class FunctionsObject implements TruffleObject {
 
     final Map<String, TLLFunction> functions = new HashMap<>();
@@ -80,6 +82,7 @@ final class FunctionsObject implements TruffleObject {
     @ExportMessage
     @TruffleBoundary
     Object getMembers(@SuppressWarnings("unused") boolean includeInternal) {
+        log.info("Get Members");
         return new FunctionNamesObject(functions.keySet().toArray());
     }
 

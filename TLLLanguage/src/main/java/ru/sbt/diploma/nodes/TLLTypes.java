@@ -3,6 +3,7 @@ package ru.sbt.diploma.nodes;
 import com.oracle.truffle.api.dsl.TypeCast;
 import com.oracle.truffle.api.dsl.TypeCheck;
 import com.oracle.truffle.api.dsl.TypeSystem;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.runtime.TLLNull;
 
@@ -13,6 +14,7 @@ import ru.sbt.diploma.runtime.TLLNull;
  * generated ones would not be sufficient.
  */
 @TypeSystem({long.class, boolean.class})
+@Log4j
 public abstract class TLLTypes {
     /**
      * Example of a manually specified type check that replaces the automatically generated type
@@ -22,6 +24,7 @@ public abstract class TLLTypes {
      */
     @TypeCheck(TLLNull.class)
     public static boolean isTLLNull(Object value) {
+        log.info("isTLLNull invoke");
         return value == TLLNull.SINGLETON;
     }
 
@@ -32,6 +35,7 @@ public abstract class TLLTypes {
      */
     @TypeCast(TLLNull.class)
     public static TLLNull asTLLNull(Object value) {
+        log.info("asTLLNull invoke");
         assert isTLLNull(value);
         return TLLNull.SINGLETON;
     }

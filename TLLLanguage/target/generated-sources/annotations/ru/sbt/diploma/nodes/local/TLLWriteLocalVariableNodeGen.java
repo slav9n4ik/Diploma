@@ -11,6 +11,7 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import java.util.concurrent.locks.Lock;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLTypesGen;
+import ru.sbt.diploma.nodes.local.TLLWriteLocalVariableNode;
 
 @GeneratedBy(TLLWriteLocalVariableNode.class)
 public final class TLLWriteLocalVariableNodeGen extends TLLWriteLocalVariableNode {

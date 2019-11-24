@@ -11,6 +11,7 @@ import com.oracle.truffle.api.nodes.NodeCost;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import java.util.concurrent.locks.Lock;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
+import ru.sbt.diploma.nodes.expression.TLLAddNode;
 
 @GeneratedBy(TLLAddNode.class)
 public final class TLLAddNodeGen extends TLLAddNode {

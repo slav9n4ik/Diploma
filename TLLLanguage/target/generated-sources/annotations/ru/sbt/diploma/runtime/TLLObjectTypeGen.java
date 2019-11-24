@@ -22,7 +22,7 @@ import com.oracle.truffle.api.object.DynamicObject;
 import com.oracle.truffle.api.object.Location;
 import com.oracle.truffle.api.object.Shape;
 import java.util.concurrent.locks.Lock;
-
+import ru.sbt.diploma.runtime.TLLObjectType;
 import ru.sbt.diploma.runtime.TLLObjectType.ExistsMember;
 import ru.sbt.diploma.runtime.TLLObjectType.GetMembers;
 import ru.sbt.diploma.runtime.TLLObjectType.Keys;
@@ -629,32 +629,6 @@ final class TLLObjectTypeGen {
                 }
             }
 
-            void removeWriteNewPropertyCached_(Object s2_) {
-                Lock lock = getLock();
-                lock.lock();
-                try {
-                    WriteMemberWriteNewPropertyCachedData prev = null;
-                    WriteMemberWriteNewPropertyCachedData cur = this.writeMember_writeNewPropertyCached_cache;
-                    while (cur != null) {
-                        if (cur == s2_) {
-                            if (prev == null) {
-                                this.writeMember_writeNewPropertyCached_cache = cur.next_;
-                            } else {
-                                prev.next_ = cur.next_;
-                            }
-                            break;
-                        }
-                        prev = cur;
-                        cur = cur.next_;
-                    }
-                    if (this.writeMember_writeNewPropertyCached_cache == null) {
-                        this.state_ = this.state_ & 0xfffffeff /* remove-active writeNewPropertyCached(DynamicObject, String, Object, Object, Shape, Location, Shape, Location) */;
-                    }
-                } finally {
-                    lock.unlock();
-                }
-            }
-
             void removeWriteExistingPropertyCached_(Object s1_) {
                 Lock lock = getLock();
                 lock.lock();
@@ -675,6 +649,32 @@ final class TLLObjectTypeGen {
                     }
                     if (this.writeMember_writeExistingPropertyCached_cache == null) {
                         this.state_ = this.state_ & 0xffffff7f /* remove-active writeExistingPropertyCached(DynamicObject, String, Object, String, Shape, Location) */;
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            void removeWriteNewPropertyCached_(Object s2_) {
+                Lock lock = getLock();
+                lock.lock();
+                try {
+                    WriteMemberWriteNewPropertyCachedData prev = null;
+                    WriteMemberWriteNewPropertyCachedData cur = this.writeMember_writeNewPropertyCached_cache;
+                    while (cur != null) {
+                        if (cur == s2_) {
+                            if (prev == null) {
+                                this.writeMember_writeNewPropertyCached_cache = cur.next_;
+                            } else {
+                                prev.next_ = cur.next_;
+                            }
+                            break;
+                        }
+                        prev = cur;
+                        cur = cur.next_;
+                    }
+                    if (this.writeMember_writeNewPropertyCached_cache == null) {
+                        this.state_ = this.state_ & 0xfffffeff /* remove-active writeNewPropertyCached(DynamicObject, String, Object, Object, Shape, Location, Shape, Location) */;
                     }
                 } finally {
                     lock.unlock();

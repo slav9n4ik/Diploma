@@ -1,7 +1,16 @@
-// Generated from /Users/u17079332/Documents/IdeaProject/Diploma/TVDLanguage/src/main/java/ru/diploma/parser/TLLLanguage.g4 by ANTLR 4.7.2
+// Generated from /Users/u17079332/Documents/IdeaProject/Diploma/TLLLanguage/src/main/java/ru/sbt/diploma/parser/TLLLanguage.g4 by ANTLR 4.7.2
 package ru.sbt.diploma.parser;
 
 //Generated from TLLLanguage.g4
+import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.source.Source;
+import ru.sbt.diploma.TLLLanguage;
+import ru.sbt.diploma.nodes.TLLExpressionNode;
+import ru.sbt.diploma.nodes.TLLStatementNode;
+
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

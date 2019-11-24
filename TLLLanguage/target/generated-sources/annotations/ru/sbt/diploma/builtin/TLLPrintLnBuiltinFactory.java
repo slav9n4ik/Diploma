@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import ru.sbt.diploma.TLLLanguage;
+import ru.sbt.diploma.builtin.TLLPrintLnBuiltin;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.runtime.TLLContext;
 

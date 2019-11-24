@@ -1,4 +1,4 @@
-// Generated from /Users/u17079332/Documents/IdeaProject/Diploma/TVDLanguage/src/main/java/ru/diploma/parser/TLLLanguage.g4 by ANTLR 4.7.2
+// Generated from /Users/u17079332/Documents/IdeaProject/Diploma/TLLLanguage/src/main/java/ru/sbt/diploma/parser/TLLLanguage.g4 by ANTLR 4.7.2
 package ru.sbt.diploma.parser;
 
 //Generated from TLLLanguage.g4
@@ -15,7 +15,11 @@ import java.util.ArrayList;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class TLLLanguageParser extends Parser {
@@ -169,6 +173,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitTlllanguage(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitTlllanguage(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TlllanguageContext tlllanguage() throws RecognitionException {
@@ -276,6 +285,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -369,6 +383,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitSum(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitSum(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SumContext sum() throws RecognitionException {
@@ -398,8 +417,7 @@ public class TLLLanguageParser extends Parser {
 			}
 			setState(61);
 			((SumContext)_localctx).OPERATION = match(OPERATION);
-			 factory.showOperation(((SumContext)_localctx).OPERATION); 
-			setState(63);
+			setState(62);
 			((SumContext)_localctx).numeric = numeric();
 			 rightnode = ((SumContext)_localctx).numeric.result; 
 			 ((SumContext)_localctx).result =  factory.createBinary(((SumContext)_localctx).OPERATION, leftnode, rightnode); 
@@ -436,6 +454,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitNumeric(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitNumeric(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final NumericContext numeric() throws RecognitionException {
@@ -446,39 +469,38 @@ public class TLLLanguageParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(70);
+			setState(69);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(67);
+				setState(66);
 				match(WHITESPACE);
 				}
 				}
-				setState(72);
+				setState(71);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(73);
+			setState(72);
 			((NumericContext)_localctx).NUMERIC_LITERAL = match(NUMERIC_LITERAL);
-			setState(77);
+			setState(76);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(74);
+					setState(73);
 					match(WHITESPACE);
 					}
 					} 
 				}
-				setState(79);
+				setState(78);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
-			 factory.showNumber(((NumericContext)_localctx).NUMERIC_LITERAL); 
 			 ((NumericContext)_localctx).result =  factory.createNumericLiteral(((NumericContext)_localctx).NUMERIC_LITERAL); 
 			}
 		}
@@ -509,6 +531,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitExpression(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitExpression(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
@@ -518,7 +545,7 @@ public class TLLLanguageParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(83);
+			setState(81);
 			((ExpressionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 TLLExpressionNode assignmentName = factory.createStringLiteral(((ExpressionContext)_localctx).IDENTIFIER, false); 
 			{
@@ -574,6 +601,11 @@ public class TLLLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitMember_expression(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitMember_expression(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Member_expressionContext member_expression(TLLExpressionNode assignmentName) throws RecognitionException {
@@ -581,7 +613,7 @@ public class TLLLanguageParser extends Parser {
 		enterRule(_localctx, 10, RULE_member_expression);
 		int _la;
 		try {
-			setState(115);
+			setState(113);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__2:
@@ -590,35 +622,35 @@ public class TLLLanguageParser extends Parser {
 				 TLLExpressionNode nestedAssignmentName = null;
 				                                               List<TLLExpressionNode> parameters = new ArrayList<>(); 
 				{
-				setState(88);
+				setState(86);
 				match(T__2);
 				 TLLExpressionNode receiver = factory.createRead(assignmentName); 
-				setState(99);
+				setState(97);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 				case 1:
 					{
-					setState(90);
+					setState(88);
 					((Member_expressionContext)_localctx).sum = sum();
 					 parameters.add(((Member_expressionContext)_localctx).sum.result); 
 					}
 					break;
 				case 2:
 					{
-					setState(93);
+					setState(91);
 					((Member_expressionContext)_localctx).numeric = numeric();
 					 parameters.add(((Member_expressionContext)_localctx).numeric.result); 
 					}
 					break;
 				case 3:
 					{
-					setState(96);
+					setState(94);
 					((Member_expressionContext)_localctx).expression = expression();
 					 parameters.add(((Member_expressionContext)_localctx).expression.result); 
 					}
 					break;
 				}
-				setState(101);
+				setState(99);
 				((Member_expressionContext)_localctx).e = match(T__3);
 				 ((Member_expressionContext)_localctx).result =  factory.createCall(receiver, parameters, ((Member_expressionContext)_localctx).e); 
 				}
@@ -628,24 +660,24 @@ public class TLLLanguageParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(103);
+				setState(101);
 				match(T__4);
 				 TLLExpressionNode receiver = factory.createRead(assignmentName); 
-				setState(108);
+				setState(106);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==WHITESPACE) {
 					{
 					{
-					setState(105);
+					setState(103);
 					match(WHITESPACE);
 					}
 					}
-					setState(110);
+					setState(108);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(111);
+				setState(109);
 				((Member_expressionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 				 TLLExpressionNode newEmptyObj = factory.createCall(receiver, Collections.emptyList(), ((Member_expressionContext)_localctx).IDENTIFIER); 
 				 TLLExpressionNode localVarName = factory.createStringLiteral(((Member_expressionContext)_localctx).IDENTIFIER, false); 
@@ -669,35 +701,35 @@ public class TLLLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13x\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13v\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\7\2\20\n\2\f\2\16\2\23\13\2\3\2"+
 		"\3\2\3\2\3\2\3\2\7\2\32\n\2\f\2\16\2\35\13\2\7\2\37\n\2\f\2\16\2\"\13"+
 		"\2\3\2\3\2\3\2\3\3\7\3(\n\3\f\3\16\3+\13\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\5\3\65\n\3\3\4\3\4\3\4\3\4\7\4;\n\4\f\4\16\4>\13\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\5\7\5G\n\5\f\5\16\5J\13\5\3\5\3\5\7\5N\n\5\f\5\16\5Q\13\5"+
-		"\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
-		"\7\3\7\5\7f\n\7\3\7\3\7\3\7\3\7\3\7\7\7m\n\7\f\7\16\7p\13\7\3\7\3\7\3"+
-		"\7\3\7\5\7v\n\7\3\7\2\2\b\2\4\6\b\n\f\2\2\2~\2\21\3\2\2\2\4)\3\2\2\2\6"+
-		"\66\3\2\2\2\bH\3\2\2\2\nU\3\2\2\2\fu\3\2\2\2\16\20\7\b\2\2\17\16\3\2\2"+
-		"\2\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\24\3\2\2\2\23\21\3\2\2"+
-		"\2\24\25\7\3\2\2\25 \b\2\1\2\26\27\5\4\3\2\27\33\b\2\1\2\30\32\7\b\2\2"+
-		"\31\30\3\2\2\2\32\35\3\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\37\3\2\2\2"+
-		"\35\33\3\2\2\2\36\26\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!#\3\2"+
-		"\2\2\" \3\2\2\2#$\7\4\2\2$%\b\2\1\2%\3\3\2\2\2&(\7\b\2\2\'&\3\2\2\2(+"+
-		"\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\64\3\2\2\2+)\3\2\2\2,-\5\6\4\2-.\b\3\1"+
-		"\2.\65\3\2\2\2/\60\7\t\2\2\60\61\b\3\1\2\61\62\5\f\7\2\62\63\b\3\1\2\63"+
-		"\65\3\2\2\2\64,\3\2\2\2\64/\3\2\2\2\65\5\3\2\2\2\66\67\b\4\1\2\678\5\b"+
-		"\5\28<\b\4\1\29;\7\b\2\2:9\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2"+
-		"\2\2><\3\2\2\2?@\7\n\2\2@A\b\4\1\2AB\5\b\5\2BC\b\4\1\2CD\b\4\1\2D\7\3"+
-		"\2\2\2EG\7\b\2\2FE\3\2\2\2GJ\3\2\2\2HF\3\2\2\2HI\3\2\2\2IK\3\2\2\2JH\3"+
-		"\2\2\2KO\7\13\2\2LN\7\b\2\2ML\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2PR"+
-		"\3\2\2\2QO\3\2\2\2RS\b\5\1\2ST\b\5\1\2T\t\3\2\2\2UV\7\t\2\2VW\b\6\1\2"+
-		"WX\b\6\1\2X\13\3\2\2\2YZ\b\7\1\2Z[\7\5\2\2[e\b\7\1\2\\]\5\6\4\2]^\b\7"+
-		"\1\2^f\3\2\2\2_`\5\b\5\2`a\b\7\1\2af\3\2\2\2bc\5\n\6\2cd\b\7\1\2df\3\2"+
-		"\2\2e\\\3\2\2\2e_\3\2\2\2eb\3\2\2\2ef\3\2\2\2fg\3\2\2\2gh\7\6\2\2hv\b"+
-		"\7\1\2ij\7\7\2\2jn\b\7\1\2km\7\b\2\2lk\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3"+
-		"\2\2\2oq\3\2\2\2pn\3\2\2\2qr\7\t\2\2rs\b\7\1\2st\b\7\1\2tv\b\7\1\2uY\3"+
-		"\2\2\2ui\3\2\2\2v\r\3\2\2\2\r\21\33 )\64<HOenu";
+		"\4\3\4\3\5\7\5F\n\5\f\5\16\5I\13\5\3\5\3\5\7\5M\n\5\f\5\16\5P\13\5\3\5"+
+		"\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5"+
+		"\7d\n\7\3\7\3\7\3\7\3\7\3\7\7\7k\n\7\f\7\16\7n\13\7\3\7\3\7\3\7\3\7\5"+
+		"\7t\n\7\3\7\2\2\b\2\4\6\b\n\f\2\2\2|\2\21\3\2\2\2\4)\3\2\2\2\6\66\3\2"+
+		"\2\2\bG\3\2\2\2\nS\3\2\2\2\fs\3\2\2\2\16\20\7\b\2\2\17\16\3\2\2\2\20\23"+
+		"\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\24\3\2\2\2\23\21\3\2\2\2\24\25"+
+		"\7\3\2\2\25 \b\2\1\2\26\27\5\4\3\2\27\33\b\2\1\2\30\32\7\b\2\2\31\30\3"+
+		"\2\2\2\32\35\3\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\37\3\2\2\2\35\33\3"+
+		"\2\2\2\36\26\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!#\3\2\2\2\" \3"+
+		"\2\2\2#$\7\4\2\2$%\b\2\1\2%\3\3\2\2\2&(\7\b\2\2\'&\3\2\2\2(+\3\2\2\2)"+
+		"\'\3\2\2\2)*\3\2\2\2*\64\3\2\2\2+)\3\2\2\2,-\5\6\4\2-.\b\3\1\2.\65\3\2"+
+		"\2\2/\60\7\t\2\2\60\61\b\3\1\2\61\62\5\f\7\2\62\63\b\3\1\2\63\65\3\2\2"+
+		"\2\64,\3\2\2\2\64/\3\2\2\2\65\5\3\2\2\2\66\67\b\4\1\2\678\5\b\5\28<\b"+
+		"\4\1\29;\7\b\2\2:9\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2\2\2><\3"+
+		"\2\2\2?@\7\n\2\2@A\5\b\5\2AB\b\4\1\2BC\b\4\1\2C\7\3\2\2\2DF\7\b\2\2ED"+
+		"\3\2\2\2FI\3\2\2\2GE\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IG\3\2\2\2JN\7\13\2\2"+
+		"KM\7\b\2\2LK\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2OQ\3\2\2\2PN\3\2\2\2"+
+		"QR\b\5\1\2R\t\3\2\2\2ST\7\t\2\2TU\b\6\1\2UV\b\6\1\2V\13\3\2\2\2WX\b\7"+
+		"\1\2XY\7\5\2\2Yc\b\7\1\2Z[\5\6\4\2[\\\b\7\1\2\\d\3\2\2\2]^\5\b\5\2^_\b"+
+		"\7\1\2_d\3\2\2\2`a\5\n\6\2ab\b\7\1\2bd\3\2\2\2cZ\3\2\2\2c]\3\2\2\2c`\3"+
+		"\2\2\2cd\3\2\2\2de\3\2\2\2ef\7\6\2\2ft\b\7\1\2gh\7\7\2\2hl\b\7\1\2ik\7"+
+		"\b\2\2ji\3\2\2\2kn\3\2\2\2lj\3\2\2\2lm\3\2\2\2mo\3\2\2\2nl\3\2\2\2op\7"+
+		"\t\2\2pq\b\7\1\2qr\b\7\1\2rt\b\7\1\2sW\3\2\2\2sg\3\2\2\2t\r\3\2\2\2\r"+
+		"\21\33 )\64<GNcls";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

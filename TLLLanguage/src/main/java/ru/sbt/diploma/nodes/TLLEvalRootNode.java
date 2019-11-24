@@ -6,6 +6,7 @@ import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.DirectCallNode;
 import com.oracle.truffle.api.nodes.RootNode;
+import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.runtime.TLLContext;
 import ru.sbt.diploma.runtime.TLLNull;
@@ -23,6 +24,7 @@ import java.util.Map;
  * understood by TLL.</li>
  * </ul>
  */
+@Log4j
 public final class TLLEvalRootNode extends RootNode {
 
     private final Map<String, RootCallTarget> functions;
@@ -57,6 +59,7 @@ public final class TLLEvalRootNode extends RootNode {
 
     @Override
     public Object execute(VirtualFrame frame) {
+        log.info("Execute in EvalRootNode");
         /* Lazy registrations of functions on first execution. */
         if (!registered) {
             /* Function registration is a slow-path operation that must not be compiled. */

@@ -13,6 +13,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.source.SourceSection;
+import lombok.extern.log4j.Log4j;
 
 /**
  * The base class of all Truffle nodes for TLL. All nodes (even expressions) can be used as
@@ -22,6 +23,7 @@ import com.oracle.truffle.api.source.SourceSection;
 @NodeInfo(language = "TLL", description = "The abstract base node for all TLL statements")
 @GenerateWrapper
 @ReportPolymorphism
+@Log4j
 public abstract class TLLStatementNode extends Node implements InstrumentableNode {
 
     private static final int NO_SOURCE = -1;
@@ -46,6 +48,7 @@ public abstract class TLLStatementNode extends Node implements InstrumentableNod
     @Override
     @TruffleBoundary
     public final SourceSection getSourceSection() {
+        log.info("Get Source Section Statement Node");
         if (sourceCharIndex == NO_SOURCE) {
             // AST node without source
             return null;
@@ -89,6 +92,7 @@ public abstract class TLLStatementNode extends Node implements InstrumentableNod
 
     // invoked by the parser to set the source
     public final void setSourceSection(int charIndex, int length) {
+        log.info("Set Source Section Statement Node");
         assert sourceCharIndex == NO_SOURCE : "source must only be set once";
         if (charIndex < 0) {
             throw new IllegalArgumentException("charIndex < 0");

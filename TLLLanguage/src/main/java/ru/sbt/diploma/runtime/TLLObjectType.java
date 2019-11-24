@@ -20,8 +20,10 @@ import com.oracle.truffle.api.object.Location;
 import com.oracle.truffle.api.object.ObjectType;
 import com.oracle.truffle.api.object.Property;
 import com.oracle.truffle.api.object.Shape;
+import lombok.extern.log4j.Log4j;
 
 @ExportLibrary(value = InteropLibrary.class, receiverType = DynamicObject.class)
+@Log4j
 public final class TLLObjectType extends ObjectType {
 
     protected static final int CACHE_LIMIT = 3;
@@ -64,6 +66,7 @@ public final class TLLObjectType extends ObjectType {
         @Specialization(replaces = "doCached")
         @TruffleBoundary
         static Keys doGeneric(DynamicObject receiver, boolean includeInternal) {
+            log.info("doGeneric");
             return new Keys(receiver.getShape().getKeyList().toArray());
         }
     }
@@ -86,6 +89,7 @@ public final class TLLObjectType extends ObjectType {
         @Specialization(replaces = "doCached")
         @TruffleBoundary
         static boolean doGeneric(DynamicObject receiver, String member) {
+            log.info("doGeneric");
             return receiver.getShape().getProperty(member) != null;
         }
     }

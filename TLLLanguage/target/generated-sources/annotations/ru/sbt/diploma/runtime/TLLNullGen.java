@@ -9,6 +9,7 @@ import com.oracle.truffle.api.library.DynamicDispatchLibrary;
 import com.oracle.truffle.api.library.LibraryExport;
 import com.oracle.truffle.api.library.LibraryFactory;
 import com.oracle.truffle.api.nodes.NodeCost;
+import ru.sbt.diploma.runtime.TLLNull;
 
 @GeneratedBy(TLLNull.class)
 final class TLLNullGen {
@@ -52,7 +53,7 @@ final class TLLNullGen {
 
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
+                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver.getClass() == this.receiverClass_;
             }
 
@@ -75,7 +76,7 @@ final class TLLNullGen {
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
+                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
                 return receiver.getClass() == this.receiverClass_;
             }
 
