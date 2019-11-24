@@ -9,7 +9,7 @@
 
 # production
 /MumbleLanguage/target
-/TVDLanguage/target
-/TVDLanguage/.idea
+/TLLLanguage/target
+/TLLLanguage/.idea
 
 /.metadata/
