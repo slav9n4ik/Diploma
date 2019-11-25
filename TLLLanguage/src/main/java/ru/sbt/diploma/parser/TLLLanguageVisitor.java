@@ -35,6 +35,24 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#return_statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturn_statement(TLLLanguageParser.Return_statementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#init_obj}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInit_obj(TLLLanguageParser.Init_objContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#init}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInit(TLLLanguageParser.InitContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#sum}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -3,6 +3,7 @@ package ru.sbt.diploma.nodes.controlflow;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.profiles.BranchProfile;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLRootNode;
@@ -17,8 +18,8 @@ import ru.sbt.diploma.runtime.TLLObjectType;
  * the exception. If the method ends without an explicit {@code return}, return the
  * {@link TLLNull#SINGLETON default null value}.
  */
+@Log4j
 @NodeInfo(shortName = "body")
-@Slf4j
 public final class TLLFunctionBodyNode extends TLLExpressionNode {
 
     /** The body of the function. */

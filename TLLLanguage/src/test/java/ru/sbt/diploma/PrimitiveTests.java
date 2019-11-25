@@ -4,6 +4,7 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +42,7 @@ public class PrimitiveTests {
     public void printSumTest() {
         context.eval("tll", "\n" +
                 "START \n" +
-                " println(100 + 23) \n" +
+                " 100 + 23 \n" +
                 "END\n"
         );
         print = context.getBindings("tll").getMember("START");
@@ -55,15 +56,37 @@ public class PrimitiveTests {
         final Source src = Source.newBuilder("tll",
                 "\n" +
                         "START \n" +
-                        " Partner: Romashka" + "\n" +
-                        //" println(Romashka)" + "\n" +
+                        " @Partner: Romashka" + "\n" +
+                        " println(Romashka)" + "\n" +
                         "END\n",
                 "testObject.sl").buildLiteral();
         context.eval(src);
 
         Value getValue = context.getBindings("tll").getMember("START");
         Value result = getValue.execute();
-//        assertNotNull(result);
-//        assertEquals(result.toString(), "NULL");
+        assertNotNull(result);
+        assertEquals(result.toString(), "NULL");
+    }
+
+    @Test
+    public void createObjectPropTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " Romashka.a: 12345" + "\n" +
+                        " return Romashka" + "\n" +
+                        "END\n",
+                "testObject.sl").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        Value obj = getValue.execute();
+        Assert.assertTrue(obj.hasMembers());
+
+        Value a = obj.getMember("a");
+        Assert.assertNotNull(a);
+        Assert.assertTrue(a.isNumber());
+        Assert.assertEquals(12345, a.asInt());
     }
 }

@@ -102,12 +102,10 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
 
     @Override
     protected Object findMetaObject(TLLContext context, Object value) {
-        log.info("FindMetaObject invoke");
         return getMetaObject(value);
     }
 
     public static String getMetaObject(Object value) {
-        log.info("GetMetaObject invoke");
         if (value == null) {
             return "ANY";
         }

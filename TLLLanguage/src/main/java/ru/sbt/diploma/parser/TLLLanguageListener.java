@@ -40,6 +40,36 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#return_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturn_statement(TLLLanguageParser.Return_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#return_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturn_statement(TLLLanguageParser.Return_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#init_obj}.
+	 * @param ctx the parse tree
+	 */
+	void enterInit_obj(TLLLanguageParser.Init_objContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#init_obj}.
+	 * @param ctx the parse tree
+	 */
+	void exitInit_obj(TLLLanguageParser.Init_objContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#init}.
+	 * @param ctx the parse tree
+	 */
+	void enterInit(TLLLanguageParser.InitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#init}.
+	 * @param ctx the parse tree
+	 */
+	void exitInit(TLLLanguageParser.InitContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#sum}.
 	 * @param ctx the parse tree
 	 */

@@ -92,14 +92,66 @@ sum
                                         { $result = $member_expression.result; }
     )
 )
-//|
-//(
-//    IDENTIFIER
-//                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
-//        member_expression[assignmentName]
-//                                        { $result = factory.createReturn($r, $member_expression.result); }
-//)
+|
+        init_obj
+                                        { $result = $init_obj.result; }
+|
+        return_statement
+                                        { $result = $return_statement.result; }
 )
+;
+
+return_statement returns [TLLStatementNode result]
+:
+r='return'                                      { TLLExpressionNode value = null; }
+(
+    WHITESPACE*
+    IDENTIFIER
+                                                { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+                                                { TLLExpressionNode read_value = factory.createRead(assignmentName); }
+                                                { $result = factory.createReturn($r, read_value); }
+)
+;
+
+init_obj returns [TLLExpressionNode result]
+:
+(
+    '@' IDENTIFIER
+                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+    (
+        init[null, null, assignmentName]
+                                        { $result = $init.result; }
+    )
+)
+;
+
+//TODO полная шляпа, отрефакторить
+init[TLLExpressionNode r, TLLExpressionNode assignmentReceiver, TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
+:
+s = WHITESPACE*
+
+(
+    ':'
+    WHITESPACE*
+    IDENTIFIER
+                                        { TLLExpressionNode receiver = factory.createRead(assignmentName); }
+                                        { TLLExpressionNode newEmptyObj = factory.createCall(receiver, Collections.emptyList(), $IDENTIFIER); }
+                                        { TLLExpressionNode localVarName = factory.createStringLiteral($IDENTIFIER, false); }
+                                        { if (assignmentReceiver == null) {
+                                            $result = factory.createAssignment(localVarName, newEmptyObj);
+                                          } else {
+                                            $result = factory.createWriteProperty(assignmentReceiver, assignmentName, localVarName);
+                                          }
+                                        }
+)
+|
+(
+    ':'
+    numeric
+
+                                        { $result = factory.createWriteProperty(assignmentReceiver, assignmentName, $numeric.result); }
+
+    )
 ;
 
 sum returns [TLLExpressionNode result]
@@ -152,12 +204,12 @@ member_expression[TLLExpressionNode assignmentName] returns [TLLExpressionNode r
 )
 |
 (
-    ':'                                      { TLLExpressionNode receiver = factory.createRead(assignmentName); }
-        WHITESPACE*
-        IDENTIFIER
-                                             { TLLExpressionNode newEmptyObj = factory.createCall(receiver, Collections.emptyList(), $IDENTIFIER); }
-                                             { TLLExpressionNode localVarName = factory.createStringLiteral($IDENTIFIER, false); }
-                                             { $result = factory.createAssignment(localVarName, newEmptyObj);}
+    '.'
+                                             { TLLExpressionNode receiver = factory.createRead(assignmentName); }
+    IDENTIFIER
+                                             { TLLExpressionNode nestedAssignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+                                             { $result = factory.createReadProperty(receiver, nestedAssignmentName); }
+    init[$result, receiver, nestedAssignmentName] { $result = $init.result; }
 )
 ;
 

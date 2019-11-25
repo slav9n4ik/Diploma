@@ -629,32 +629,6 @@ final class TLLObjectTypeGen {
                 }
             }
 
-            void removeWriteExistingPropertyCached_(Object s1_) {
-                Lock lock = getLock();
-                lock.lock();
-                try {
-                    WriteMemberWriteExistingPropertyCachedData prev = null;
-                    WriteMemberWriteExistingPropertyCachedData cur = this.writeMember_writeExistingPropertyCached_cache;
-                    while (cur != null) {
-                        if (cur == s1_) {
-                            if (prev == null) {
-                                this.writeMember_writeExistingPropertyCached_cache = cur.next_;
-                            } else {
-                                prev.next_ = cur.next_;
-                            }
-                            break;
-                        }
-                        prev = cur;
-                        cur = cur.next_;
-                    }
-                    if (this.writeMember_writeExistingPropertyCached_cache == null) {
-                        this.state_ = this.state_ & 0xffffff7f /* remove-active writeExistingPropertyCached(DynamicObject, String, Object, String, Shape, Location) */;
-                    }
-                } finally {
-                    lock.unlock();
-                }
-            }
-
             void removeWriteNewPropertyCached_(Object s2_) {
                 Lock lock = getLock();
                 lock.lock();
@@ -675,6 +649,32 @@ final class TLLObjectTypeGen {
                     }
                     if (this.writeMember_writeNewPropertyCached_cache == null) {
                         this.state_ = this.state_ & 0xfffffeff /* remove-active writeNewPropertyCached(DynamicObject, String, Object, Object, Shape, Location, Shape, Location) */;
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            void removeWriteExistingPropertyCached_(Object s1_) {
+                Lock lock = getLock();
+                lock.lock();
+                try {
+                    WriteMemberWriteExistingPropertyCachedData prev = null;
+                    WriteMemberWriteExistingPropertyCachedData cur = this.writeMember_writeExistingPropertyCached_cache;
+                    while (cur != null) {
+                        if (cur == s1_) {
+                            if (prev == null) {
+                                this.writeMember_writeExistingPropertyCached_cache = cur.next_;
+                            } else {
+                                prev.next_ = cur.next_;
+                            }
+                            break;
+                        }
+                        prev = cur;
+                        cur = cur.next_;
+                    }
+                    if (this.writeMember_writeExistingPropertyCached_cache == null) {
+                        this.state_ = this.state_ & 0xffffff7f /* remove-active writeExistingPropertyCached(DynamicObject, String, Object, String, Shape, Location) */;
                     }
                 } finally {
                     lock.unlock();

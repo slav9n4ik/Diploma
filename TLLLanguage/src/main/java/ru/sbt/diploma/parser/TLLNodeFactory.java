@@ -12,12 +12,11 @@ import org.antlr.v4.runtime.Token;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLStatementNode;
-import ru.sbt.diploma.nodes.expression.TLLAddNodeGen;
+import ru.sbt.diploma.nodes.expression.*;
 import ru.sbt.diploma.nodes.TLLRootNode;
 import ru.sbt.diploma.nodes.controlflow.TLLBlockNode;
 import ru.sbt.diploma.nodes.controlflow.TLLFunctionBodyNode;
 import ru.sbt.diploma.nodes.controlflow.TLLReturnNode;
-import ru.sbt.diploma.nodes.expression.TLLInvokeNode;
 import ru.sbt.diploma.nodes.literal.TLLFunctionLiteralNode;
 import ru.sbt.diploma.nodes.literal.TLLLongLiteralNode;
 import ru.sbt.diploma.nodes.literal.TLLStringLiteralNode;
@@ -109,6 +108,11 @@ public class TLLNodeFactory {
     }
 
     private TLLBlockNode executeBlock(List<TLLStatementNode> blockNodes, int startPos, int length) {
+
+        if (containsNull(blockNodes)) {
+            return null;
+        }
+
         List<TLLStatementNode> flattenedNodes = new ArrayList<>(blockNodes.size());
         flattenBlocks(blockNodes, flattenedNodes);
         for (TLLStatementNode statement : flattenedNodes) {
@@ -167,6 +171,53 @@ public class TLLNodeFactory {
         final TLLReturnNode returnNode = new TLLReturnNode(valueNode);
         returnNode.setSourceSection(start, length);
         return returnNode;
+    }
+
+    /**
+     * Returns an {@link TLLReadPropertyNode} for the given parameters.
+     *
+     * @param receiverNode The receiver of the property access
+     * @param nameNode The name of the property being accessed
+     * @return An SLExpressionNode for the given parameters. null if receiverNode or nameNode is
+     *         null.
+     */
+    public TLLExpressionNode createReadProperty(TLLExpressionNode receiverNode, TLLExpressionNode nameNode) {
+        if (receiverNode == null || nameNode == null) {
+            return null;
+        }
+
+        final TLLExpressionNode result = TLLReadPropertyNodeGen.create(receiverNode, nameNode);
+
+        final int startPos = receiverNode.getSourceCharIndex();
+        final int endPos = nameNode.getSourceEndIndex();
+        result.setSourceSection(startPos, endPos - startPos);
+        result.addExpressionTag();
+
+        return result;
+    }
+
+    /**
+     * Returns an {@link TLLWritePropertyNode} for the given parameters.
+     *
+     * @param receiverNode The receiver object of the property assignment
+     * @param nameNode The name of the property being assigned
+     * @param valueNode The value to be assigned
+     * @return An SLExpressionNode for the given parameters. null if receiverNode, nameNode or
+     *         valueNode is null.
+     */
+    public TLLExpressionNode createWriteProperty(TLLExpressionNode receiverNode, TLLExpressionNode nameNode, TLLExpressionNode valueNode) {
+        if (receiverNode == null || nameNode == null || valueNode == null) {
+            return null;
+        }
+
+        final TLLExpressionNode result = TLLWritePropertyNodeGen.create(receiverNode, nameNode, valueNode);
+
+        final int start = receiverNode.getSourceCharIndex();
+        final int length = valueNode.getSourceEndIndex() - start;
+        result.setSourceSection(start, length);
+        result.addExpressionTag();
+
+        return result;
     }
 
     /**
