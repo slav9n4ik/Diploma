@@ -96,11 +96,11 @@ public class PrimitiveTests {
         final Source src = Source.newBuilder("tll",
                 "\n" +
                         "START \n" +
-                        " array[0] = 123" + "\n" +
-                        " println(array[0])" + "\n" +
+                        " array[1] = 123" + "\n" +
+                        " println(array[1])" + "\n" +
                         "END\n",
                 "testObject.tll").buildLiteral();
-        context.eval(src); 
+        context.eval(src);
 
         Value getValue = context.getBindings("tll").getMember("START");
         Number ret = getValue.execute().as(Number.class);

@@ -33,7 +33,7 @@ public abstract class TLLReadArrayLocalNode extends TLLExpressionNode {
          */
         CompilerDirectives.transferToInterpreter();
         BufferArray bufferArray = (BufferArray) frame.getValue(getSlot());
-        long result = (Long) bufferArray.buffer.get((int) index);
+        long result = (Long) bufferArray.buffer.get((int) index - 1);
         frame.setObject(getSlot(), bufferArray);
         return result;
     }

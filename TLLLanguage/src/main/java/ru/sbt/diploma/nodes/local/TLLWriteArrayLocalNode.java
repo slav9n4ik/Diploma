@@ -37,7 +37,7 @@ public abstract class TLLWriteArrayLocalNode extends TLLExpressionNode {
                 if (bufferArray == null) {
                     bufferArray = createBufferArray(value);
                 } else {
-                    bufferArray.buffer.add((int) index, value);
+                    bufferArray.buffer.add((int) index - 1, value);
                 }
             } catch (FrameSlotTypeException e) {
                 e.printStackTrace();
