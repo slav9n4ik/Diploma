@@ -46,32 +46,30 @@ final class TLLFunctionGen {
         @Override
         protected InteropLibrary createUncached(Object receiver) {
             assert receiver instanceof TLLFunction;
-            return new Uncached(receiver);
+            return new Uncached();
         }
 
         @Override
         protected InteropLibrary createCached(Object receiver) {
             assert receiver instanceof TLLFunction;
-            return new Cached(receiver);
+            return new Cached();
         }
 
         @GeneratedBy(TLLFunction.class)
         private static final class Cached extends InteropLibrary {
 
-            private final Class<? extends TLLFunction> receiverClass_;
             @CompilationFinal private int state_;
             @CompilationFinal private int exclude_;
             @Child private DirectData direct_cache;
             @Child private IndirectCallNode indirect_callNode_;
 
-            Cached(Object receiver) {
-                this.receiverClass_ = ((TLLFunction) receiver).getClass();
+            Cached() {
             }
 
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
-                return receiver.getClass() == this.receiverClass_;
+                assert !(receiver instanceof TLLFunction) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
+                return receiver instanceof TLLFunction;
             }
 
             @ExplodeLoop(kind = LoopExplosionKind.FULL_EXPLODE_UNTIL_RETURN)
@@ -79,7 +77,7 @@ final class TLLFunctionGen {
             public Object execute(Object arg0Value_, Object... arg1Value) throws UnsupportedTypeException, ArityException, UnsupportedMessageException {
                 assert assertAdopted();
                 assert this.accepts(arg0Value_) : "Invalid library usage. Library does not accept given receiver.";
-                TLLFunction arg0Value = CompilerDirectives.castExact(arg0Value_, receiverClass_);
+                TLLFunction arg0Value = (TLLFunction) arg0Value_;
                 int state = state_;
                 if (state != 0 /* is-active doDirect(TLLFunction, Object[], Assumption, RootCallTarget, DirectCallNode) || doIndirect(TLLFunction, Object[], IndirectCallNode) */) {
                     if ((state & 0b1) != 0 /* is-active doDirect(TLLFunction, Object[], Assumption, RootCallTarget, DirectCallNode) */) {
@@ -210,7 +208,7 @@ final class TLLFunctionGen {
             public boolean isExecutable(Object receiver) {
                 assert assertAdopted();
                 assert this.accepts(receiver) : "Invalid library usage. Library does not accept given receiver.";
-                return (CompilerDirectives.castExact(receiver, receiverClass_)).isExecutable();
+                return ((TLLFunction) receiver).isExecutable();
             }
 
             @GeneratedBy(TLLFunction.class)
@@ -240,17 +238,14 @@ final class TLLFunctionGen {
         @GeneratedBy(TLLFunction.class)
         private static final class Uncached extends InteropLibrary {
 
-            private final Class<? extends TLLFunction> receiverClass_;
-
-            Uncached(Object receiver) {
-                this.receiverClass_ = ((TLLFunction) receiver).getClass();
+            Uncached() {
             }
 
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
-                return receiver.getClass() == this.receiverClass_;
+                assert !(receiver instanceof TLLFunction) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLFunction'. Exported receiver with dynamic dispatch found but not expected.";
+                return receiver instanceof TLLFunction;
             }
 
             @Override

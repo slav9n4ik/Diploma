@@ -109,4 +109,14 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMember_expression(TLLLanguageParser.Member_expressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#array_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray_statement(TLLLanguageParser.Array_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#array_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray_statement(TLLLanguageParser.Array_statementContext ctx);
 }

@@ -36,7 +36,7 @@ import static com.oracle.truffle.api.CompilerDirectives.transferToInterpreter;
  * context. Therefore, the context is not a singleton.
  */
 @Log4j
-public class TLLContext {
+public final class TLLContext {
 
     private static final Source BUILTIN_SOURCE = Source.newBuilder(TLLLanguage.ID, "", "TLL builtin").build();
     static final Layout LAYOUT = Layout.createLayout();

@@ -8,7 +8,7 @@ import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLTypes;
 
 /**
- * The node to normalize any value to an SL value. This is useful to reduce the number of values
+ * The node to normalize any value to an TLL value. This is useful to reduce the number of values
  * expression nodes need to expect.
  */
 @TypeSystemReference(TLLTypes.class)

@@ -76,4 +76,10 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMember_expression(TLLLanguageParser.Member_expressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#array_statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray_statement(TLLLanguageParser.Array_statementContext ctx);
 }

@@ -28,7 +28,7 @@ import java.util.logging.Level;
  */
 @ExportLibrary(InteropLibrary.class)
 @Log4j
-public class TLLFunction implements TruffleObject {
+public final class TLLFunction implements TruffleObject {
     public static final int INLINE_CACHE_SIZE = 2;
 
     private static final TruffleLogger LOG = TruffleLogger.getLogger(TLLLanguage.ID, TLLFunction.class);

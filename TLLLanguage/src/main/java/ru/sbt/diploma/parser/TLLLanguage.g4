@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 }
+//научиться выводить значения массива
 
 @parser::members
 {
@@ -80,16 +81,26 @@ e='END'
 //TODO отрефакторить эту сраку
 statement returns [TLLStatementNode result]
 :
-r = WHITESPACE* (
-sum
+r = WHITESPACE*
+(
+        sum
                                         { $result = $sum.result; }
 |
 (
     IDENTIFIER
-                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
     (
+                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
         member_expression[assignmentName]
                                         { $result = $member_expression.result; }
+    )
+)
+|
+(
+    IDENTIFIER
+    (
+                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+        array_statement[assignmentName]
+                                        { $result = $array_statement.result; }
     )
 )
 |
@@ -151,7 +162,18 @@ s = WHITESPACE*
 
                                         { $result = factory.createWriteProperty(assignmentReceiver, assignmentName, $numeric.result); }
 
-    )
+)
+|
+(
+    '='
+    numeric
+                                        { TLLExpressionNode index = r;}
+                                        { $result = factory.createWriteArrayValue(assignmentName, $numeric.result, index); }
+)
+|
+(
+    WHITESPACE*                         { $result = null; }
+)
 ;
 
 sum returns [TLLExpressionNode result]
@@ -183,6 +205,13 @@ expression returns [TLLExpressionNode result]
                                         { $result = factory.createRead(assignmentName); }
     )
 )
+|
+(
+    IDENTIFIER
+                                        { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
+    array_statement[assignmentName]
+                                        { $result = $array_statement.result; }
+)
 ;
 
 //TODO пока не делаем присваивание проперти, оставляем три аргумента
@@ -210,6 +239,24 @@ member_expression[TLLExpressionNode assignmentName] returns [TLLExpressionNode r
                                              { TLLExpressionNode nestedAssignmentName = factory.createStringLiteral($IDENTIFIER, false); }
                                              { $result = factory.createReadProperty(receiver, nestedAssignmentName); }
     init[$result, receiver, nestedAssignmentName] { $result = $init.result; }
+)
+;
+
+array_statement[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
+:
+(
+    s='['
+        NUMERIC_LITERAL
+                                             { TLLExpressionNode index = factory.createNumericLiteral($NUMERIC_LITERAL); }
+    e=']'
+        WHITESPACE*
+    init[index, null, assignmentName]        { TLLExpressionNode initResult = $init.result; }
+                                             {  if (initResult == null) {
+                                                    $result = factory.createReadArrayValue(assignmentName, $NUMERIC_LITERAL);
+                                                } else {
+                                                    $result = initResult;
+                                                }
+                                             }
 )
 ;
 

@@ -28,7 +28,7 @@ public abstract class TLLReadPropertyNode extends TLLExpressionNode {
     static final int LIBRARY_LIMIT = 3;
 
     @Specialization(guards = "arrays.hasArrayElements(receiver)", limit = "LIBRARY_LIMIT")
-    protected Object writeArray(Object receiver, Object index,
+    protected Object readArray(Object receiver, Object index,
                                 @CachedLibrary("receiver") InteropLibrary arrays,
                                 @CachedLibrary("index") InteropLibrary numbers) {
         try {
@@ -40,7 +40,7 @@ public abstract class TLLReadPropertyNode extends TLLExpressionNode {
     }
 
     @Specialization(guards = "objects.hasMembers(receiver)", limit = "LIBRARY_LIMIT")
-    protected Object writeObject(Object receiver, Object name,
+    protected Object readObject(Object receiver, Object name,
                                  @CachedLibrary("receiver") InteropLibrary objects,
                                  @Cached TLLToMemberNode asMember) {
         try {

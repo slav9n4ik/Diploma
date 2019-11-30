@@ -13,7 +13,7 @@ import ru.sbt.diploma.nodes.TLLExpressionNode;
 /**
  * Node to read a local variable from a function's {@link VirtualFrame frame}. The Truffle frame API
  * allows to store primitive values of all Java primitive types, and Object values. This means that
- * all SL types that are objects are handled by the {@link #readObject} method.
+ * all TLL types that are objects are handled by the {@link #readObject} method.
  * <p>
  * We use the primitive type only when the same primitive type is uses for all writes. If the local
  * variable is type-polymorphic, then the value is always stored as an Object, i.e., primitive
@@ -31,7 +31,7 @@ public abstract class TLLReadLocalVariableNode extends TLLExpressionNode {
 
     @Specialization(guards = "isLong(frame)")
     protected long readLong(VirtualFrame frame) {
-        log.info("readLond in Read Local Vars Node");
+        log.info("readLong in Read Local Vars Node");
         /*
          * When the FrameSlotKind is Long, we know that only primitive long values have ever been
          * written to the local variable. So we do not need to check that the frame really contains

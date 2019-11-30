@@ -13,7 +13,7 @@ import java.util.*;
  * Manages the mapping from function names to {@link TLLFunction function objects}.
  */
 @Log4j
-public class TLLFunctionRegistry {
+public final class TLLFunctionRegistry {
     private final TLLLanguage language;
     private final FunctionsObject functionsObject = new FunctionsObject();
 

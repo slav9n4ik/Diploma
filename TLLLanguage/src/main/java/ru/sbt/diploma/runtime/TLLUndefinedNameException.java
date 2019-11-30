@@ -3,7 +3,7 @@ package ru.sbt.diploma.runtime;
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.nodes.Node;
 
-public class TLLUndefinedNameException extends TLLException {
+public final class TLLUndefinedNameException extends TLLException {
     private static final long serialVersionUID = 1L;
 
     @CompilerDirectives.TruffleBoundary

@@ -1,7 +1,6 @@
 // CheckStyle: start generated
 package ru.sbt.diploma.runtime;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.dsl.GeneratedBy;
 import com.oracle.truffle.api.interop.InteropLibrary;
@@ -26,6 +25,9 @@ final class TLLNullGen {
     @GeneratedBy(TLLNull.class)
     private static final class InteropLibraryExports extends LibraryExport<InteropLibrary> {
 
+        private static final Uncached UNCACHED = new Uncached();
+        private static final Cached CACHE = new Cached();
+
         private InteropLibraryExports() {
             super(InteropLibrary.class, TLLNull.class, false);
         }
@@ -33,51 +35,50 @@ final class TLLNullGen {
         @Override
         protected InteropLibrary createUncached(Object receiver) {
             assert receiver instanceof TLLNull;
-            return new Uncached(receiver);
+            return InteropLibraryExports.UNCACHED;
         }
 
         @Override
         protected InteropLibrary createCached(Object receiver) {
             assert receiver instanceof TLLNull;
-            return new Cached(receiver);
+            return InteropLibraryExports.CACHE;
         }
 
         @GeneratedBy(TLLNull.class)
         private static final class Cached extends InteropLibrary {
 
-            private final Class<? extends TLLNull> receiverClass_;
-
-            Cached(Object receiver) {
-                this.receiverClass_ = ((TLLNull) receiver).getClass();
+            Cached() {
             }
 
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
-                return receiver.getClass() == this.receiverClass_;
+                assert !(receiver instanceof TLLNull) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
+                return receiver instanceof TLLNull;
+            }
+
+            @Override
+            public boolean isAdoptable() {
+                return false;
             }
 
             @Override
             public boolean isNull(Object receiver) {
                 assert this.accepts(receiver) : "Invalid library usage. Library does not accept given receiver.";
-                return (CompilerDirectives.castExact(receiver, receiverClass_)).isNull();
+                return ((TLLNull) receiver).isNull();
             }
 
         }
         @GeneratedBy(TLLNull.class)
         private static final class Uncached extends InteropLibrary {
 
-            private final Class<? extends TLLNull> receiverClass_;
-
-            Uncached(Object receiver) {
-                this.receiverClass_ = ((TLLNull) receiver).getClass();
+            Uncached() {
             }
 
             @TruffleBoundary
             @Override
             public boolean accepts(Object receiver) {
-                assert receiver.getClass() != this.receiverClass_ || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
-                return receiver.getClass() == this.receiverClass_;
+                assert !(receiver instanceof TLLNull) || DYNAMIC_DISPATCH_LIBRARY_.getUncached().dispatch(receiver) == null : "Invalid library export 'ru.sbt.diploma.runtime.TLLNull'. Exported receiver with dynamic dispatch found but not expected.";
+                return receiver instanceof TLLNull;
             }
 
             @Override

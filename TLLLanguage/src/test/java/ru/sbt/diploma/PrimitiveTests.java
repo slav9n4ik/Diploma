@@ -42,7 +42,7 @@ public class PrimitiveTests {
     public void printSumTest() {
         context.eval("tll", "\n" +
                 "START \n" +
-                " 100 + 23 \n" +
+                " println(100 + 23) \n" +
                 "END\n"
         );
         print = context.getBindings("tll").getMember("START");
@@ -59,7 +59,7 @@ public class PrimitiveTests {
                         " @Partner: Romashka" + "\n" +
                         " println(Romashka)" + "\n" +
                         "END\n",
-                "testObject.sl").buildLiteral();
+                "testObject.tll").buildLiteral();
         context.eval(src);
 
         Value getValue = context.getBindings("tll").getMember("START");
@@ -75,9 +75,10 @@ public class PrimitiveTests {
                         "START \n" +
                         " @Partner: Romashka" + "\n" +
                         " Romashka.a: 12345" + "\n" +
+                        " println(12) " +
                         " return Romashka" + "\n" +
                         "END\n",
-                "testObject.sl").buildLiteral();
+                "testObject.tll").buildLiteral();
         context.eval(src);
 
         Value getValue = context.getBindings("tll").getMember("START");
@@ -88,5 +89,21 @@ public class PrimitiveTests {
         Assert.assertNotNull(a);
         Assert.assertTrue(a.isNumber());
         Assert.assertEquals(12345, a.asInt());
+    }
+
+    @Test
+    public void createArrayTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " array[0] = 123" + "\n" +
+                        " println(array[0])" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src); 
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        Number ret = getValue.execute().as(Number.class);
+        assertEquals(123, ret.intValue());
     }
 }

@@ -14,10 +14,10 @@ import com.oracle.truffle.api.library.ExportMessage;
  * practice.
  */
 @ExportLibrary(InteropLibrary.class)
-public class TLLNull implements TruffleObject {
+public final class TLLNull implements TruffleObject {
 
     /**
-     * The canonical value to represent {@code null} in SL.
+     * The canonical value to represent {@code null} in TLL.
      */
     public static final TLLNull SINGLETON = new TLLNull();
 
@@ -30,7 +30,7 @@ public class TLLNull implements TruffleObject {
 
     /**
      * This method is, e.g., called when using the {@code null} value in a string concatenation. So
-     * changing it has an effect on SL programs.
+     * changing it has an effect on TLL programs.
      */
     @Override
     public String toString() {

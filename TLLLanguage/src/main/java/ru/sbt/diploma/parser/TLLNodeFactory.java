@@ -254,6 +254,25 @@ public class TLLNodeFactory {
         return result;
     }
 
+    public TLLExpressionNode createReadArrayValue(TLLExpressionNode nameArray, Token literalToken) {
+        if (nameArray == null) {
+            return null;
+        }
+
+        String name = ((TLLStringLiteralNode) nameArray).executeGeneric(null);
+        TLLExpressionNode index = new TLLLongLiteralNode(Long.parseLong(literalToken.getText()));
+
+        log.info("CreateReadArrayValue: " + name);
+        final FrameSlot frameSlot = lexicalScope.locals.get(name);
+        if (frameSlot == null) {
+            throw new RuntimeException("Frame slot is null in CreateReadArrayValue");
+        }
+        final TLLExpressionNode result = TLLReadArrayLocalNodeGen.create(index, frameSlot);
+        result.setSourceSection(nameArray.getSourceCharIndex(), nameArray.getSourceLength());
+        result.addExpressionTag();
+        return result;
+    }
+
     /**
      * Returns an {@link TLLInvokeNode} for the given parameters.
      *
@@ -325,6 +344,27 @@ public class TLLNodeFactory {
 
         if (valueNode.hasSource()) {
             final int start = nameNode.getSourceCharIndex();
+            final int length = valueNode.getSourceEndIndex() - start;
+            result.setSourceSection(start, length);
+        }
+        result.addExpressionTag();
+
+        return result;
+    }
+
+    public TLLExpressionNode createWriteArrayValue(TLLExpressionNode name, TLLExpressionNode valueNode, TLLExpressionNode index) {
+        if (name == null || valueNode == null) {
+            return null;
+        }
+
+        String nameArray = ((TLLStringLiteralNode) name).executeGeneric(null);
+        FrameSlot frameSlot = frameDescriptor.findOrAddFrameSlot(
+                nameArray, null, FrameSlotKind.Object);
+        lexicalScope.locals.put(nameArray, frameSlot);
+        final TLLExpressionNode result = TLLWriteArrayLocalNodeGen.create(index, valueNode, frameSlot);
+
+        if (valueNode.hasSource()) {
+            final int start = name.getSourceCharIndex();
             final int length = valueNode.getSourceEndIndex() - start;
             result.setSourceSection(start, length);
         }
