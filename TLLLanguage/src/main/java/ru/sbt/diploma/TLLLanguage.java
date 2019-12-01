@@ -57,10 +57,10 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
         log.info("Start parsing");
         Source source = request.getSource();
         Map<String, RootCallTarget> blocks = TLLLanguageParser.parseTLL(this, source);
-        RootCallTarget main = blocks.get("START");
-        RootNode evalMain = new TLLEvalRootNode(this, null, blocks);
+        //RootCallTarget main = blocks.get("START");
+        RootNode evalMain = new TLLEvalRootNode(this, blocks);
         log.info("TLLLanguage - End parsing. Create call target!");
-        return Truffle.getRuntime().createCallTarget(evalMain);
+        return Truffle.getRuntime().createCallTarget(evalMain.getRootNode());
     }
 
     @Override
@@ -151,7 +151,11 @@ public class TLLLanguage extends TruffleLanguage<TLLContext> {
                         if (!hasNext()) {
                             throw new NoSuchElementException();
                         }
-                        Scope vscope = Scope.newBuilder(nextScope.getName(), nextScope.getVariables(frame)).node(nextScope.getNode()).arguments(nextScope.getArguments(frame)).build();
+                        Scope vscope = Scope.newBuilder(nextScope.getName(),
+                                nextScope.getVariables(frame))
+                                         .node(nextScope.getNode())
+                                         .arguments(nextScope.getArguments(frame))
+                                         .build();
                         previousScope = nextScope;
                         nextScope = null;
                         return vscope;

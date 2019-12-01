@@ -33,12 +33,12 @@ public final class TLLEvalRootNode extends RootNode {
 
     private final TruffleLanguage.ContextReference<TLLContext> reference;
 
-    @Child private DirectCallNode mainCallNode;
+    //@Child private DirectCallNode mainCallNode;
 
-    public TLLEvalRootNode(TLLLanguage language, RootCallTarget rootFunction, Map<String, RootCallTarget> functions) {
+    public TLLEvalRootNode(TLLLanguage language, Map<String, RootCallTarget> functions) {
         super(null); // internal frame
         this.functions = functions;
-        this.mainCallNode = rootFunction != null ? DirectCallNode.create(rootFunction) : null;
+        //this.mainCallNode = rootFunction != null ? DirectCallNode.create(rootFunction) : null;
         this.reference = language.getContextReference();
     }
 
@@ -67,16 +67,16 @@ public final class TLLEvalRootNode extends RootNode {
             reference.get().getFunctionRegistry().register(functions);
             registered = true;
         }
-        if (mainCallNode == null) {
+        //if (mainCallNode == null) {
             /* The source code did not have a "main" function, so nothing to execute. */
             return TLLNull.SINGLETON;
-        } else {
-            /* Conversion of arguments to types understood by TLL. */
-            Object[] arguments = frame.getArguments();
-            for (int i = 0; i < arguments.length; i++) {
-                arguments[i] = TLLContext.fromForeignValue(arguments[i]);
-            }
-            return mainCallNode.call(arguments);
-        }
+        //} else {
+//            /* Conversion of arguments to types understood by TLL. */
+//            Object[] arguments = frame.getArguments();
+//            for (int i = 0; i < arguments.length; i++) {
+//                arguments[i] = TLLContext.fromForeignValue(arguments[i]);
+//            }
+//            return mainCallNode.call(arguments);
+//        }
     }
 }

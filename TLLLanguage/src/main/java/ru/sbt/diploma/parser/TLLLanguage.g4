@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 }
-//научиться выводить значения массива
 
 @parser::members
 {
@@ -114,13 +113,21 @@ r = WHITESPACE*
 
 return_statement returns [TLLStatementNode result]
 :
-r='return'                                      { TLLExpressionNode value = null; }
+r='return'
+(
 (
     WHITESPACE*
     IDENTIFIER
                                                 { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
                                                 { TLLExpressionNode read_value = factory.createRead(assignmentName); }
                                                 { $result = factory.createReturn($r, read_value); }
+)
+|
+(
+    WHITESPACE*
+    numeric
+                                                { $result = factory.createReturn($r, $numeric.result); }
+)
 )
 ;
 

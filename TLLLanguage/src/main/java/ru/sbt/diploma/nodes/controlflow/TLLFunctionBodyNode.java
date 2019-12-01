@@ -2,9 +2,9 @@ package ru.sbt.diploma.nodes.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.object.ObjectType;
 import com.oracle.truffle.api.profiles.BranchProfile;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLRootNode;
 import ru.sbt.diploma.nodes.TLLStatementNode;
@@ -62,7 +62,7 @@ public final class TLLFunctionBodyNode extends TLLExpressionNode {
          */
         nullTaken.enter();
         /* Return the default null value. */
-        return TLLObjectType.SINGLETON;
+        return TLLNull.SINGLETON;
     }
 }
 
