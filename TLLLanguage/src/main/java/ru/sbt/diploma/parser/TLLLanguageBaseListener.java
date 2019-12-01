@@ -52,18 +52,6 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinary(TLLLanguageParser.BinaryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBinary(TLLLanguageParser.BinaryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterReturn_statement(TLLLanguageParser.Return_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -71,6 +59,18 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitReturn_statement(TLLLanguageParser.Return_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpression(TLLLanguageParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpression(TLLLanguageParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -112,30 +112,6 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumeric(TLLLanguageParser.NumericContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumeric(TLLLanguageParser.NumericContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpression(TLLLanguageParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpression(TLLLanguageParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -155,6 +131,30 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArray_statement(TLLLanguageParser.Array_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBinary(TLLLanguageParser.BinaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinary(TLLLanguageParser.BinaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumeric(TLLLanguageParser.NumericContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumeric(TLLLanguageParser.NumericContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -35,17 +35,17 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TLLLanguageParser#binary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBinary(TLLLanguageParser.BinaryContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#return_statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitReturn_statement(TLLLanguageParser.Return_statementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(TLLLanguageParser.ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#init_obj}.
 	 * @param ctx the parse tree
@@ -65,18 +65,6 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInit(TLLLanguageParser.InitContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TLLLanguageParser#numeric}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumeric(TLLLanguageParser.NumericContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link TLLLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression(TLLLanguageParser.ExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#builtin_functions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -88,4 +76,16 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArray_statement(TLLLanguageParser.Array_statementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#numeric}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumeric(TLLLanguageParser.NumericContext ctx);
 }

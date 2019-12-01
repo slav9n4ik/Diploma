@@ -40,16 +40,6 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#binary}.
-	 * @param ctx the parse tree
-	 */
-	void enterBinary(TLLLanguageParser.BinaryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#binary}.
-	 * @param ctx the parse tree
-	 */
-	void exitBinary(TLLLanguageParser.BinaryContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#return_statement}.
 	 * @param ctx the parse tree
 	 */
@@ -59,6 +49,16 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReturn_statement(TLLLanguageParser.Return_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression(TLLLanguageParser.ExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression(TLLLanguageParser.ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#init_obj}.
 	 * @param ctx the parse tree
@@ -90,26 +90,6 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitInit(TLLLanguageParser.InitContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#numeric}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumeric(TLLLanguageParser.NumericContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#numeric}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumeric(TLLLanguageParser.NumericContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpression(TLLLanguageParser.ExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpression(TLLLanguageParser.ExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#builtin_functions}.
 	 * @param ctx the parse tree
 	 */
@@ -129,4 +109,24 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArray_statement(TLLLanguageParser.Array_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#numeric}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumeric(TLLLanguageParser.NumericContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#numeric}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumeric(TLLLanguageParser.NumericContext ctx);
 }

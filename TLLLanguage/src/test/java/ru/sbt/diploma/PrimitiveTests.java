@@ -30,10 +30,12 @@ public class PrimitiveTests {
         context.eval("tll", "\n" +
                 "START \n" +
                 " println(100) \n" +
+                " return 100 \n" +
                 "END\n"
         );
         print = context.getBindings("tll").getMember("START");
-        print.execute();
+        Number ret = print.execute().as(Number.class);
+        assertEquals(ret.longValue(), 100);
     }
 
     @Test
@@ -41,10 +43,12 @@ public class PrimitiveTests {
         context.eval("tll", "\n" +
                 "START \n" +
                 " println(100 + 23) \n" +
+                " return 100 + 23 \n" +
                 "END\n"
         );
         print = context.getBindings("tll").getMember("START");
-        print.execute();
+        Number ret = print.execute().as(Number.class);
+        assertEquals(ret.longValue(), 123);
     }
 
     @Test
@@ -71,7 +75,8 @@ public class PrimitiveTests {
                         "START \n" +
                         " @Partner: Romashka" + "\n" +
                         " Romashka.a: 12345" + "\n" +
-                        " println(12) " +
+                        " Romashka.b: 54321" + "\n" +
+                        " Romashka.c: kek" + "\n" +     //Strings not allowed
                         " return Romashka" + "\n" +
                         "END\n",
                 "testObject.tll").buildLiteral();
@@ -85,6 +90,15 @@ public class PrimitiveTests {
         Assert.assertNotNull(a);
         Assert.assertTrue(a.isNumber());
         Assert.assertEquals(12345, a.asInt());
+
+        Value b = obj.getMember("b");
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.isNumber());
+        Assert.assertEquals(54321, b.asInt());
+
+        Value c = obj.getMember("c");
+        Assert.assertNotNull(c);
+        Assert.assertFalse(b.isString());
     }
 
     @Test
@@ -92,15 +106,17 @@ public class PrimitiveTests {
         final Source src = Source.newBuilder("tll",
                 "\n" +
                         "START \n" +
-                        " array[1] = 1" + "\n" +
-                        " array[2] = 2" + "\n" +
+                        " array[1] = 1234" + "\n" +
+                        " array[2] = 5678" + "\n" +
                         " println(array[1])" + "\n" +
                         " println(array[2])" + "\n" +
+                        " return array[1] " + "\n" +
                         "END\n",
                 "testObject.tll").buildLiteral();
         context.eval(src);
 
         Value getValue = context.getBindings("tll").getMember("START");
-        getValue.execute();
+        Number ret = getValue.execute().as(Number.class);
+        assertEquals(ret.longValue(), 1234);
     }
 }
