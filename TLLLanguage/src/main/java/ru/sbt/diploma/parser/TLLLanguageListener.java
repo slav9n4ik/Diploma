@@ -40,6 +40,16 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#return_statement}.
 	 * @param ctx the parse tree
 	 */
@@ -60,6 +70,16 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitInit_obj(TLLLanguageParser.Init_objContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#init_prop}.
+	 * @param ctx the parse tree
+	 */
+	void enterInit_prop(TLLLanguageParser.Init_propContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#init_prop}.
+	 * @param ctx the parse tree
+	 */
+	void exitInit_prop(TLLLanguageParser.Init_propContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#init}.
 	 * @param ctx the parse tree
 	 */
@@ -69,16 +89,6 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInit(TLLLanguageParser.InitContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#sum}.
-	 * @param ctx the parse tree
-	 */
-	void enterSum(TLLLanguageParser.SumContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#sum}.
-	 * @param ctx the parse tree
-	 */
-	void exitSum(TLLLanguageParser.SumContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#numeric}.
 	 * @param ctx the parse tree
@@ -100,15 +110,15 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitExpression(TLLLanguageParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#member_expression}.
+	 * Enter a parse tree produced by {@link TLLLanguageParser#builtin_functions}.
 	 * @param ctx the parse tree
 	 */
-	void enterMember_expression(TLLLanguageParser.Member_expressionContext ctx);
+	void enterBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#member_expression}.
+	 * Exit a parse tree produced by {@link TLLLanguageParser#builtin_functions}.
 	 * @param ctx the parse tree
 	 */
-	void exitMember_expression(TLLLanguageParser.Member_expressionContext ctx);
+	void exitBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#array_statement}.
 	 * @param ctx the parse tree

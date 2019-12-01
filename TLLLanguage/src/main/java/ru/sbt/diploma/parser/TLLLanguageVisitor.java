@@ -35,6 +35,12 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(TLLLanguageParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#binary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinary(TLLLanguageParser.BinaryContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#return_statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -47,17 +53,17 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInit_obj(TLLLanguageParser.Init_objContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TLLLanguageParser#init_prop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInit_prop(TLLLanguageParser.Init_propContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#init}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInit(TLLLanguageParser.InitContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link TLLLanguageParser#sum}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSum(TLLLanguageParser.SumContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#numeric}.
 	 * @param ctx the parse tree
@@ -71,11 +77,11 @@ public interface TLLLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(TLLLanguageParser.ExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TLLLanguageParser#member_expression}.
+	 * Visit a parse tree produced by {@link TLLLanguageParser#builtin_functions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMember_expression(TLLLanguageParser.Member_expressionContext ctx);
+	T visitBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TLLLanguageParser#array_statement}.
 	 * @param ctx the parse tree

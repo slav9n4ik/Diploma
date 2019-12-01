@@ -52,6 +52,18 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBinary(TLLLanguageParser.BinaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinary(TLLLanguageParser.BinaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterReturn_statement(TLLLanguageParser.Return_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -76,6 +88,18 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterInit_prop(TLLLanguageParser.Init_propContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInit_prop(TLLLanguageParser.Init_propContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInit(TLLLanguageParser.InitContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -83,18 +107,6 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInit(TLLLanguageParser.InitContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSum(TLLLanguageParser.SumContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSum(TLLLanguageParser.SumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,13 +136,13 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMember_expression(TLLLanguageParser.Member_expressionContext ctx) { }
+	@Override public void enterBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMember_expression(TLLLanguageParser.Member_expressionContext ctx) { }
+	@Override public void exitBuiltin_functions(TLLLanguageParser.Builtin_functionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
