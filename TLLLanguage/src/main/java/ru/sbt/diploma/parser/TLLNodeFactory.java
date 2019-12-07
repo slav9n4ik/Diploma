@@ -193,6 +193,27 @@ public class TLLNodeFactory {
         result.setSourceSection(startPos, endPos - startPos);
         result.addExpressionTag();
 
+        log.info("createReadProperty: " + nameNode.toString());
+        return result;
+    }
+
+    public TLLExpressionNode createReadArrayProperty(TLLExpressionNode receiverNode,
+                                                     TLLExpressionNode nameNode,
+                                                     Token literalToken) {
+        if (receiverNode == null || nameNode == null || literalToken == null) {
+            return null;
+        }
+
+        TLLExpressionNode index = new TLLLongLiteralNode(Long.parseLong(literalToken.getText()));
+        final TLLExpressionNode result = TLLReadArrayPropertyNodeGen.create(receiverNode, nameNode, index);
+        //final TLLExpressionNode result = TLLReadArrayPropertyNodeGen.create(receiverNode, index);
+
+        final int startPos = receiverNode.getSourceCharIndex();
+        final int endPos = nameNode.getSourceEndIndex();
+        result.setSourceSection(startPos, endPos - startPos);
+        result.addExpressionTag();
+
+        log.info("createReadArrayProperty" + nameNode.toString() + " index: " + index);
         return result;
     }
 
@@ -205,7 +226,9 @@ public class TLLNodeFactory {
      * @return An SLExpressionNode for the given parameters. null if receiverNode, nameNode or
      *         valueNode is null.
      */
-    public TLLExpressionNode createWriteProperty(TLLExpressionNode receiverNode, TLLExpressionNode nameNode, TLLExpressionNode valueNode) {
+    public TLLExpressionNode createWriteProperty(TLLExpressionNode receiverNode,
+                                                 TLLExpressionNode nameNode,
+                                                 TLLExpressionNode valueNode) {
         if (receiverNode == null || nameNode == null || valueNode == null) {
             return null;
         }
@@ -217,6 +240,27 @@ public class TLLNodeFactory {
         result.setSourceSection(start, length);
         result.addExpressionTag();
 
+        return result;
+    }
+
+    public TLLExpressionNode createWriteArrayProperty(TLLExpressionNode receiverNode,
+                                                      TLLExpressionNode nameNode,
+                                                      TLLExpressionNode valueNode,
+                                                      TLLExpressionNode index) {
+        if (receiverNode == null || nameNode == null
+                || valueNode == null || index == null) {
+            return null;
+        }
+
+        final TLLExpressionNode result = TLLWriteArrayPropertyNodeGen.create(receiverNode, nameNode, valueNode, index);
+        //final TLLExpressionNode result = TLLWriteArrayPropertyNodeGen.create(receiverNode, nameNode, valueNode);
+
+        final int start = receiverNode.getSourceCharIndex();
+        final int length = valueNode.getSourceEndIndex() - start;
+        result.setSourceSection(start, length);
+        result.addExpressionTag();
+
+        log.info("createReadArrayProperty" + nameNode.toString() + " index: " + index);
         return result;
     }
 

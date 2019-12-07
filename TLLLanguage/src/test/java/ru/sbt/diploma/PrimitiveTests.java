@@ -119,4 +119,40 @@ public class PrimitiveTests {
         Number ret = getValue.execute().as(Number.class);
         assertEquals(ret.longValue(), 1234);
     }
+
+    @Test
+    public void createObjectArrayPropTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " Romashka.sublimit[1] = 12345" + "\n" +
+                        " Romashka.sublimit[2] = 54321" + "\n" +
+                        " return Romashka.sublimit[2]" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        Number ret = getValue.execute().as(Number.class);
+        assertEquals(ret.longValue(), 54321);
+    }
+
+    @Test
+    public void printObjectArrayPropTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " Romashka.sublimit[1] = 12345" + "\n" +
+                        " Romashka.sublimit[2] = 54321" + "\n" +
+                        " println(Romashka.sublimit[2])" + "\n" +
+                        " println(Romashka.sublimit[1])" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
 }

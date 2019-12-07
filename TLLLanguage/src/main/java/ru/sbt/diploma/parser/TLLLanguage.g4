@@ -77,7 +77,6 @@ e='END'
 )
 ;
 
-//TODO отрефакторить эту сраку
 statement returns [TLLStatementNode result]
 :
 r = WHITESPACE*
@@ -126,7 +125,13 @@ WHITESPACE*
         )
         |
         (
-            array_statement[assignmentName] { $result = $array_statement.result; }
+            array_statement[assignmentName, null]
+                                            { $result = $array_statement.result; }
+        )
+        |
+        (
+            init_prop[assignmentName]
+                                            { $result = $init_prop.result; }
         )
     )
 )
@@ -154,15 +159,25 @@ init_prop[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
 (
     '.'
                                             { TLLExpressionNode receiver = factory.createRead(assignmentName); }
-    IDENTIFIER
+    (
+        (
+            IDENTIFIER
                                             { TLLExpressionNode nestedAssignmentName = factory.createStringLiteral($IDENTIFIER, false); }
                                             { $result = factory.createReadProperty(receiver, nestedAssignmentName); }
-    init[$result, receiver, nestedAssignmentName]
+            init[$result, receiver, nestedAssignmentName]
                                             { $result = $init.result; }
+        )
+        |
+        (
+            IDENTIFIER
+                                            { TLLExpressionNode propName = factory.createStringLiteral($IDENTIFIER, false); }
+            array_statement[propName, receiver]
+                                            { $result = $array_statement.result; }
+        )
+    )
 )
 ;
 
-//TODO полная шляпа, отрефакторить
 init[TLLExpressionNode r, TLLExpressionNode assignmentReceiver, TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
 :
 s = WHITESPACE*
@@ -190,7 +205,12 @@ s = WHITESPACE*
 (
     '='
     numeric                                 { TLLExpressionNode index = r;}
-                                            { $result = factory.createWriteArrayValue(assignmentName, $numeric.result, index); }
+                                            { if(assignmentReceiver == null) {
+                                                  $result = factory.createWriteArrayValue(assignmentName, $numeric.result, index);
+                                              } else {
+                                                  $result = factory.createWriteArrayProperty(assignmentReceiver, assignmentName,$numeric.result, index);
+                                              }
+                                            }
 )
 |
 (
@@ -214,17 +234,22 @@ builtin_functions[TLLExpressionNode assignmentName] returns [TLLExpressionNode r
 ;
 
 //Инициализация массива
-array_statement[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
+array_statement[TLLExpressionNode assignmentName, TLLExpressionNode receiver] returns [TLLExpressionNode result]
 :
+//TODO обработать проперти массив
 (
     s='['
         NUMERIC_LITERAL
                                             { TLLExpressionNode index = factory.createNumericLiteral($NUMERIC_LITERAL); }
     e=']'
         WHITESPACE*
-    init[index, null, assignmentName]       { TLLExpressionNode initResult = $init.result; }
+    init[index, receiver, assignmentName]   { TLLExpressionNode initResult = $init.result; }
                                             {  if (initResult == null) {
-                                                    $result = factory.createReadArrayValue(assignmentName, $NUMERIC_LITERAL);
+                                                    if (receiver == null) {
+                                                        $result = factory.createReadArrayValue(assignmentName, $NUMERIC_LITERAL);
+                                                    } else {
+                                                        $result = factory.createReadArrayProperty(receiver, assignmentName, $NUMERIC_LITERAL);
+                                                    }
                                                 } else {
                                                     $result = initResult;
                                                 }
