@@ -164,8 +164,15 @@ init_prop[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
             IDENTIFIER
                                             { TLLExpressionNode nestedAssignmentName = factory.createStringLiteral($IDENTIFIER, false); }
                                             { $result = factory.createReadProperty(receiver, nestedAssignmentName); }
+                                            { TLLExpressionNode readResult = $result; }
             init[$result, receiver, nestedAssignmentName]
-                                            { $result = $init.result; }
+                                            {
+                                                if($init.result != null) {
+                                                    $result = $init.result;
+                                                } else {
+                                                    $result = readResult;
+                                                }
+                                            }
         )
         |
         (
