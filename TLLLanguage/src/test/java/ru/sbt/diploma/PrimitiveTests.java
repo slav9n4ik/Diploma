@@ -16,7 +16,7 @@ public class PrimitiveTests {
     private Value print;
 
     @Before
-    public void initEngine() throws Exception {
+    public void initEngine() {
         context = Context.create();
     }
 
@@ -106,8 +106,8 @@ public class PrimitiveTests {
         final Source src = Source.newBuilder("tll",
                 "\n" +
                         "START \n" +
-                        " array[1] = 1234" + "\n" +
-                        " array[2] = 5678" + "\n" +
+                        " array[1]: 1234" + "\n" +
+                        " array[2]: 5678" + "\n" +
                         " println(array[1])" + "\n" +
                         " println(array[2])" + "\n" +
                         " return array[1] " + "\n" +
@@ -126,8 +126,8 @@ public class PrimitiveTests {
                 "\n" +
                         "START \n" +
                         " @Partner: Romashka" + "\n" +
-                        " Romashka.sublimit[1] = 12345" + "\n" +
-                        " Romashka.sublimit[2] = 54321" + "\n" +
+                        " Romashka.sublimit[1]: 12345" + "\n" +
+                        " Romashka.sublimit[2]: 54321" + "\n" +
                         " return Romashka.sublimit[2]" + "\n" +
                         "END\n",
                 "testObject.tll").buildLiteral();
@@ -144,8 +144,8 @@ public class PrimitiveTests {
                 "\n" +
                         "START \n" +
                         " @Partner: Romashka" + "\n" +
-                        " Romashka.sublimit[1] = 12345" + "\n" +
-                        " Romashka.sublimit[2] = 54321" + "\n" +
+                        " Romashka.sublimit[1]: 12345" + "\n" +
+                        " Romashka.sublimit[2]: 54321" + "\n" +
                         " println(Romashka.sublimit[2])" + "\n" +
                         " println(Romashka.sublimit[1])" + "\n" +
                         "END\n",
@@ -167,11 +167,11 @@ public class PrimitiveTests {
                         " @Partner: SuperRomashka" + "\n" +
                         " SuperRomashka.limit: 200000" + "\n" +
 
-                        " Romashka.sublimit[1] = 12345" + "\n" +
-                        " Romashka.sublimit[2] = 54321" + "\n" +
+                        " Romashka.sublimit[1]: 12345" + "\n" +
+                        " Romashka.sublimit[2]: 54321" + "\n" +
 
-                        " SuperRomashka.sublimit[1] = 67890" + "\n" +
-                        " SuperRomashka.sublimit[2] = 9876" + "\n" +
+                        " SuperRomashka.sublimit[1]: 67890" + "\n" +
+                        " SuperRomashka.sublimit[2]: 9876" + "\n" +
 
                         " println(Romashka.limit)" + "\n" +
                         " println(Romashka.sublimit[2])" + "\n" +

@@ -165,7 +165,7 @@ init_prop[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
                                             { TLLExpressionNode nestedAssignmentName = factory.createStringLiteral($IDENTIFIER, false); }
                                             { $result = factory.createReadProperty(receiver, nestedAssignmentName); }
                                             { TLLExpressionNode readResult = $result; }
-            init[$result, receiver, nestedAssignmentName]
+            init[null, receiver, nestedAssignmentName]
                                             {
                                                 if($init.result != null) {
                                                     $result = $init.result;
@@ -204,20 +204,19 @@ s = WHITESPACE*
                                               }
                                             }
         |
-        numeric                             { $result = factory.createWriteProperty(assignmentReceiver, assignmentName, $numeric.result); }
-    )
-)
-|
-//Массив. Присваивание значения.
-(
-    '='
-    numeric                                 { TLLExpressionNode index = r;}
-                                            { if(assignmentReceiver == null) {
-                                                  $result = factory.createWriteArrayValue(assignmentName, $numeric.result, index);
-                                              } else {
-                                                  $result = factory.createWriteArrayProperty(assignmentReceiver, assignmentName,$numeric.result, index);
-                                              }
+        numeric                             { TLLExpressionNode index = r;}
+                                            {
+                                                if (index != null) {
+                                                    if(assignmentReceiver == null) {
+                                                        $result = factory.createWriteArrayValue(assignmentName, $numeric.result, index);
+                                                    } else {
+                                                        $result = factory.createWriteArrayProperty(assignmentReceiver, assignmentName,$numeric.result, index);
+                                                    }
+                                                } else {
+                                                    $result = factory.createWriteProperty(assignmentReceiver, assignmentName, $numeric.result);
+                                                }
                                             }
+    )
 )
 |
 (
