@@ -95,6 +95,7 @@ public final class TLLContext {
     private void installBuiltins() {
         installBuiltin(TLLPrintLnBuiltinFactory.getInstance());
         installBuiltin(TLLPartnerObjBuildinFactory.getInstance());
+        installBuiltin(TLLCheckBuiltinFactory.getInstance());
 
         //installBuiltin(TLLReadLnBuiltinFactory.getInstance());
         //installBuiltin(TLLImportBuiltinFactory.getInstance());

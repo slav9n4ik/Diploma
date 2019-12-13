@@ -187,4 +187,25 @@ public class PrimitiveTests {
         Value getValue = context.getBindings("tll").getMember("START");
         getValue.execute();
     }
+
+    @Test
+    public void checkFunctionTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " Romashka.limit: 100000" + "\n" +
+
+                        " Romashka.sublimit[1]: 12345" + "\n" +
+                        " Romashka.sublimit[2]: 554321" + "\n" +
+
+                        " check(Romashka)" + "\n" +
+
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
 }

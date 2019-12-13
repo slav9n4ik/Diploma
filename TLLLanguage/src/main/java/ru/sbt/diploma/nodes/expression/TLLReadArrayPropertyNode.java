@@ -37,16 +37,4 @@ public abstract class TLLReadArrayPropertyNode extends TLLExpressionNode {
             throw TLLUndefinedNameException.undefinedProperty(this, name);
         }
     }
-
-//    @Specialization(guards = "arrays.hasArrayElements(receiver)", limit = "LIBRARY_LIMIT")
-//    protected Object readArray(Object receiver, Object index,
-//                               @CachedLibrary("receiver") InteropLibrary arrays,
-//                               @CachedLibrary("index") InteropLibrary numbers) {
-//        try {
-//            return arrays.readArrayElement(receiver, numbers.asLong(index));
-//        } catch (UnsupportedMessageException | InvalidArrayIndexException e) {
-//            // read was not successful. In SL we only have basic support for errors.
-//            throw TLLUndefinedNameException.undefinedProperty(this, index);
-//        }
-//    }
 }
