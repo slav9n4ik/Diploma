@@ -17,6 +17,7 @@ import com.oracle.truffle.api.source.Source;
 import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.builtin.*;
+import ru.sbt.diploma.nodes.BufferArray;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLRootNode;
 import ru.sbt.diploma.nodes.local.TLLReadArgumentNode;
@@ -94,23 +95,8 @@ public final class TLLContext {
      */
     private void installBuiltins() {
         installBuiltin(TLLPrintLnBuiltinFactory.getInstance());
-        installBuiltin(TLLPartnerObjBuildinFactory.getInstance());
+        installBuiltin(TLLPartnerObjBuiltinFactory.getInstance());
         installBuiltin(TLLCheckBuiltinFactory.getInstance());
-
-        //installBuiltin(TLLReadLnBuiltinFactory.getInstance());
-        //installBuiltin(TLLImportBuiltinFactory.getInstance());
-        //installBuiltin(TLLEvalBuiltinFactory.getInstance());
-        //installBuiltin(TLLWrapPrimitiveBuiltinFactory.getInstance());
-
-        //installBuiltin(TLLIsNullBuiltinFactory.getInstance());
-        //installBuiltin(TLLIsExecutableBuiltinFactory.getInstance());
-        //installBuiltin(TLLHasSizeBuiltinFactory.getInstance());
-        //installBuiltin(TLLGetSizeBuiltinFactory.getInstance());
-        //installBuiltin(TLLNanoTimeBuiltinFactory.getInstance());
-        //installBuiltin(TLLDefineFunctionBuiltinFactory.getInstance());
-        //installBuiltin(TLLStackTraceBuiltinFactory.getInstance());
-        //installBuiltin(TLLHelloEqualsWorldBuiltinFactory.getInstance());
-        //installBuiltin(TLLNewObjectBuiltinFactory.getInstance());
     }
 
     public void installBuiltin(NodeFactory<? extends TLLBuiltinNode> factory) {
@@ -170,6 +156,15 @@ public final class TLLContext {
         DynamicObject object = null;
         reporter.onEnter(null, 0, AllocationReporter.SIZE_UNKNOWN);
         object = emptyShape.newInstance();
+        reporter.onReturnValue(object, 0, AllocationReporter.SIZE_UNKNOWN);
+        return object;
+    }
+
+    public DynamicObject createPartnerObject(AllocationReporter reporter) {
+        DynamicObject object = null;
+        reporter.onEnter(null, 0, AllocationReporter.SIZE_UNKNOWN);
+        object = emptyShape.newInstance();
+        object.define("sublimit", new BufferArray());
         reporter.onReturnValue(object, 0, AllocationReporter.SIZE_UNKNOWN);
         return object;
     }

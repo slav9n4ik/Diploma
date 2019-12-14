@@ -5,12 +5,18 @@
 	+ Олег Шелаев ссылка внизу ~ 45мин
 	+ Проекция Футамура
 	+ Смешанные вычисления Ершов
-2. **Condition Profile for Branch** (**ConditionProfile** class)
-	+ Презентация Oracle, слайд 25, ~30мин
-3. **Assumption**
+2. **Transfer to Interpreter**
+	+ Презентация Oracle, слайд 22, ~21 мин
+3. **Condition Profile for Branch** (**ConditionProfile** class)
+	+ Презентация Oracle, слайд 25, ~30мин    
+	+ Смысл в том, чтобы не компилировать много ненужного кода и не тратить на это время и ресурсы, если 
+	часть этого кода действительно встречается редко. Можно указать с помощью функции transferToInterpreterAndInvalidate(), 
+	что код, который следует после нее можно не вычислять, до тех пор, пока не поменяется поле @CompilationFinal  
+	Слайд 23
+4. **Assumption**
 	+ Презентация Oracle, слайд 27, ~33мин
 	+ Олег Шелаев ссылка внизу ~ 47мин
-4. **Specialization**
+5. **Specialization**
 	+ Олег Шелаев ссылка внизу ~ 49мин
 	+ Презентация Oracle, слайд 29, ~36мин
 ---
@@ -48,4 +54,8 @@ https://habr.com/ru/post/341138/
 **Настройка idea annotation processor**
 https://stackoverflow.com/questions/43999714/intellij-maven-default-annotation-processors-configuration-getting-lost
 https://medium.com/@komamitsu/how-to-run-simplelanguage-built-using-truffle-for-the-graalvm-on-intellij-26b08dad9238
+
+**Cтатьи**
+http://lafo.ssw.uni-linz.ac.at/papers/2013_Onward_OneVMToRuleThemAll.pdf - truffle approach    
+
 

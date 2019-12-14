@@ -10,6 +10,7 @@ import com.oracle.truffle.api.interop.UnsupportedMessageException;
 import com.oracle.truffle.api.interop.UnsupportedTypeException;
 import com.oracle.truffle.api.library.CachedLibrary;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.profiles.BranchProfile;
 import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.runtime.TLLContext;
@@ -21,7 +22,7 @@ import ru.sbt.diploma.runtime.TLLUndefinedNameException;
  */
 @NodeInfo(shortName = "Partner")
 @Log4j
-public abstract class TLLPartnerObjBuildin extends TLLBuiltinNode {
+public abstract class TLLPartnerObjBuiltin extends TLLBuiltinNode {
 
     @Specialization
     @SuppressWarnings("unused")
@@ -29,17 +30,6 @@ public abstract class TLLPartnerObjBuildin extends TLLBuiltinNode {
                             @Cached("context.getAllocationReporter()") AllocationReporter reporter) {
         //TODO проверь это @SuppressWarnings("unused")
         log.info("NewPartnerObject invoke");
-        return context.createObject(reporter);
-    }
-
-    @Specialization(guards = "!values.isNull(obj)", limit = "3")
-    public Object newPartnerObject(Object obj, @CachedLibrary("obj") InteropLibrary values) {
-        try {
-            log.info("NewPartnerObject invoke");
-            return values.instantiate(obj);
-        } catch (UnsupportedTypeException | ArityException | UnsupportedMessageException e) {
-            /* Foreign access was not successful. */
-            throw TLLUndefinedNameException.undefinedFunction(this, obj);
-        }
+        return context.createPartnerObject(reporter);
     }
 }

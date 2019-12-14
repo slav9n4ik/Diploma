@@ -29,12 +29,7 @@ public abstract class TLLWriteArrayPropertyNode extends TLLExpressionNode {
                            @CachedLibrary("receiver") InteropLibrary objectLibrary,
                            @Cached TLLToMemberNode asMember) {
         try {
-            BufferArray list = null;
-            if (!objectLibrary.isMemberReadable(receiver, asMember.execute(name))) {
-                list = new BufferArray();
-            } else {
-                list = (BufferArray) objectLibrary.readMember(receiver, asMember.execute(name));
-            }
+            BufferArray list = (BufferArray) objectLibrary.readMember(receiver, asMember.execute(name));
             list.buffer.add((int) index - 1, value);
             String execute = asMember.execute(name);
             log.info("writeObject in Write Property Array Node");

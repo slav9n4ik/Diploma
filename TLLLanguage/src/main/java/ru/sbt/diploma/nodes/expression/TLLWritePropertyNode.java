@@ -27,19 +27,6 @@ import ru.sbt.diploma.runtime.TLLUndefinedNameException;
 public abstract class TLLWritePropertyNode extends TLLExpressionNode {
     static final int LIBRARY_LIMIT = 3;
 
-    @Specialization(guards = "arrays.hasArrayElements(receiver)", limit = "LIBRARY_LIMIT")
-    protected Object write(Object receiver, Object index, Object value,
-                           @CachedLibrary("receiver") InteropLibrary arrays,
-                           @CachedLibrary("index") InteropLibrary numbers) {
-        try {
-            arrays.writeArrayElement(receiver, numbers.asLong(index), value);
-        } catch (UnsupportedMessageException | UnsupportedTypeException | InvalidArrayIndexException e) {
-            // read was not successful. In SL we only have basic support for errors.
-            throw TLLUndefinedNameException.undefinedProperty(this, index);
-        }
-        return value;
-    }
-
     @Specialization(limit = "LIBRARY_LIMIT")
     protected Object write(Object receiver, Object name, Object value,
                            @CachedLibrary("receiver") InteropLibrary objectLibrary,

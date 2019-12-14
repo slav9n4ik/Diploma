@@ -6,6 +6,7 @@ import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.interop.InteropLibrary;
 import com.oracle.truffle.api.library.CachedLibrary;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.profiles.BranchProfile;
 import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.TLLLanguage;
 import ru.sbt.diploma.nodes.BufferArray;
@@ -16,6 +17,8 @@ import java.io.PrintWriter;
 @NodeInfo(shortName = "check")
 @Log4j
 public abstract class TLLCheckBuiltin extends TLLBuiltinNode {
+
+    private final BranchProfile readMemberException = BranchProfile.create();
 
     @Specialization(guards = "objects.hasMembers(receiver)", limit = "3")
     public boolean check(Object receiver,
@@ -36,6 +39,7 @@ public abstract class TLLCheckBuiltin extends TLLBuiltinNode {
                 doPrint(context.getOutput(), "Лимит больше суммы сублимитов");
             }
         } catch (Exception e) {
+            readMemberException.enter();
             e.printStackTrace();
         }
         return true;
