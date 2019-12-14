@@ -126,11 +126,12 @@ public class TLLNodeFactory {
     }
 
     public TLLExpressionNode createBinary(Token opToken, TLLExpressionNode leftNode, TLLExpressionNode rightNode) {
-        log.info("Create Binary Left: " + leftNode.toString() + " Right: "
-                + rightNode.toString() + " Expression: " + opToken.getText());
         if (leftNode == null || rightNode == null) {
             return null;
         }
+        log.info("Create Binary Left: " + leftNode.toString() + " Right: "
+                + rightNode.toString() + " Expression: " + opToken.getText());
+
         final TLLExpressionNode leftUnboxed = TLLUnboxNodeGen.create(leftNode);
         final TLLExpressionNode rightUnboxed = TLLUnboxNodeGen.create(rightNode);
 

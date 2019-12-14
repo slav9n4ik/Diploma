@@ -1,5 +1,6 @@
 package ru.sbt.diploma.nodes.local;
 
+import com.oracle.truffle.api.CompilerDirectives.*;
 import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.NodeField;
 import com.oracle.truffle.api.dsl.Specialization;
@@ -10,6 +11,8 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import lombok.extern.log4j.Log4j;
 import ru.sbt.diploma.nodes.BufferArray;
 import ru.sbt.diploma.nodes.TLLExpressionNode;
+
+import static com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate;
 
 @NodeChild("index")
 @NodeChild("valueNode")
@@ -23,35 +26,32 @@ public abstract class TLLWriteArrayLocalNode extends TLLExpressionNode {
      */
     protected abstract FrameSlot getSlot();
 
+    @CompilationFinal
+    private BufferArray bufferArray;
+
     @Specialization(guards = "isBufferObjectOrIllegal(frame)")
     protected long writeLongByIndex(VirtualFrame frame, long index, long value) {
         log.info("writeLong in Write Local Array Node");
-        /* Initialize type on first write of the local variable. No-op if kind is already Long. */
-        final FrameSlotKind kind = frame.getFrameDescriptor().getFrameSlotKind(getSlot());
-        BufferArray bufferArray = null;
-        if (kind == FrameSlotKind.Illegal) {
-            bufferArray = createBufferArray(value);
-        } else {
-            try {
-                bufferArray = (BufferArray) frame.getObject(getSlot());
-                if (bufferArray == null) {
-                    bufferArray = createBufferArray(value);
-                } else {
-                    bufferArray.buffer.add((int) index - 1, value);
-                }
-            } catch (FrameSlotTypeException e) {
-                e.printStackTrace();
+        try {
+            bufferArray = (BufferArray) frame.getObject(getSlot());
+            if (bufferArray == null) {
+                /* We are about to change a @CompilationFinal field. */
+                transferToInterpreterAndInvalidate();
+                 /* First execution of the node */
+                bufferArray = createBufferArray();
             }
+            bufferArray.buffer.add((int) index - 1, value);
+        } catch (FrameSlotTypeException e) {
+            e.printStackTrace();
         }
         frame.getFrameDescriptor().setFrameSlotKind(getSlot(), FrameSlotKind.Object);
         frame.setObject(getSlot(), bufferArray);
         return value;
     }
 
-    private BufferArray createBufferArray(long value) {
+    private BufferArray createBufferArray() {
         BufferArray bufferArray;
         bufferArray = new BufferArray();
-        bufferArray.buffer.add(value);
         return bufferArray;
     }
 
