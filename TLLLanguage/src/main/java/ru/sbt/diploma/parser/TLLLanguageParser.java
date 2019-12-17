@@ -33,20 +33,21 @@ public class TLLLanguageParser extends Parser {
 		T__9=10, WHITESPACE=11, IDENTIFIER=12, OPERATION=13, NUMERIC_LITERAL=14;
 	public static final int
 		RULE_tlllanguage = 0, RULE_statement = 1, RULE_return_statement = 2, RULE_expression = 3, 
-		RULE_init_obj = 4, RULE_init_prop = 5, RULE_init = 6, RULE_builtin_functions = 7, 
-		RULE_array_statement = 8, RULE_binary = 9, RULE_numeric = 10;
+		RULE_createLocalVar = 4, RULE_init_obj = 5, RULE_property = 6, RULE_init = 7, 
+		RULE_builtin_functions = 8, RULE_array_statement = 9, RULE_binary = 10, 
+		RULE_numeric = 11;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"tlllanguage", "statement", "return_statement", "expression", "init_obj", 
-			"init_prop", "init", "builtin_functions", "array_statement", "binary", 
-			"numeric"
+			"tlllanguage", "statement", "return_statement", "expression", "createLocalVar", 
+			"init_obj", "property", "init", "builtin_functions", "array_statement", 
+			"binary", "numeric"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'START'", "'END'", "'return'", "'@'", "'.'", "':'", "'('", "')'", 
+			null, "'START'", "'END'", "'return'", "':'", "'@'", "'.'", "'('", "')'", 
 			"'['", "']'"
 		};
 	}
@@ -192,58 +193,58 @@ public class TLLLanguageParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(25);
+			setState(27);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(22);
+				setState(24);
 				((TlllanguageContext)_localctx).block = match(WHITESPACE);
 				}
 				}
-				setState(27);
+				setState(29);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
 			{
-			setState(28);
+			setState(30);
 			((TlllanguageContext)_localctx).s = match(T__0);
 
 			                                           factory.startBlock(((TlllanguageContext)_localctx).s, ((TlllanguageContext)_localctx).block);
 			                                           List<TLLStatementNode> body = new ArrayList<>(); 
-			setState(40);
+			setState(42);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << WHITESPACE) | (1L << IDENTIFIER) | (1L << NUMERIC_LITERAL))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__4) | (1L << WHITESPACE) | (1L << IDENTIFIER) | (1L << NUMERIC_LITERAL))) != 0)) {
 				{
 				{
-				setState(30);
+				setState(32);
 				((TlllanguageContext)_localctx).statement = statement();
 				 body.add(((TlllanguageContext)_localctx).statement.result); 
-				setState(35);
+				setState(37);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(32);
+						setState(34);
 						match(WHITESPACE);
 						}
 						} 
 					}
-					setState(37);
+					setState(39);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 				}
 				}
 				}
-				setState(42);
+				setState(44);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(43);
+			setState(45);
 			((TlllanguageContext)_localctx).e = match(T__1);
 			 factory.finishBlock(body, ((TlllanguageContext)_localctx).s.getStartIndex(), ((TlllanguageContext)_localctx).e.getStopIndex() - ((TlllanguageContext)_localctx).s.getStartIndex() + 1); 
 			}
@@ -268,7 +269,7 @@ public class TLLLanguageParser extends Parser {
 		public Init_objContext init_obj;
 		public Return_statementContext return_statement;
 		public ExpressionContext expression;
-		public Init_propContext init_prop;
+		public PropertyContext property;
 		public Init_objContext init_obj() {
 			return getRuleContext(Init_objContext.class,0);
 		}
@@ -283,8 +284,8 @@ public class TLLLanguageParser extends Parser {
 		public TerminalNode WHITESPACE(int i) {
 			return getToken(TLLLanguageParser.WHITESPACE, i);
 		}
-		public Init_propContext init_prop() {
-			return getRuleContext(Init_propContext.class,0);
+		public PropertyContext property() {
+			return getRuleContext(PropertyContext.class,0);
 		}
 		public Builtin_functionsContext builtin_functions() {
 			return getRuleContext(Builtin_functionsContext.class,0);
@@ -315,33 +316,33 @@ public class TLLLanguageParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
+			setState(51);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(46);
+					setState(48);
 					((StatementContext)_localctx).r = match(WHITESPACE);
 					}
 					} 
 				}
-				setState(51);
+				setState(53);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
-			setState(71);
+			setState(73);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				{
 				{
-				setState(52);
+				setState(54);
 				((StatementContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 				{
 				 TLLExpressionNode assignmentName = factory.createStringLiteral(((StatementContext)_localctx).IDENTIFIER, false); 
-				setState(54);
+				setState(56);
 				((StatementContext)_localctx).builtin_functions = builtin_functions(assignmentName);
 				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).builtin_functions.result; 
 				}
@@ -350,34 +351,34 @@ public class TLLLanguageParser extends Parser {
 				break;
 			case 2:
 				{
-				setState(57);
+				setState(59);
 				((StatementContext)_localctx).init_obj = init_obj();
 				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).init_obj.result; 
 				}
 				break;
 			case 3:
 				{
-				setState(60);
+				setState(62);
 				((StatementContext)_localctx).return_statement = return_statement();
 				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).return_statement.result; 
 				}
 				break;
 			case 4:
 				{
-				setState(63);
+				setState(65);
 				((StatementContext)_localctx).expression = expression();
 				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).expression.result; 
 				}
 				break;
 			case 5:
 				{
-				setState(66);
+				setState(68);
 				((StatementContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 				{
 				 TLLExpressionNode assignmentName = factory.createStringLiteral(((StatementContext)_localctx).IDENTIFIER, false); 
-				setState(68);
-				((StatementContext)_localctx).init_prop = init_prop(assignmentName);
-				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).init_prop.result; 
+				setState(70);
+				((StatementContext)_localctx).property = property(assignmentName);
+				 ((StatementContext)_localctx).result =  ((StatementContext)_localctx).property.result; 
 				}
 				}
 				break;
@@ -427,10 +428,10 @@ public class TLLLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
+			setState(75);
 			((Return_statementContext)_localctx).r = match(T__2);
 			{
-			setState(74);
+			setState(76);
 			((Return_statementContext)_localctx).expression = expression();
 			 TLLExpressionNode read_value = ((Return_statementContext)_localctx).expression.result; 
 			 ((Return_statementContext)_localctx).result =  factory.createReturn(((Return_statementContext)_localctx).r, read_value); 
@@ -452,7 +453,8 @@ public class TLLLanguageParser extends Parser {
 		public TLLExpressionNode result;
 		public Token IDENTIFIER;
 		public Array_statementContext array_statement;
-		public Init_propContext init_prop;
+		public PropertyContext property;
+		public CreateLocalVarContext createLocalVar;
 		public BinaryContext binary;
 		public NumericContext numeric;
 		public TerminalNode IDENTIFIER() { return getToken(TLLLanguageParser.IDENTIFIER, 0); }
@@ -463,8 +465,11 @@ public class TLLLanguageParser extends Parser {
 		public Array_statementContext array_statement() {
 			return getRuleContext(Array_statementContext.class,0);
 		}
-		public Init_propContext init_prop() {
-			return getRuleContext(Init_propContext.class,0);
+		public PropertyContext property() {
+			return getRuleContext(PropertyContext.class,0);
+		}
+		public CreateLocalVarContext createLocalVar() {
+			return getRuleContext(CreateLocalVarContext.class,0);
 		}
 		public BinaryContext binary() {
 			return getRuleContext(BinaryContext.class,0);
@@ -496,36 +501,36 @@ public class TLLLanguageParser extends Parser {
 		enterRule(_localctx, 6, RULE_expression);
 		int _la;
 		try {
-			setState(101);
+			setState(106);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(81);
+				setState(83);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==WHITESPACE) {
 					{
 					{
-					setState(78);
+					setState(80);
 					match(WHITESPACE);
 					}
 					}
-					setState(83);
+					setState(85);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				{
-				setState(84);
+				setState(86);
 				((ExpressionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 				 TLLExpressionNode assignmentName = factory.createStringLiteral(((ExpressionContext)_localctx).IDENTIFIER, false); 
-				setState(93);
+				setState(98);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case T__1:
 				case T__2:
-				case T__3:
+				case T__4:
 				case T__7:
 				case WHITESPACE:
 				case IDENTIFIER:
@@ -539,18 +544,27 @@ public class TLLLanguageParser extends Parser {
 				case T__8:
 					{
 					{
-					setState(87);
+					setState(89);
 					((ExpressionContext)_localctx).array_statement = array_statement(assignmentName, null);
 					 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).array_statement.result; 
 					}
 					}
 					break;
-				case T__4:
+				case T__5:
 					{
 					{
-					setState(90);
-					((ExpressionContext)_localctx).init_prop = init_prop(assignmentName);
-					 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).init_prop.result; 
+					setState(92);
+					((ExpressionContext)_localctx).property = property(assignmentName);
+					 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).property.result; 
+					}
+					}
+					break;
+				case T__3:
+					{
+					{
+					setState(95);
+					((ExpressionContext)_localctx).createLocalVar = createLocalVar(assignmentName);
+					 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).createLocalVar.result; 
 					}
 					}
 					break;
@@ -564,7 +578,7 @@ public class TLLLanguageParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(95);
+				setState(100);
 				((ExpressionContext)_localctx).binary = binary();
 				 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).binary.result; 
 				}
@@ -573,11 +587,93 @@ public class TLLLanguageParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(98);
+				setState(103);
 				((ExpressionContext)_localctx).numeric = numeric();
 				 ((ExpressionContext)_localctx).result =  ((ExpressionContext)_localctx).numeric.result; 
 				}
 				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CreateLocalVarContext extends ParserRuleContext {
+		public TLLExpressionNode assignmentName;
+		public TLLExpressionNode result;
+		public Token IDENTIFIER;
+		public Builtin_functionsContext builtin_functions;
+		public TerminalNode IDENTIFIER() { return getToken(TLLLanguageParser.IDENTIFIER, 0); }
+		public List<TerminalNode> WHITESPACE() { return getTokens(TLLLanguageParser.WHITESPACE); }
+		public TerminalNode WHITESPACE(int i) {
+			return getToken(TLLLanguageParser.WHITESPACE, i);
+		}
+		public Builtin_functionsContext builtin_functions() {
+			return getRuleContext(Builtin_functionsContext.class,0);
+		}
+		public CreateLocalVarContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public CreateLocalVarContext(ParserRuleContext parent, int invokingState, TLLExpressionNode assignmentName) {
+			super(parent, invokingState);
+			this.assignmentName = assignmentName;
+		}
+		@Override public int getRuleIndex() { return RULE_createLocalVar; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).enterCreateLocalVar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitCreateLocalVar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitCreateLocalVar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final CreateLocalVarContext createLocalVar(TLLExpressionNode assignmentName) throws RecognitionException {
+		CreateLocalVarContext _localctx = new CreateLocalVarContext(_ctx, getState(), assignmentName);
+		enterRule(_localctx, 8, RULE_createLocalVar);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			{
+			setState(108);
+			match(T__3);
+			setState(112);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==WHITESPACE) {
+				{
+				{
+				setState(109);
+				match(WHITESPACE);
+				}
+				}
+				setState(114);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			{
+			setState(115);
+			((CreateLocalVarContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+			{
+			 TLLExpressionNode arg = factory.createStringLiteral(((CreateLocalVarContext)_localctx).IDENTIFIER, false); 
+			setState(117);
+			((CreateLocalVarContext)_localctx).builtin_functions = builtin_functions(arg);
+			 ((CreateLocalVarContext)_localctx).result =  factory.createAssignment(assignmentName, ((CreateLocalVarContext)_localctx).builtin_functions.result); 
+			}
+			}
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -620,18 +716,18 @@ public class TLLLanguageParser extends Parser {
 
 	public final Init_objContext init_obj() throws RecognitionException {
 		Init_objContext _localctx = new Init_objContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_init_obj);
+		enterRule(_localctx, 10, RULE_init_obj);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(103);
-			match(T__3);
-			setState(104);
+			setState(120);
+			match(T__4);
+			setState(121);
 			((Init_objContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 TLLExpressionNode assignmentName = factory.createStringLiteral(((Init_objContext)_localctx).IDENTIFIER, false); 
 			{
-			setState(106);
+			setState(123);
 			((Init_objContext)_localctx).init = init(null, null, assignmentName);
 			 ((Init_objContext)_localctx).result =  ((Init_objContext)_localctx).init.result; 
 			}
@@ -649,7 +745,7 @@ public class TLLLanguageParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Init_propContext extends ParserRuleContext {
+	public static class PropertyContext extends ParserRuleContext {
 		public TLLExpressionNode assignmentName;
 		public TLLExpressionNode result;
 		public Token IDENTIFIER;
@@ -662,55 +758,55 @@ public class TLLLanguageParser extends Parser {
 		public Array_statementContext array_statement() {
 			return getRuleContext(Array_statementContext.class,0);
 		}
-		public Init_propContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
-		public Init_propContext(ParserRuleContext parent, int invokingState, TLLExpressionNode assignmentName) {
+		public PropertyContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public PropertyContext(ParserRuleContext parent, int invokingState, TLLExpressionNode assignmentName) {
 			super(parent, invokingState);
 			this.assignmentName = assignmentName;
 		}
-		@Override public int getRuleIndex() { return RULE_init_prop; }
+		@Override public int getRuleIndex() { return RULE_property; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).enterInit_prop(this);
+			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).enterProperty(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitInit_prop(this);
+			if ( listener instanceof TLLLanguageListener ) ((TLLLanguageListener)listener).exitProperty(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitInit_prop(this);
+			if ( visitor instanceof TLLLanguageVisitor ) return ((TLLLanguageVisitor<? extends T>)visitor).visitProperty(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Init_propContext init_prop(TLLExpressionNode assignmentName) throws RecognitionException {
-		Init_propContext _localctx = new Init_propContext(_ctx, getState(), assignmentName);
-		enterRule(_localctx, 10, RULE_init_prop);
+	public final PropertyContext property(TLLExpressionNode assignmentName) throws RecognitionException {
+		PropertyContext _localctx = new PropertyContext(_ctx, getState(), assignmentName);
+		enterRule(_localctx, 12, RULE_property);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(109);
-			match(T__4);
+			setState(126);
+			match(T__5);
 			 TLLExpressionNode receiver = factory.createRead(assignmentName); 
-			setState(123);
+			setState(140);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
 				{
-				setState(111);
-				((Init_propContext)_localctx).IDENTIFIER = match(IDENTIFIER);
-				 TLLExpressionNode nestedAssignmentName = factory.createStringLiteral(((Init_propContext)_localctx).IDENTIFIER, false); 
-				 ((Init_propContext)_localctx).result =  factory.createReadProperty(receiver, nestedAssignmentName); 
+				setState(128);
+				((PropertyContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+				 TLLExpressionNode nestedAssignmentName = factory.createStringLiteral(((PropertyContext)_localctx).IDENTIFIER, false); 
+				 ((PropertyContext)_localctx).result =  factory.createReadProperty(receiver, nestedAssignmentName); 
 				 TLLExpressionNode readResult = _localctx.result; 
-				setState(115);
-				((Init_propContext)_localctx).init = init(null, receiver, nestedAssignmentName);
+				setState(132);
+				((PropertyContext)_localctx).init = init(null, receiver, nestedAssignmentName);
 
-				                                                if(((Init_propContext)_localctx).init.result != null) {
-				                                                    ((Init_propContext)_localctx).result =  ((Init_propContext)_localctx).init.result;
+				                                                if(((PropertyContext)_localctx).init.result != null) {
+				                                                    ((PropertyContext)_localctx).result =  ((PropertyContext)_localctx).init.result;
 				                                                } else {
-				                                                    ((Init_propContext)_localctx).result =  readResult;
+				                                                    ((PropertyContext)_localctx).result =  readResult;
 				                                                }
 				                                            
 				}
@@ -719,12 +815,12 @@ public class TLLLanguageParser extends Parser {
 			case 2:
 				{
 				{
-				setState(118);
-				((Init_propContext)_localctx).IDENTIFIER = match(IDENTIFIER);
-				 TLLExpressionNode propName = factory.createStringLiteral(((Init_propContext)_localctx).IDENTIFIER, false); 
-				setState(120);
-				((Init_propContext)_localctx).array_statement = array_statement(propName, receiver);
-				 ((Init_propContext)_localctx).result =  ((Init_propContext)_localctx).array_statement.result; 
+				setState(135);
+				((PropertyContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+				 TLLExpressionNode propName = factory.createStringLiteral(((PropertyContext)_localctx).IDENTIFIER, false); 
+				setState(137);
+				((PropertyContext)_localctx).array_statement = array_statement(propName, receiver);
+				 ((PropertyContext)_localctx).result =  ((PropertyContext)_localctx).array_statement.result; 
 				}
 				}
 				break;
@@ -784,55 +880,55 @@ public class TLLLanguageParser extends Parser {
 
 	public final InitContext init(TLLExpressionNode r,TLLExpressionNode assignmentReceiver,TLLExpressionNode assignmentName) throws RecognitionException {
 		InitContext _localctx = new InitContext(_ctx, getState(), r, assignmentReceiver, assignmentName);
-		enterRule(_localctx, 12, RULE_init);
+		enterRule(_localctx, 14, RULE_init);
 		int _la;
 		try {
 			int _alt;
-			setState(156);
+			setState(173);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(128);
+				setState(145);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==WHITESPACE) {
 					{
 					{
-					setState(125);
+					setState(142);
 					((InitContext)_localctx).s = match(WHITESPACE);
 					}
 					}
-					setState(130);
+					setState(147);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				{
-				setState(131);
-				match(T__5);
-				setState(135);
+				setState(148);
+				match(T__3);
+				setState(152);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(132);
+						setState(149);
 						match(WHITESPACE);
 						}
 						} 
 					}
-					setState(137);
+					setState(154);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 				}
-				setState(147);
+				setState(164);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case IDENTIFIER:
 					{
-					setState(138);
+					setState(155);
 					((InitContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 					 TLLExpressionNode receiver = factory.createRead(assignmentName); 
 					 TLLExpressionNode newEmptyObj = factory.createCall(receiver, Collections.emptyList(), ((InitContext)_localctx).IDENTIFIER); 
@@ -848,7 +944,7 @@ public class TLLLanguageParser extends Parser {
 				case WHITESPACE:
 				case NUMERIC_LITERAL:
 					{
-					setState(143);
+					setState(160);
 					((InitContext)_localctx).numeric = numeric();
 					 TLLExpressionNode index = r;
 
@@ -874,21 +970,21 @@ public class TLLLanguageParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(152);
+				setState(169);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(149);
+						setState(166);
 						match(WHITESPACE);
 						}
 						} 
 					}
-					setState(154);
+					setState(171);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
 				}
 				 ((InitContext)_localctx).result =  null; 
 				}
@@ -942,35 +1038,35 @@ public class TLLLanguageParser extends Parser {
 
 	public final Builtin_functionsContext builtin_functions(TLLExpressionNode assignmentName) throws RecognitionException {
 		Builtin_functionsContext _localctx = new Builtin_functionsContext(_ctx, getState(), assignmentName);
-		enterRule(_localctx, 14, RULE_builtin_functions);
+		enterRule(_localctx, 16, RULE_builtin_functions);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			 TLLExpressionNode nestedAssignmentName = null;
 			                                              List<TLLExpressionNode> parameters = new ArrayList<>(); 
 			{
-			setState(159);
+			setState(176);
 			match(T__6);
 			 TLLExpressionNode receiver = factory.createRead(assignmentName); 
-			setState(167);
+			setState(184);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				{
-				setState(161);
+				setState(178);
 				((Builtin_functionsContext)_localctx).numeric = numeric();
 				 parameters.add(((Builtin_functionsContext)_localctx).numeric.result); 
 				}
 				break;
 			case 2:
 				{
-				setState(164);
+				setState(181);
 				((Builtin_functionsContext)_localctx).expression = expression();
 				 parameters.add(((Builtin_functionsContext)_localctx).expression.result); 
 				}
 				break;
 			}
-			setState(169);
+			setState(186);
 			((Builtin_functionsContext)_localctx).e = match(T__7);
 			 ((Builtin_functionsContext)_localctx).result =  factory.createCall(receiver, parameters, ((Builtin_functionsContext)_localctx).e); 
 			}
@@ -1027,36 +1123,36 @@ public class TLLLanguageParser extends Parser {
 
 	public final Array_statementContext array_statement(TLLExpressionNode assignmentName,TLLExpressionNode receiver) throws RecognitionException {
 		Array_statementContext _localctx = new Array_statementContext(_ctx, getState(), assignmentName, receiver);
-		enterRule(_localctx, 16, RULE_array_statement);
+		enterRule(_localctx, 18, RULE_array_statement);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(172);
+			setState(189);
 			((Array_statementContext)_localctx).s = match(T__8);
-			setState(173);
+			setState(190);
 			((Array_statementContext)_localctx).NUMERIC_LITERAL = match(NUMERIC_LITERAL);
 			 TLLExpressionNode index = factory.createNumericLiteral(((Array_statementContext)_localctx).NUMERIC_LITERAL); 
-			setState(175);
+			setState(192);
 			((Array_statementContext)_localctx).e = match(T__9);
-			setState(179);
+			setState(196);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(176);
+					setState(193);
 					match(WHITESPACE);
 					}
 					} 
 				}
-				setState(181);
+				setState(198);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
 			}
-			setState(182);
+			setState(199);
 			((Array_statementContext)_localctx).init = init(index, receiver, assignmentName);
 			 TLLExpressionNode initResult = ((Array_statementContext)_localctx).init.result; 
 			  if (initResult == null) {
@@ -1115,18 +1211,18 @@ public class TLLLanguageParser extends Parser {
 
 	public final BinaryContext binary() throws RecognitionException {
 		BinaryContext _localctx = new BinaryContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_binary);
+		enterRule(_localctx, 20, RULE_binary);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
 			 TLLExpressionNode leftnode, rightnode;  
-			setState(187);
+			setState(204);
 			((BinaryContext)_localctx).numeric = numeric();
 			 leftnode = ((BinaryContext)_localctx).numeric.result; 
-			setState(189);
+			setState(206);
 			((BinaryContext)_localctx).OPERATION = match(OPERATION);
-			setState(190);
+			setState(207);
 			((BinaryContext)_localctx).numeric = numeric();
 			 rightnode = ((BinaryContext)_localctx).numeric.result; 
 			 ((BinaryContext)_localctx).result =  factory.createBinary(((BinaryContext)_localctx).OPERATION, leftnode, rightnode); 
@@ -1173,43 +1269,43 @@ public class TLLLanguageParser extends Parser {
 
 	public final NumericContext numeric() throws RecognitionException {
 		NumericContext _localctx = new NumericContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_numeric);
+		enterRule(_localctx, 22, RULE_numeric);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(197);
+			setState(214);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(194);
+				setState(211);
 				match(WHITESPACE);
 				}
 				}
-				setState(199);
+				setState(216);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(200);
+			setState(217);
 			((NumericContext)_localctx).NUMERIC_LITERAL = match(NUMERIC_LITERAL);
-			setState(204);
+			setState(221);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(201);
+					setState(218);
 					match(WHITESPACE);
 					}
 					} 
 				}
-				setState(206);
+				setState(223);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
 			}
 			 ((NumericContext)_localctx).result =  factory.createNumericLiteral(((NumericContext)_localctx).NUMERIC_LITERAL); 
 			}
@@ -1226,70 +1322,77 @@ public class TLLLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20\u00d4\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20\u00e5\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
-		"\t\13\4\f\t\f\3\2\7\2\32\n\2\f\2\16\2\35\13\2\3\2\3\2\3\2\3\2\3\2\7\2"+
-		"$\n\2\f\2\16\2\'\13\2\7\2)\n\2\f\2\16\2,\13\2\3\2\3\2\3\2\3\3\7\3\62\n"+
-		"\3\f\3\16\3\65\13\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3J\n\3\3\4\3\4\3\4\3\4\3\4\3\5\7\5R\n\5\f"+
-		"\5\16\5U\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5`\n\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\5\5h\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7~\n\7\3\b\7\b\u0081\n\b\f\b\16\b\u0084"+
-		"\13\b\3\b\3\b\7\b\u0088\n\b\f\b\16\b\u008b\13\b\3\b\3\b\3\b\3\b\3\b\3"+
-		"\b\3\b\3\b\3\b\5\b\u0096\n\b\3\b\7\b\u0099\n\b\f\b\16\b\u009c\13\b\3\b"+
-		"\5\b\u009f\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00aa\n\t\3\t\3"+
-		"\t\3\t\3\n\3\n\3\n\3\n\3\n\7\n\u00b4\n\n\f\n\16\n\u00b7\13\n\3\n\3\n\3"+
-		"\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f\7\f\u00c6\n\f\f\f\16"+
-		"\f\u00c9\13\f\3\f\3\f\7\f\u00cd\n\f\f\f\16\f\u00d0\13\f\3\f\3\f\3\f\2"+
-		"\2\r\2\4\6\b\n\f\16\20\22\24\26\2\2\2\u00e0\2\33\3\2\2\2\4\63\3\2\2\2"+
-		"\6K\3\2\2\2\bg\3\2\2\2\ni\3\2\2\2\fo\3\2\2\2\16\u009e\3\2\2\2\20\u00a0"+
-		"\3\2\2\2\22\u00ae\3\2\2\2\24\u00bc\3\2\2\2\26\u00c7\3\2\2\2\30\32\7\r"+
-		"\2\2\31\30\3\2\2\2\32\35\3\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\36\3\2"+
-		"\2\2\35\33\3\2\2\2\36\37\7\3\2\2\37*\b\2\1\2 !\5\4\3\2!%\b\2\1\2\"$\7"+
-		"\r\2\2#\"\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3\2\2\2&)\3\2\2\2\'%\3\2\2\2"+
-		"( \3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2\2+-\3\2\2\2,*\3\2\2\2-.\7\4\2\2"+
-		"./\b\2\1\2/\3\3\2\2\2\60\62\7\r\2\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61"+
-		"\3\2\2\2\63\64\3\2\2\2\64I\3\2\2\2\65\63\3\2\2\2\66\67\7\16\2\2\678\b"+
-		"\3\1\289\5\20\t\29:\b\3\1\2:J\3\2\2\2;<\5\n\6\2<=\b\3\1\2=J\3\2\2\2>?"+
-		"\5\6\4\2?@\b\3\1\2@J\3\2\2\2AB\5\b\5\2BC\b\3\1\2CJ\3\2\2\2DE\7\16\2\2"+
-		"EF\b\3\1\2FG\5\f\7\2GH\b\3\1\2HJ\3\2\2\2I\66\3\2\2\2I;\3\2\2\2I>\3\2\2"+
-		"\2IA\3\2\2\2ID\3\2\2\2J\5\3\2\2\2KL\7\5\2\2LM\5\b\5\2MN\b\4\1\2NO\b\4"+
-		"\1\2O\7\3\2\2\2PR\7\r\2\2QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2TV\3"+
-		"\2\2\2US\3\2\2\2VW\7\16\2\2W_\b\5\1\2X`\b\5\1\2YZ\5\22\n\2Z[\b\5\1\2["+
-		"`\3\2\2\2\\]\5\f\7\2]^\b\5\1\2^`\3\2\2\2_X\3\2\2\2_Y\3\2\2\2_\\\3\2\2"+
-		"\2`h\3\2\2\2ab\5\24\13\2bc\b\5\1\2ch\3\2\2\2de\5\26\f\2ef\b\5\1\2fh\3"+
-		"\2\2\2gS\3\2\2\2ga\3\2\2\2gd\3\2\2\2h\t\3\2\2\2ij\7\6\2\2jk\7\16\2\2k"+
-		"l\b\6\1\2lm\5\16\b\2mn\b\6\1\2n\13\3\2\2\2op\7\7\2\2p}\b\7\1\2qr\7\16"+
-		"\2\2rs\b\7\1\2st\b\7\1\2tu\b\7\1\2uv\5\16\b\2vw\b\7\1\2w~\3\2\2\2xy\7"+
-		"\16\2\2yz\b\7\1\2z{\5\22\n\2{|\b\7\1\2|~\3\2\2\2}q\3\2\2\2}x\3\2\2\2~"+
-		"\r\3\2\2\2\177\u0081\7\r\2\2\u0080\177\3\2\2\2\u0081\u0084\3\2\2\2\u0082"+
-		"\u0080\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0085\3\2\2\2\u0084\u0082\3\2"+
-		"\2\2\u0085\u0089\7\b\2\2\u0086\u0088\7\r\2\2\u0087\u0086\3\2\2\2\u0088"+
-		"\u008b\3\2\2\2\u0089\u0087\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u0095\3\2"+
-		"\2\2\u008b\u0089\3\2\2\2\u008c\u008d\7\16\2\2\u008d\u008e\b\b\1\2\u008e"+
-		"\u008f\b\b\1\2\u008f\u0090\b\b\1\2\u0090\u0096\b\b\1\2\u0091\u0092\5\26"+
-		"\f\2\u0092\u0093\b\b\1\2\u0093\u0094\b\b\1\2\u0094\u0096\3\2\2\2\u0095"+
-		"\u008c\3\2\2\2\u0095\u0091\3\2\2\2\u0096\u009f\3\2\2\2\u0097\u0099\7\r"+
-		"\2\2\u0098\u0097\3\2\2\2\u0099\u009c\3\2\2\2\u009a\u0098\3\2\2\2\u009a"+
-		"\u009b\3\2\2\2\u009b\u009d\3\2\2\2\u009c\u009a\3\2\2\2\u009d\u009f\b\b"+
-		"\1\2\u009e\u0082\3\2\2\2\u009e\u009a\3\2\2\2\u009f\17\3\2\2\2\u00a0\u00a1"+
-		"\b\t\1\2\u00a1\u00a2\7\t\2\2\u00a2\u00a9\b\t\1\2\u00a3\u00a4\5\26\f\2"+
-		"\u00a4\u00a5\b\t\1\2\u00a5\u00aa\3\2\2\2\u00a6\u00a7\5\b\5\2\u00a7\u00a8"+
-		"\b\t\1\2\u00a8\u00aa\3\2\2\2\u00a9\u00a3\3\2\2\2\u00a9\u00a6\3\2\2\2\u00a9"+
-		"\u00aa\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\7\n\2\2\u00ac\u00ad\b\t"+
-		"\1\2\u00ad\21\3\2\2\2\u00ae\u00af\7\13\2\2\u00af\u00b0\7\20\2\2\u00b0"+
-		"\u00b1\b\n\1\2\u00b1\u00b5\7\f\2\2\u00b2\u00b4\7\r\2\2\u00b3\u00b2\3\2"+
-		"\2\2\u00b4\u00b7\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b5\u00b6\3\2\2\2\u00b6"+
-		"\u00b8\3\2\2\2\u00b7\u00b5\3\2\2\2\u00b8\u00b9\5\16\b\2\u00b9\u00ba\b"+
-		"\n\1\2\u00ba\u00bb\b\n\1\2\u00bb\23\3\2\2\2\u00bc\u00bd\b\13\1\2\u00bd"+
-		"\u00be\5\26\f\2\u00be\u00bf\b\13\1\2\u00bf\u00c0\7\17\2\2\u00c0\u00c1"+
-		"\5\26\f\2\u00c1\u00c2\b\13\1\2\u00c2\u00c3\b\13\1\2\u00c3\25\3\2\2\2\u00c4"+
-		"\u00c6\7\r\2\2\u00c5\u00c4\3\2\2\2\u00c6\u00c9\3\2\2\2\u00c7\u00c5\3\2"+
-		"\2\2\u00c7\u00c8\3\2\2\2\u00c8\u00ca\3\2\2\2\u00c9\u00c7\3\2\2\2\u00ca"+
-		"\u00ce\7\20\2\2\u00cb\u00cd\7\r\2\2\u00cc\u00cb\3\2\2\2\u00cd\u00d0\3"+
-		"\2\2\2\u00ce\u00cc\3\2\2\2\u00ce\u00cf\3\2\2\2\u00cf\u00d1\3\2\2\2\u00d0"+
-		"\u00ce\3\2\2\2\u00d1\u00d2\b\f\1\2\u00d2\27\3\2\2\2\24\33%*\63IS_g}\u0082"+
-		"\u0089\u0095\u009a\u009e\u00a9\u00b5\u00c7\u00ce";
+		"\t\13\4\f\t\f\4\r\t\r\3\2\7\2\34\n\2\f\2\16\2\37\13\2\3\2\3\2\3\2\3\2"+
+		"\3\2\7\2&\n\2\f\2\16\2)\13\2\7\2+\n\2\f\2\16\2.\13\2\3\2\3\2\3\2\3\3\7"+
+		"\3\64\n\3\f\3\16\3\67\13\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3L\n\3\3\4\3\4\3\4\3\4\3\4\3\5\7\5"+
+		"T\n\5\f\5\16\5W\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5"+
+		"\5e\n\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5m\n\5\3\6\3\6\7\6q\n\6\f\6\16\6t\13"+
+		"\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u008f\n\b\3\t\7\t\u0092\n\t\f\t\16"+
+		"\t\u0095\13\t\3\t\3\t\7\t\u0099\n\t\f\t\16\t\u009c\13\t\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\5\t\u00a7\n\t\3\t\7\t\u00aa\n\t\f\t\16\t\u00ad"+
+		"\13\t\3\t\5\t\u00b0\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u00bb"+
+		"\n\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\7\13\u00c5\n\13\f\13\16\13\u00c8"+
+		"\13\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\r\7\r\u00d7"+
+		"\n\r\f\r\16\r\u00da\13\r\3\r\3\r\7\r\u00de\n\r\f\r\16\r\u00e1\13\r\3\r"+
+		"\3\r\3\r\2\2\16\2\4\6\b\n\f\16\20\22\24\26\30\2\2\2\u00f2\2\35\3\2\2\2"+
+		"\4\65\3\2\2\2\6M\3\2\2\2\bl\3\2\2\2\nn\3\2\2\2\fz\3\2\2\2\16\u0080\3\2"+
+		"\2\2\20\u00af\3\2\2\2\22\u00b1\3\2\2\2\24\u00bf\3\2\2\2\26\u00cd\3\2\2"+
+		"\2\30\u00d8\3\2\2\2\32\34\7\r\2\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3"+
+		"\2\2\2\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\3\2\2!,\b\2\1\2\"#"+
+		"\5\4\3\2#\'\b\2\1\2$&\7\r\2\2%$\3\2\2\2&)\3\2\2\2\'%\3\2\2\2\'(\3\2\2"+
+		"\2(+\3\2\2\2)\'\3\2\2\2*\"\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2\2-/\3\2"+
+		"\2\2.,\3\2\2\2/\60\7\4\2\2\60\61\b\2\1\2\61\3\3\2\2\2\62\64\7\r\2\2\63"+
+		"\62\3\2\2\2\64\67\3\2\2\2\65\63\3\2\2\2\65\66\3\2\2\2\66K\3\2\2\2\67\65"+
+		"\3\2\2\289\7\16\2\29:\b\3\1\2:;\5\22\n\2;<\b\3\1\2<L\3\2\2\2=>\5\f\7\2"+
+		">?\b\3\1\2?L\3\2\2\2@A\5\6\4\2AB\b\3\1\2BL\3\2\2\2CD\5\b\5\2DE\b\3\1\2"+
+		"EL\3\2\2\2FG\7\16\2\2GH\b\3\1\2HI\5\16\b\2IJ\b\3\1\2JL\3\2\2\2K8\3\2\2"+
+		"\2K=\3\2\2\2K@\3\2\2\2KC\3\2\2\2KF\3\2\2\2L\5\3\2\2\2MN\7\5\2\2NO\5\b"+
+		"\5\2OP\b\4\1\2PQ\b\4\1\2Q\7\3\2\2\2RT\7\r\2\2SR\3\2\2\2TW\3\2\2\2US\3"+
+		"\2\2\2UV\3\2\2\2VX\3\2\2\2WU\3\2\2\2XY\7\16\2\2Yd\b\5\1\2Ze\b\5\1\2[\\"+
+		"\5\24\13\2\\]\b\5\1\2]e\3\2\2\2^_\5\16\b\2_`\b\5\1\2`e\3\2\2\2ab\5\n\6"+
+		"\2bc\b\5\1\2ce\3\2\2\2dZ\3\2\2\2d[\3\2\2\2d^\3\2\2\2da\3\2\2\2em\3\2\2"+
+		"\2fg\5\26\f\2gh\b\5\1\2hm\3\2\2\2ij\5\30\r\2jk\b\5\1\2km\3\2\2\2lU\3\2"+
+		"\2\2lf\3\2\2\2li\3\2\2\2m\t\3\2\2\2nr\7\6\2\2oq\7\r\2\2po\3\2\2\2qt\3"+
+		"\2\2\2rp\3\2\2\2rs\3\2\2\2su\3\2\2\2tr\3\2\2\2uv\7\16\2\2vw\b\6\1\2wx"+
+		"\5\22\n\2xy\b\6\1\2y\13\3\2\2\2z{\7\7\2\2{|\7\16\2\2|}\b\7\1\2}~\5\20"+
+		"\t\2~\177\b\7\1\2\177\r\3\2\2\2\u0080\u0081\7\b\2\2\u0081\u008e\b\b\1"+
+		"\2\u0082\u0083\7\16\2\2\u0083\u0084\b\b\1\2\u0084\u0085\b\b\1\2\u0085"+
+		"\u0086\b\b\1\2\u0086\u0087\5\20\t\2\u0087\u0088\b\b\1\2\u0088\u008f\3"+
+		"\2\2\2\u0089\u008a\7\16\2\2\u008a\u008b\b\b\1\2\u008b\u008c\5\24\13\2"+
+		"\u008c\u008d\b\b\1\2\u008d\u008f\3\2\2\2\u008e\u0082\3\2\2\2\u008e\u0089"+
+		"\3\2\2\2\u008f\17\3\2\2\2\u0090\u0092\7\r\2\2\u0091\u0090\3\2\2\2\u0092"+
+		"\u0095\3\2\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094\u0096\3\2"+
+		"\2\2\u0095\u0093\3\2\2\2\u0096\u009a\7\6\2\2\u0097\u0099\7\r\2\2\u0098"+
+		"\u0097\3\2\2\2\u0099\u009c\3\2\2\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2"+
+		"\2\2\u009b\u00a6\3\2\2\2\u009c\u009a\3\2\2\2\u009d\u009e\7\16\2\2\u009e"+
+		"\u009f\b\t\1\2\u009f\u00a0\b\t\1\2\u00a0\u00a1\b\t\1\2\u00a1\u00a7\b\t"+
+		"\1\2\u00a2\u00a3\5\30\r\2\u00a3\u00a4\b\t\1\2\u00a4\u00a5\b\t\1\2\u00a5"+
+		"\u00a7\3\2\2\2\u00a6\u009d\3\2\2\2\u00a6\u00a2\3\2\2\2\u00a7\u00b0\3\2"+
+		"\2\2\u00a8\u00aa\7\r\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab"+
+		"\u00a9\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ae\3\2\2\2\u00ad\u00ab\3\2"+
+		"\2\2\u00ae\u00b0\b\t\1\2\u00af\u0093\3\2\2\2\u00af\u00ab\3\2\2\2\u00b0"+
+		"\21\3\2\2\2\u00b1\u00b2\b\n\1\2\u00b2\u00b3\7\t\2\2\u00b3\u00ba\b\n\1"+
+		"\2\u00b4\u00b5\5\30\r\2\u00b5\u00b6\b\n\1\2\u00b6\u00bb\3\2\2\2\u00b7"+
+		"\u00b8\5\b\5\2\u00b8\u00b9\b\n\1\2\u00b9\u00bb\3\2\2\2\u00ba\u00b4\3\2"+
+		"\2\2\u00ba\u00b7\3\2\2\2\u00ba\u00bb\3\2\2\2\u00bb\u00bc\3\2\2\2\u00bc"+
+		"\u00bd\7\n\2\2\u00bd\u00be\b\n\1\2\u00be\23\3\2\2\2\u00bf\u00c0\7\13\2"+
+		"\2\u00c0\u00c1\7\20\2\2\u00c1\u00c2\b\13\1\2\u00c2\u00c6\7\f\2\2\u00c3"+
+		"\u00c5\7\r\2\2\u00c4\u00c3\3\2\2\2\u00c5\u00c8\3\2\2\2\u00c6\u00c4\3\2"+
+		"\2\2\u00c6\u00c7\3\2\2\2\u00c7\u00c9\3\2\2\2\u00c8\u00c6\3\2\2\2\u00c9"+
+		"\u00ca\5\20\t\2\u00ca\u00cb\b\13\1\2\u00cb\u00cc\b\13\1\2\u00cc\25\3\2"+
+		"\2\2\u00cd\u00ce\b\f\1\2\u00ce\u00cf\5\30\r\2\u00cf\u00d0\b\f\1\2\u00d0"+
+		"\u00d1\7\17\2\2\u00d1\u00d2\5\30\r\2\u00d2\u00d3\b\f\1\2\u00d3\u00d4\b"+
+		"\f\1\2\u00d4\27\3\2\2\2\u00d5\u00d7\7\r\2\2\u00d6\u00d5\3\2\2\2\u00d7"+
+		"\u00da\3\2\2\2\u00d8\u00d6\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9\u00db\3\2"+
+		"\2\2\u00da\u00d8\3\2\2\2\u00db\u00df\7\20\2\2\u00dc\u00de\7\r\2\2\u00dd"+
+		"\u00dc\3\2\2\2\u00de\u00e1\3\2\2\2\u00df\u00dd\3\2\2\2\u00df\u00e0\3\2"+
+		"\2\2\u00e0\u00e2\3\2\2\2\u00e1\u00df\3\2\2\2\u00e2\u00e3\b\r\1\2\u00e3"+
+		"\31\3\2\2\2\25\35\',\65KUdlr\u008e\u0093\u009a\u00a6\u00ab\u00af\u00ba"+
+		"\u00c6\u00d8\u00df";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

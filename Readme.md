@@ -7,18 +7,22 @@
 	+ Смешанные вычисления Ершов
 2. **Transfer to Interpreter**
 	+ Презентация Oracle, слайд 22, ~21 мин
-3. **Condition Profile for Branch** (**ConditionProfile** class)
+3. **Condition Profile for Branch** (**ConditionProfile** class)    
 	+ Презентация Oracle, слайд 25, ~30мин    
 	+ Смысл в том, чтобы не компилировать много ненужного кода и не тратить на это время и ресурсы, если 
 	часть этого кода действительно встречается редко. Можно указать с помощью функции transferToInterpreterAndInvalidate(), 
 	что код, который следует после нее можно не вычислять, до тех пор, пока не поменяется поле @CompilationFinal  
 	Слайд 23
-4. **Assumption**
+4. **Assumption**  
 	+ Презентация Oracle, слайд 27, ~33мин
 	+ Олег Шелаев ссылка внизу ~ 47мин
-5. **Specialization**
+5. **Specialization**  
 	+ Олег Шелаев ссылка внизу ~ 49мин
 	+ Презентация Oracle, слайд 29, ~36мин
+6. **Когда использовать?**  
+	+ Презентация Oracle, слайд 30, ~37мин
+7. **Polimorphic Inline Cache**  
+
 ---
 Полезные аннотации в Truffle
 ---
@@ -57,5 +61,8 @@ https://medium.com/@komamitsu/how-to-run-simplelanguage-built-using-truffle-for-
 
 **Cтатьи**
 http://lafo.ssw.uni-linz.ac.at/papers/2013_Onward_OneVMToRuleThemAll.pdf - truffle approach    
+https://chrisseaton.com/rubytruffle/pppj14-om/pppj14-om.pdf - An Object Storage Model for the Truffle Language    
+
+
 
 

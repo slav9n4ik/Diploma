@@ -76,6 +76,18 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCreateLocalVar(TLLLanguageParser.CreateLocalVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCreateLocalVar(TLLLanguageParser.CreateLocalVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInit_obj(TLLLanguageParser.Init_objContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -88,13 +100,13 @@ public class TLLLanguageBaseListener implements TLLLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInit_prop(TLLLanguageParser.Init_propContext ctx) { }
+	@Override public void enterProperty(TLLLanguageParser.PropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInit_prop(TLLLanguageParser.Init_propContext ctx) { }
+	@Override public void exitProperty(TLLLanguageParser.PropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

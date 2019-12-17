@@ -60,6 +60,16 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitExpression(TLLLanguageParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TLLLanguageParser#createLocalVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterCreateLocalVar(TLLLanguageParser.CreateLocalVarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TLLLanguageParser#createLocalVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitCreateLocalVar(TLLLanguageParser.CreateLocalVarContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#init_obj}.
 	 * @param ctx the parse tree
 	 */
@@ -70,15 +80,15 @@ public interface TLLLanguageListener extends ParseTreeListener {
 	 */
 	void exitInit_obj(TLLLanguageParser.Init_objContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TLLLanguageParser#init_prop}.
+	 * Enter a parse tree produced by {@link TLLLanguageParser#property}.
 	 * @param ctx the parse tree
 	 */
-	void enterInit_prop(TLLLanguageParser.Init_propContext ctx);
+	void enterProperty(TLLLanguageParser.PropertyContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TLLLanguageParser#init_prop}.
+	 * Exit a parse tree produced by {@link TLLLanguageParser#property}.
 	 * @param ctx the parse tree
 	 */
-	void exitInit_prop(TLLLanguageParser.Init_propContext ctx);
+	void exitProperty(TLLLanguageParser.PropertyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TLLLanguageParser#init}.
 	 * @param ctx the parse tree

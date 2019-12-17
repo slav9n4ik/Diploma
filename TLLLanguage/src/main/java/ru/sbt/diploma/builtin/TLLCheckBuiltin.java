@@ -5,6 +5,7 @@ import com.oracle.truffle.api.dsl.CachedContext;
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.interop.InteropLibrary;
 import com.oracle.truffle.api.library.CachedLibrary;
+import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.profiles.BranchProfile;
 import lombok.extern.log4j.Log4j;
@@ -20,6 +21,7 @@ public abstract class TLLCheckBuiltin extends TLLBuiltinNode {
 
     private final BranchProfile readMemberException = BranchProfile.create();
 
+    @ExplodeLoop
     @Specialization(guards = "objects.hasMembers(receiver)", limit = "3")
     public boolean check(Object receiver,
                       @CachedLibrary("receiver") InteropLibrary objects,

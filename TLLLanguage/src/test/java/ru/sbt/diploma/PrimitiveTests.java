@@ -208,4 +208,49 @@ public class PrimitiveTests {
         Value getValue = context.getBindings("tll").getMember("START");
         getValue.execute();
     }
+
+    @Test
+    public void checkCollectionSumTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+
+                        " Romashka.sublimit[1]: 111" + "\n" +
+                        " Romashka.sublimit[2]: 111" + "\n" +
+
+                        " sum(Romashka.sublimit)" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
+
+    @Test
+    public void checkWriteSumInLocalVarTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " @Partner: SuperRomashka" + "\n" +
+
+                        " SuperRomashka.sublimit[1]: 67890" + "\n" +
+                        " SuperRomashka.sublimit[2]: 9876" + "\n" +
+
+                        " Romashka.sublimit[1]: 111" + "\n" +
+                        " Romashka.sublimit[2]: 111" + "\n" +
+
+                        " sumVar: sum(Romashka.sublimit)" + "\n" +
+                        " sumVar2: sum(SuperRomashka.sublimit)" + "\n" +
+                        " println(sumVar)" + "\n" +
+                        " println(sumVar2)" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
 }

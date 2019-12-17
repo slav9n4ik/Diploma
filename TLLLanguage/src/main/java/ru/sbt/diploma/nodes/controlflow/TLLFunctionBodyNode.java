@@ -9,7 +9,6 @@ import ru.sbt.diploma.nodes.TLLExpressionNode;
 import ru.sbt.diploma.nodes.TLLRootNode;
 import ru.sbt.diploma.nodes.TLLStatementNode;
 import ru.sbt.diploma.runtime.TLLNull;
-import ru.sbt.diploma.runtime.TLLObjectType;
 
 /**
  * The body of a user-defined TLL function. This is the node referenced by a {@link TLLRootNode} for

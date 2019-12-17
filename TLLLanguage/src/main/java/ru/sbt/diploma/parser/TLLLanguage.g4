@@ -98,7 +98,7 @@ r = WHITESPACE*
     IDENTIFIER
     (
                                         { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
-        init_prop[assignmentName]       { $result = $init_prop.result; }
+        property[assignmentName]       { $result = $property.result; }
     )
 )
 ;
@@ -130,8 +130,12 @@ WHITESPACE*
         )
         |
         (
-            init_prop[assignmentName]
-                                            { $result = $init_prop.result; }
+            property[assignmentName]
+                                            { $result = $property.result; }
+        )
+        |
+        (
+            createLocalVar[assignmentName]  { $result = $createLocalVar.result; }
         )
     )
 )
@@ -141,6 +145,29 @@ WHITESPACE*
 )
 |
         numeric                             { $result = $numeric.result; }
+;
+
+createLocalVar[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
+:
+                                            //{ TLLExpressionNode localVar = factory.createRead(assignmentName); }
+(
+    ':'
+    WHITESPACE*
+//    (
+//        IDENTIFIER
+//                                            { TLLExpressionNode stringValue = factory.createStringLiteral($IDENTIFIER, false); }
+//                                            { $result = factory.createAssignment(assignmentName, stringValue); }
+//    )
+//    |
+    (
+        IDENTIFIER
+        (
+                                              { TLLExpressionNode arg = factory.createStringLiteral($IDENTIFIER, false); }
+            builtin_functions[arg]
+                                              { $result = factory.createAssignment(assignmentName, $builtin_functions.result); }
+        )
+    )
+)
 ;
 
 init_obj returns [TLLExpressionNode result]
@@ -154,7 +181,7 @@ init_obj returns [TLLExpressionNode result]
 )
 ;
 
-init_prop[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
+property[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
 :
 (
     '.'
@@ -181,6 +208,12 @@ init_prop[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
             array_statement[propName, receiver]
                                             { $result = $array_statement.result; }
         )
+//        |
+//        (
+//            IDENTIFIER
+//                                            { TLLExpressionNode propName = factory.createStringLiteral($IDENTIFIER, false); }
+//                                            { $result = factory.createReadProperty(receiver, propName); }
+//        )
     )
 )
 ;
@@ -231,6 +264,8 @@ builtin_functions[TLLExpressionNode assignmentName] returns [TLLExpressionNode r
 (
     '('                                     { TLLExpressionNode receiver = factory.createRead(assignmentName); }
         (
+//            IDENTIFIER                      { parameters.add(factory.createStringLiteral($IDENTIFIER, false)); }
+//            |
             numeric                         { parameters.add($numeric.result); }
             |
             expression                      { parameters.add($expression.result); }

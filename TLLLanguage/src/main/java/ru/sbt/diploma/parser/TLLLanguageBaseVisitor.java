@@ -57,6 +57,13 @@ public class TLLLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitCreateLocalVar(TLLLanguageParser.CreateLocalVarContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitInit_obj(TLLLanguageParser.Init_objContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -64,7 +71,7 @@ public class TLLLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInit_prop(TLLLanguageParser.Init_propContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProperty(TLLLanguageParser.PropertyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
