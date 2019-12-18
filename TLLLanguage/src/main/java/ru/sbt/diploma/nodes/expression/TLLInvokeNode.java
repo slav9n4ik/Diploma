@@ -59,8 +59,7 @@ public final class TLLInvokeNode extends TLLExpressionNode {
         }
 
         try {
-            Object execute = library.execute(function, argumentValues);
-            return execute;
+            return library.execute(function, argumentValues);
         } catch (ArityException | UnsupportedTypeException | UnsupportedMessageException e) {
             /* Execute was not successful. */
             throw TLLUndefinedNameException.undefinedFunction(this, function);

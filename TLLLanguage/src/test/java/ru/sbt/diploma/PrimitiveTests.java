@@ -253,4 +253,50 @@ public class PrimitiveTests {
         Value getValue = context.getBindings("tll").getMember("START");
         getValue.execute();
     }
+
+    @Test
+    public void checkCompareFunctionTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " Romashka.limit: 100000" + "\n" +
+
+                        " Romashka.sublimit[1]: 111" + "\n" +
+                        " Romashka.sublimit[2]: 111" + "\n" +
+
+                        " sumVar: sum(Romashka.sublimit)" + "\n" +
+                        " compare(sumVar, Romashka.limit)" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
+
+    @Test
+    public void checkCheckCompareVarsTest() {
+        final Source src = Source.newBuilder("tll",
+                "\n" +
+                        "START \n" +
+                        " @Partner: Romashka" + "\n" +
+                        " @Partner: SuperRomashka" + "\n" +
+
+                        " SuperRomashka.sublimit[1]: 67890" + "\n" +
+                        " SuperRomashka.sublimit[2]: 9876" + "\n" +
+
+                        " Romashka.sublimit[1]: 111" + "\n" +
+                        " Romashka.sublimit[2]: 111" + "\n" +
+
+                        " sumVar: sum(Romashka.sublimit)" + "\n" +
+                        " sumVar2: sum(SuperRomashka.sublimit)" + "\n" +
+                        " compare(sumVar2, sumVar)" + "\n" +
+                        "END\n",
+                "testObject.tll").buildLiteral();
+        context.eval(src);
+
+        Value getValue = context.getBindings("tll").getMember("START");
+        getValue.execute();
+    }
 }

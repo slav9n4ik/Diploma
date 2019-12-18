@@ -116,7 +116,6 @@ expression returns [TLLExpressionNode result]
 :
 WHITESPACE*
 (
-//local vars or builtin Funcs
     IDENTIFIER
                                             { TLLExpressionNode assignmentName = factory.createStringLiteral($IDENTIFIER, false); }
     (
@@ -149,16 +148,9 @@ WHITESPACE*
 
 createLocalVar[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
 :
-                                            //{ TLLExpressionNode localVar = factory.createRead(assignmentName); }
 (
     ':'
     WHITESPACE*
-//    (
-//        IDENTIFIER
-//                                            { TLLExpressionNode stringValue = factory.createStringLiteral($IDENTIFIER, false); }
-//                                            { $result = factory.createAssignment(assignmentName, stringValue); }
-//    )
-//    |
     (
         IDENTIFIER
         (
@@ -208,12 +200,6 @@ property[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
             array_statement[propName, receiver]
                                             { $result = $array_statement.result; }
         )
-//        |
-//        (
-//            IDENTIFIER
-//                                            { TLLExpressionNode propName = factory.createStringLiteral($IDENTIFIER, false); }
-//                                            { $result = factory.createReadProperty(receiver, propName); }
-//        )
     )
 )
 ;
@@ -261,15 +247,21 @@ s = WHITESPACE*
 builtin_functions[TLLExpressionNode assignmentName] returns [TLLExpressionNode result]
 :                                           { TLLExpressionNode nestedAssignmentName = null;
                                               List<TLLExpressionNode> parameters = new ArrayList<>(); }
+                                            { TLLExpressionNode receiver = factory.createRead(assignmentName); }
 (
-    '('                                     { TLLExpressionNode receiver = factory.createRead(assignmentName); }
+    '('
         (
-//            IDENTIFIER                      { parameters.add(factory.createStringLiteral($IDENTIFIER, false)); }
-//            |
             numeric                         { parameters.add($numeric.result); }
             |
             expression                      { parameters.add($expression.result); }
-        )?
+            |
+            (
+                expression                  { parameters.add($expression.result); }
+                    ','
+                    WHITESPACE*
+                expression                  { parameters.add($expression.result); }
+            )
+        )
     e=')'                                   { $result = factory.createCall(receiver, parameters, $e); }
 )
 ;
